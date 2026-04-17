@@ -8,7 +8,13 @@
       "Bash(./mvnw test *)",
       "Bash(where mvn *)",
       "Bash(mvn test *)",
-      "Bash(cmd //c \"mvn test -Dtest=CommonComponentTest\")"
+      "Bash(cmd //c \"mvn test -Dtest=CommonComponentTest\")",
+      "Bash(cmd //c \"mvn compile -DskipTests 2>&1 | head -100\")",
+      "Bash(cmd //c \"mvn compile -DskipTests 2>&1 | tail -30\")",
+      "Bash(cmd //c \"mvn compile -DskipTests 2>&1 | grep -A 20 \\\\\"COMPILATION ERROR\\\\\"\")",
+      "Bash(cmd //c \"mvn compile -DskipTests 2>&1 | tail -20\")",
+      "Bash(cmd //c \"mvn compile -DskipTests 2>&1 | grep -i error\")",
+      "Bash(cmd //c \"mvn compile -DskipTests 2>&1 | tail -10\")"
     ]
   }
 }

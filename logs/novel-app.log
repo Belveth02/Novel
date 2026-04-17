@@ -1,0 +1,6 @@
+2026-04-18 06:02:00 [main] INFO  c.e.novel.common.CommonComponentTest - Starting CommonComponentTest using Java 17.0.10 with PID 30184 (started by Strelitzia in D:\IntelliJ IDEA 2023.2.3\Novel)
+2026-04-18 06:02:00 [main] DEBUG c.e.novel.common.CommonComponentTest - Running with Spring Boot v3.5.13, Spring v6.2.17
+2026-04-18 06:02:00 [main] INFO  c.e.novel.common.CommonComponentTest - No active profile set, falling back to 1 default profile: "default"
+2026-04-18 06:02:00 [main] WARN  o.m.s.mapper.ClassPathMapperScanner - No MyBatis mapper was found in '[com.example.novel]' package. Please check your configuration.
+2026-04-18 06:02:02 [main] INFO  c.b.m.e.s.MybatisPlusApplicationContextAware - Register ApplicationContext instances org.springframework.web.context.support.GenericWebApplicationContext@7b208b45
+2026-04-18 06:02:02 [main] INFO  c.e.novel.common.CommonComponentTest - Started CommonComponentTest in 2.535 seconds (process running for 3.42)

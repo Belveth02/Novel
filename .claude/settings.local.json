@@ -19,7 +19,9 @@
       "Bash(curl *)",
       "Bash(mvn spring-boot:run)",
       "Bash(./mvnw spring-boot:run)",
-      "Bash(cmd /c \"mvnw.cmd spring-boot:run\")"
+      "Bash(cmd /c \"mvnw.cmd spring-boot:run\")",
+      "Read(//d/IntelliJ IDEA 2023.2.3/**)",
+      "Bash(mkdir -p src/main/java/com/example/novel/config)"
     ]
   }
 }

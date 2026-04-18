@@ -3,6 +3,7 @@ package com.example.novel.controller;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.novel.common.core.Result;
 import com.example.novel.service.IChapterService;
+import com.example.novel.vo.ChapterDetailVO;
 import com.example.novel.vo.ChapterVO;
 import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
@@ -36,5 +37,20 @@ public class ChapterController {
         log.info("返回 {} 个章节，共 {} 页", page.getTotal(), page.getPages());
 
         return Result.success(page);
+    }
+
+    /**
+     * 查询章节详情（包含内容）
+     */
+    @GetMapping("/{id}")
+    public Result<ChapterDetailVO> getChapterById(@PathVariable Long id) {
+        log.info("查询章节详情请求, chapterId: {}", id);
+
+        ChapterDetailVO chapterDetail = chapterService.getChapterById(id);
+        if (chapterDetail == null) {
+            return Result.success(null);
+        }
+
+        return Result.success(chapterDetail);
     }
 }

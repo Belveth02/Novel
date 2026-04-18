@@ -3,12 +3,16 @@ package com.example.novel.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.novel.entity.Chapter;
+import com.example.novel.entity.Novel;
 import com.example.novel.mapper.ChapterMapper;
+import com.example.novel.mapper.NovelMapper;
 import com.example.novel.service.IChapterService;
+import com.example.novel.vo.ChapterDetailVO;
 import com.example.novel.vo.ChapterVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,6 +26,7 @@ import java.util.stream.Collectors;
 public class ChapterServiceImpl implements IChapterService {
 
     private final ChapterMapper chapterMapper;
+    private final NovelMapper novelMapper;
 
     @Override
     public Page<ChapterVO> listByNovelId(Long novelId, Integer pageNum, Integer pageSize) {
@@ -45,6 +50,79 @@ public class ChapterServiceImpl implements IChapterService {
 
         // 转换为VO
         return convertToVOPage(chapterPage);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public ChapterDetailVO getChapterById(Long chapterId) {
+        log.info("查询章节详情, chapterId: {}", chapterId);
+
+        if (chapterId == null) {
+            log.warn("章节ID不能为空");
+            return null;
+        }
+
+        Chapter chapter = chapterMapper.selectById(chapterId);
+        if (chapter == null) {
+            log.warn("章节不存在, chapterId: {}", chapterId);
+            return null;
+        }
+
+        // 查询上一章和下一章ID
+        Long prevChapterId = getPrevChapterId(chapter.getNovelId(), chapter.getChapterNumber());
+        Long nextChapterId = getNextChapterId(chapter.getNovelId(), chapter.getChapterNumber());
+
+        // 查询小说标题
+        String novelTitle = "";
+        try {
+            Novel novel = novelMapper.selectById(chapter.getNovelId());
+            if (novel != null) {
+                novelTitle = novel.getTitle();
+            }
+        } catch (Exception e) {
+            log.warn("查询小说标题失败, novelId: {}", chapter.getNovelId(), e);
+        }
+
+        return ChapterDetailVO.builder()
+                .id(chapter.getId())
+                .novelId(chapter.getNovelId())
+                .novelTitle(novelTitle)
+                .title(chapter.getTitle())
+                .content(chapter.getContent())
+                .chapterNumber(chapter.getChapterNumber())
+                .wordCount(chapter.getWordCount())
+                .prevChapterId(prevChapterId)
+                .nextChapterId(nextChapterId)
+                .createTime(chapter.getCreateTime())
+                .build();
+    }
+
+    /**
+     * 获取上一章ID
+     */
+    private Long getPrevChapterId(Long novelId, Integer currentChapterNumber) {
+        LambdaQueryWrapper<Chapter> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(Chapter::getNovelId, novelId)
+                   .lt(Chapter::getChapterNumber, currentChapterNumber)
+                   .orderByDesc(Chapter::getChapterNumber)
+                   .last("LIMIT 1");
+
+        Chapter prevChapter = chapterMapper.selectOne(queryWrapper);
+        return prevChapter != null ? prevChapter.getId() : null;
+    }
+
+    /**
+     * 获取下一章ID
+     */
+    private Long getNextChapterId(Long novelId, Integer currentChapterNumber) {
+        LambdaQueryWrapper<Chapter> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(Chapter::getNovelId, novelId)
+                   .gt(Chapter::getChapterNumber, currentChapterNumber)
+                   .orderByAsc(Chapter::getChapterNumber)
+                   .last("LIMIT 1");
+
+        Chapter nextChapter = chapterMapper.selectOne(queryWrapper);
+        return nextChapter != null ? nextChapter.getId() : null;
     }
 
     /**

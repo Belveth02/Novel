@@ -17,6 +17,16 @@ const router = createRouter({
       path: '/novels/:id',
       name: 'novel-detail',
       component: () => import('@/views/NovelDetail.vue')
+    },
+    {
+      path: '/chapters/:id',
+      name: 'chapter-read',
+      component: () => import('@/views/ChapterRead.vue')
+    },
+    {
+      path: '/user/favorites',
+      name: 'user-favorites',
+      component: () => import('@/views/UserFavorites.vue')
     }
   ]
 })

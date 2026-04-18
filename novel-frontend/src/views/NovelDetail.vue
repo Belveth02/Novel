@@ -32,13 +32,19 @@
                 class="cover-image"
               />
               <div class="cover-actions">
-                <el-button type="primary" size="large" class="read-btn">
+                <el-button type="primary" size="large" class="read-btn" @click="startReading">
                   <el-icon><Reading /></el-icon>
                   开始阅读
                 </el-button>
-                <el-button type="info" size="large" class="collect-btn">
+                <el-button
+                  :type="isFavorited ? 'warning' : 'info'"
+                  size="large"
+                  class="collect-btn"
+                  :loading="favoriteLoading"
+                  @click="handleFavorite"
+                >
                   <el-icon><Star /></el-icon>
-                  收藏
+                  {{ isFavorited ? '已收藏' : '收藏' }}
                 </el-button>
               </div>
             </div>
@@ -134,6 +140,23 @@
         </div>
       </div>
 
+      <!-- 评论区域 -->
+      <div v-if="novel" class="comment-section">
+        <div class="section-header">
+          <h2>评论</h2>
+        </div>
+        <div class="comment-container">
+          <CommentForm
+            :novel-id="novel.id"
+            @comment-added="handleCommentAdded"
+          />
+          <CommentList
+            ref="commentListRef"
+            :novel-id="novel.id"
+          />
+        </div>
+      </div>
+
       <!-- 小说不存在 -->
       <div v-else class="not-found">
         <el-empty description="小说不存在" />
@@ -152,7 +175,11 @@ import { ref, reactive, onMounted, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { getNovelById } from '@/api/novel'
 import { getChapters } from '@/api/chapter'
+import { toggleFavorite, checkFavorite } from '@/api/favorite'
 import type { NovelVO, ChapterVO, ChapterQueryParams } from '@/types'
+import { ElMessage } from 'element-plus'
+import CommentForm from '@/views/CommentForm.vue'
+import CommentList from '@/views/CommentList.vue'
 import {
   User,
   Clock,
@@ -168,10 +195,20 @@ const router = useRouter()
 const novel = ref<NovelVO | null>(null)
 const loading = ref(false)
 
+// 收藏状态
+const isFavorited = ref(false)
+const favoriteLoading = ref(false)
+
+// 临时用户ID
+const tempUserId = ref<string>()
+
 // 章节数据
 const chapters = ref<ChapterVO[]>([])
 const chapterTotal = ref(0)
 const chapterLoading = ref(false)
+
+// 评论列表引用
+const commentListRef = ref<InstanceType<typeof CommentList>>()
 
 // 章节查询参数
 const chapterParams = reactive<ChapterQueryParams>({
@@ -180,11 +217,66 @@ const chapterParams = reactive<ChapterQueryParams>({
   size: 20
 })
 
+// 初始化临时用户ID
+const initTempUserId = () => {
+  const stored = localStorage.getItem('tempUserId')
+  if (stored) {
+    tempUserId.value = stored
+  } else {
+    tempUserId.value = 'temp_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9)
+    localStorage.setItem('tempUserId', tempUserId.value)
+  }
+}
+
+// 检查收藏状态
+const checkFavoriteStatus = async (novelId: number) => {
+  if (!novelId) return
+
+  try {
+    isFavorited.value = await checkFavorite(novelId)
+  } catch (err) {
+    console.error('检查收藏状态失败:', err)
+  }
+}
+
+// 收藏/取消收藏
+const handleFavorite = async () => {
+  if (!novel.value || favoriteLoading.value) return
+
+  favoriteLoading.value = true
+  try {
+    const result = await toggleFavorite(novel.value.id)
+    isFavorited.value = result
+    ElMessage.success(result ? '收藏成功' : '已取消收藏')
+  } catch (err: any) {
+    console.error('收藏操作失败:', err)
+    ElMessage.error(err.message || '操作失败')
+  } finally {
+    favoriteLoading.value = false
+  }
+}
+
+// 开始阅读
+const startReading = () => {
+  if (!novel.value) return
+
+  // 如果有章节，跳转到第一章
+  if (chapters.value.length > 0) {
+    router.push(`/chapters/${chapters.value[0].id}`)
+  } else {
+    ElMessage.warning('暂无章节内容')
+  }
+}
+
 // 加载小说详情
 const loadNovel = async (id: number) => {
   loading.value = true
   try {
     novel.value = await getNovelById(id)
+    // 加载小说后检查收藏状态
+    if (novel.value) {
+      await checkFavoriteStatus(novel.value.id)
+    }
   } catch (error) {
     console.error('加载小说详情失败:', error)
     novel.value = null
@@ -264,8 +356,18 @@ watch(
   { immediate: true }
 )
 
+// 处理评论添加后刷新评论列表
+const handleCommentAdded = () => {
+  if (commentListRef.value) {
+    commentListRef.value.refresh()
+  }
+}
+
 // 初始化加载
 onMounted(() => {
+  // 初始化临时用户ID
+  initTempUserId()
+
   const id = Number(route.params.id)
   if (id) {
     chapterParams.novelId = id
@@ -532,6 +634,31 @@ onMounted(() => {
   padding: 20px;
   color: #666;
   font-size: 14px;
+}
+
+/* 评论区域 */
+.comment-section {
+  margin-top: 40px;
+  padding-top: 30px;
+  border-top: 1px solid #e4e7ed;
+}
+
+.comment-section .section-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.comment-section .section-header h2 {
+  margin: 0;
+  font-size: 24px;
+  color: #333;
+}
+
+.comment-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 /* 响应式设计 */

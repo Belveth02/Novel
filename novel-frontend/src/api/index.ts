@@ -14,6 +14,12 @@ const request: AxiosInstance = axios.create({
 // 请求拦截器
 request.interceptors.request.use(
   (config) => {
+    // 添加临时用户ID请求头
+    const tempUserId = localStorage.getItem('tempUserId')
+    if (tempUserId) {
+      config.headers['X-User-ID'] = tempUserId
+    }
+
     // 可在此处添加 token 等认证信息
     // const token = localStorage.getItem('token')
     // if (token) {

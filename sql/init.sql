@@ -104,6 +104,39 @@ CREATE TABLE `reading_history` (
     CONSTRAINT `fk_history_chapter` FOREIGN KEY (`chapter_id`) REFERENCES `chapter` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='阅读记录表';
 
+-- 收藏表
+DROP TABLE IF EXISTS `favorite`;
+CREATE TABLE `favorite` (
+    `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '收藏ID',
+    `user_id` BIGINT UNSIGNED NOT NULL COMMENT '用户ID',
+    `novel_id` BIGINT UNSIGNED NOT NULL COMMENT '小说ID',
+    `create_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `uk_user_novel` (`user_id`, `novel_id`),
+    KEY `idx_user_id` (`user_id`),
+    KEY `idx_novel_id` (`novel_id`),
+    KEY `idx_create_time` (`create_time`),
+    CONSTRAINT `fk_favorite_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `fk_favorite_novel` FOREIGN KEY (`novel_id`) REFERENCES `novel` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='收藏表';
+
+-- 评论表
+DROP TABLE IF EXISTS `comment`;
+CREATE TABLE `comment` (
+    `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '评论ID',
+    `user_id` BIGINT UNSIGNED NOT NULL COMMENT '用户ID',
+    `novel_id` BIGINT UNSIGNED NOT NULL COMMENT '小说ID',
+    `content` TEXT NOT NULL COMMENT '评论内容',
+    `create_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `update_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    PRIMARY KEY (`id`),
+    KEY `idx_user_id` (`user_id`),
+    KEY `idx_novel_id` (`novel_id`),
+    KEY `idx_create_time` (`create_time`),
+    CONSTRAINT `fk_comment_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `fk_comment_novel` FOREIGN KEY (`novel_id`) REFERENCES `novel` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='评论表';
+
 -- 插入初始分类数据
 INSERT INTO `category` (`name`, `description`, `sort_order`) VALUES
 ('玄幻', '东方玄幻、异界大陆等', 1),
@@ -144,4 +177,8 @@ SELECT 'novel', COUNT(*) FROM `novel`
 UNION ALL
 SELECT 'chapter', COUNT(*) FROM `chapter`
 UNION ALL
-SELECT 'reading_history', COUNT(*) FROM `reading_history`;
+SELECT 'reading_history', COUNT(*) FROM `reading_history`
+UNION ALL
+SELECT 'favorite', COUNT(*) FROM `favorite`
+UNION ALL
+SELECT 'comment', COUNT(*) FROM `comment`;

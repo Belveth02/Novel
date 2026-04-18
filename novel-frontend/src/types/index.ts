@@ -58,6 +58,68 @@ export interface NovelQueryParams {
   sortOrder?: 'asc' | 'desc'
 }
 
+// 章节详情视图对象（包含内容）
+export interface ChapterDetailVO {
+  id: number
+  novelId: number
+  novelTitle: string
+  title: string
+  content: string
+  chapterNumber: number
+  wordCount: number
+  prevChapterId?: number
+  nextChapterId?: number
+  createTime: string
+}
+
+// 阅读记录视图对象
+export interface ReadingHistoryVO {
+  id: number
+  userId: number
+  novelId: number
+  novelTitle: string
+  novelCoverImage: string
+  chapterId: number
+  chapterTitle: string
+  chapterNumber: number
+  progress: number
+  lastReadTime: string
+  createTime: string
+}
+
+// 阅读记录数据传输对象
+export interface ReadingHistoryDTO {
+  userId?: number
+  novelId: number
+  chapterId: number
+  progress: number
+}
+
+// 收藏视图对象
+export interface FavoriteVO {
+  id: number
+  userId: number
+  novelId: number
+  novelTitle: string
+  novelCoverImage: string
+  novelAuthor: string
+  novelDescription: string
+  novelWordCount: number
+  novelChapterCount: number
+  novelViewCount: number
+  createTime: string
+}
+
+// 评论视图对象
+export interface CommentVO {
+  id: number
+  userId: number
+  novelId: number
+  content: string
+  createTime: string
+  updateTime: string
+}
+
 // 章节查询参数
 export interface ChapterQueryParams {
   novelId: number

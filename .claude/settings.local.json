@@ -21,7 +21,24 @@
       "Bash(./mvnw spring-boot:run)",
       "Bash(cmd /c \"mvnw.cmd spring-boot:run\")",
       "Read(//d/IntelliJ IDEA 2023.2.3/**)",
-      "Bash(mkdir -p src/main/java/com/example/novel/config)"
+      "Bash(mkdir -p src/main/java/com/example/novel/config)",
+      "Bash(mvn --version)",
+      "Bash(cmd /c mvnw.cmd test)",
+      "Bash(cmd.exe /c \"mvnw.cmd test\")",
+      "Bash(sh mvnw *)",
+      "Bash(bash mvnw *)",
+      "Bash(cmd.exe *)",
+      "Bash(git add *)",
+      "Bash(./mvnw compile *)",
+      "Bash(mv *)",
+      "Bash(taskkill /f /im java.exe)",
+      "Bash(./mvnw.cmd spring-boot:run)",
+      "Bash(echo \"后台进程PID: $!\")",
+      "Bash(npm run *)",
+      "Bash(echo \"前端进程PID: $!\")",
+      "Bash(kill -9 10268)",
+      "Bash(pkill -f mvnw)",
+      "Bash(pkill -f spring-boot)"
     ]
   }
 }

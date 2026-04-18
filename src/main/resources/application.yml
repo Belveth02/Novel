@@ -4,6 +4,9 @@ server:
     context-path: /api
 
 spring:
+  docker:
+    compose:
+      enabled: false
   application:
     name: novel-app
 

@@ -1,6 +1,7 @@
 package com.example.novel.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.novel.vo.ChapterDetailVO;
 import com.example.novel.vo.ChapterVO;
 
 /**
@@ -17,4 +18,12 @@ public interface IChapterService {
      * @return 分页结果
      */
     Page<ChapterVO> listByNovelId(Long novelId, Integer pageNum, Integer pageSize);
+
+    /**
+     * 根据ID查询章节详情
+     *
+     * @param chapterId 章节ID
+     * @return 章节详情
+     */
+    ChapterDetailVO getChapterById(Long chapterId);
 }

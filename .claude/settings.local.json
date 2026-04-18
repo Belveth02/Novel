@@ -14,7 +14,12 @@
       "Bash(cmd //c \"mvn compile -DskipTests 2>&1 | grep -A 20 \\\\\"COMPILATION ERROR\\\\\"\")",
       "Bash(cmd //c \"mvn compile -DskipTests 2>&1 | tail -20\")",
       "Bash(cmd //c \"mvn compile -DskipTests 2>&1 | grep -i error\")",
-      "Bash(cmd //c \"mvn compile -DskipTests 2>&1 | tail -10\")"
+      "Bash(cmd //c \"mvn compile -DskipTests 2>&1 | tail -10\")",
+      "Bash(npm *)",
+      "Bash(curl *)",
+      "Bash(mvn spring-boot:run)",
+      "Bash(./mvnw spring-boot:run)",
+      "Bash(cmd /c \"mvnw.cmd spring-boot:run\")"
     ]
   }
 }

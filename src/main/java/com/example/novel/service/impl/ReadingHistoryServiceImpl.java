@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.scheduling.annotation.Async;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -30,6 +31,7 @@ public class ReadingHistoryServiceImpl implements IReadingHistoryService {
     private final ChapterMapper chapterMapper;
 
     @Override
+    @Async
     @Transactional(rollbackFor = Exception.class)
     public Long saveOrUpdate(ReadingHistory readingHistory) {
         log.info("保存或更新阅读记录, userId: {}, novelId: {}, chapterId: {}",

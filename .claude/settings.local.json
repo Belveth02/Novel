@@ -38,7 +38,13 @@
       "Bash(echo \"前端进程PID: $!\")",
       "Bash(kill -9 10268)",
       "Bash(pkill -f mvnw)",
-      "Bash(pkill -f spring-boot)"
+      "Bash(pkill -f spring-boot)",
+      "Bash(xargs grep *)",
+      "Bash(grep -E \"\\(DTO|VO\\)\\\\.java$\")",
+      "Bash(./mvnw.cmd --version)",
+      "Bash(./mvnw.cmd compile *)",
+      "WebSearch",
+      "Bash(npx vue-tsc *)"
     ]
   }
 }

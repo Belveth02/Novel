@@ -27,7 +27,7 @@
           <el-col :xs="24" :sm="8" :md="6">
             <div class="cover-section">
               <el-image
-                :src="novel.coverImage || 'https://via.placeholder.com/300x450?text=封面'"
+                :src="novelData.coverImage || 'https://via.placeholder.com/300x450?text=封面'"
                 fit="cover"
                 class="cover-image"
               />
@@ -53,38 +53,38 @@
           <!-- 小说信息 -->
           <el-col :xs="24" :sm="16" :md="18">
             <div class="info-section">
-              <h1 class="novel-title">{{ novel.title }}</h1>
+              <h1 class="novel-title">{{ novelData.title }}</h1>
               <div class="novel-meta">
                 <span class="author">
                   <el-icon><User /></el-icon>
-                  {{ novel.author }}
+                  {{ novelData.author }}
                 </span>
-                <el-tag v-if="novel.status === 1" type="success" size="small">上架</el-tag>
+                <el-tag v-if="novelData.status === 1" type="success" size="small">上架</el-tag>
                 <el-tag v-else type="info" size="small">下架</el-tag>
                 <span class="create-time">
                   <el-icon><Clock /></el-icon>
-                  {{ formatDate(novel.createTime) }}
+                  {{ formatDate(novelData.createTime) }}
                 </span>
               </div>
 
               <div class="stats">
                 <div class="stat-item">
-                  <div class="stat-value">{{ novel.viewCount }}</div>
+                  <div class="stat-value">{{ novelData.viewCount }}</div>
                   <div class="stat-label">阅读</div>
                 </div>
                 <div class="stat-item">
-                  <div class="stat-value">{{ novel.chapterCount }}</div>
+                  <div class="stat-value">{{ novelData.chapterCount }}</div>
                   <div class="stat-label">章节</div>
                 </div>
                 <div class="stat-item">
-                  <div class="stat-value">{{ formatWordCount(novel.wordCount) }}</div>
+                  <div class="stat-value">{{ formatWordCount(novelData.wordCount) }}</div>
                   <div class="stat-label">字数</div>
                 </div>
               </div>
 
               <div class="novel-description">
                 <h3>作品简介</h3>
-                <p>{{ novel.description }}</p>
+                <p>{{ novelData.description }}</p>
               </div>
             </div>
           </el-col>
@@ -147,12 +147,12 @@
         </div>
         <div class="comment-container">
           <CommentForm
-            :novel-id="novel.id"
+            :novel-id="novelData.id"
             @comment-added="handleCommentAdded"
           />
           <CommentList
             ref="commentListRef"
-            :novel-id="novel.id"
+            :novel-id="novelData.id"
           />
         </div>
       </div>
@@ -171,8 +171,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted, watch } from 'vue'
+import { ref, reactive, onMounted, watch, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { useHead } from '@vueuse/head'
 import { getNovelById } from '@/api/novel'
 import { getChapters } from '@/api/chapter'
 import { toggleFavorite, checkFavorite } from '@/api/favorite'
@@ -194,6 +195,9 @@ const router = useRouter()
 // 小说数据
 const novel = ref<NovelVO | null>(null)
 const loading = ref(false)
+
+// 非空小说数据（用于模板，避免类型检查错误）
+const novelData = computed(() => novel.value!)
 
 // 收藏状态
 const isFavorited = ref(false)
@@ -276,6 +280,16 @@ const loadNovel = async (id: number) => {
     // 加载小说后检查收藏状态
     if (novel.value) {
       await checkFavoriteStatus(novel.value.id)
+      // 动态设置页面标题和 meta 描述
+      useHead({
+        title: `《${novel.value.title}》- 在线阅读`,
+        meta: [
+          {
+            name: 'description',
+            content: novel.value.description || `《${novel.value.title}》是一部由${novel.value.author}创作的小说，欢迎在线阅读。`
+          }
+        ]
+      })
     }
   } catch (error) {
     console.error('加载小说详情失败:', error)
@@ -334,7 +348,7 @@ const handleChapterPageChange = (page: number) => {
 }
 
 // 阅读章节
-const readChapter = (chapter: ChapterVO) => {
+const readChapter = (_chapter: ChapterVO) => {
   // 这里可以跳转到阅读页面
   ElMessage.info('阅读功能开发中...')
 }

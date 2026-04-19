@@ -33,52 +33,58 @@ public class AdminAuthController {
      */
     @PostMapping("/login")
     public Result<AdminLoginVO> login(@Validated @RequestBody AdminLoginDTO loginDTO) {
+        long startTime = System.currentTimeMillis();
         log.info("管理员登录请求，用户名: {}", loginDTO.getUsername());
 
-        // 查询用户
-        LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(User::getUsername, loginDTO.getUsername());
-        User user = userMapper.selectOne(queryWrapper);
+        try {
+            // 查询用户
+            LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
+            queryWrapper.eq(User::getUsername, loginDTO.getUsername());
+            User user = userMapper.selectOne(queryWrapper);
 
-        // 验证用户是否存在
-        if (user == null) {
-            log.warn("登录失败，用户不存在: {}", loginDTO.getUsername());
-            throw new BusinessException("用户名或密码错误");
+            // 验证用户是否存在
+            if (user == null) {
+                log.warn("登录失败，用户不存在: {}", loginDTO.getUsername());
+                throw new BusinessException("用户名或密码错误");
+            }
+
+            // 验证用户状态
+            if (user.getStatus() != 1) {
+                log.warn("登录失败，用户已被禁用: {}", loginDTO.getUsername());
+                throw new BusinessException("用户已被禁用");
+            }
+
+            // 验证用户角色（必须是管理员）
+            if (!"ADMIN".equals(user.getRole())) {
+                log.warn("登录失败，用户不是管理员: {}", loginDTO.getUsername());
+                throw new BusinessException("权限不足，仅限管理员登录");
+            }
+
+            // 验证密码
+            if (!passwordEncoder.matches(loginDTO.getPassword(), user.getPassword())) {
+                log.warn("登录失败，密码错误: {}", loginDTO.getUsername());
+                throw new BusinessException("用户名或密码错误");
+            }
+
+            // 生成JWT token
+            String token = jwtUtil.generateToken(user.getId(), user.getUsername(), user.getRole());
+
+            // 构建响应
+            AdminLoginVO loginVO = AdminLoginVO.builder()
+                    .token(token)
+                    .userId(user.getId())
+                    .username(user.getUsername())
+                    .nickname(user.getNickname())
+                    .role(user.getRole())
+                    .avatar(user.getAvatar())
+                    .build();
+
+            log.info("管理员登录成功，用户ID: {}, 角色: {}", user.getId(), user.getRole());
+            return Result.success(loginVO);
+        } finally {
+            long cost = System.currentTimeMillis() - startTime;
+            log.info("管理员登录请求耗时 {}ms", cost);
         }
-
-        // 验证用户状态
-        if (user.getStatus() != 1) {
-            log.warn("登录失败，用户已被禁用: {}", loginDTO.getUsername());
-            throw new BusinessException("用户已被禁用");
-        }
-
-        // 验证用户角色（必须是管理员）
-        if (!"ADMIN".equals(user.getRole())) {
-            log.warn("登录失败，用户不是管理员: {}", loginDTO.getUsername());
-            throw new BusinessException("权限不足，仅限管理员登录");
-        }
-
-        // 验证密码
-        if (!passwordEncoder.matches(loginDTO.getPassword(), user.getPassword())) {
-            log.warn("登录失败，密码错误: {}", loginDTO.getUsername());
-            throw new BusinessException("用户名或密码错误");
-        }
-
-        // 生成JWT token
-        String token = jwtUtil.generateToken(user.getId(), user.getUsername(), user.getRole());
-
-        // 构建响应
-        AdminLoginVO loginVO = AdminLoginVO.builder()
-                .token(token)
-                .userId(user.getId())
-                .username(user.getUsername())
-                .nickname(user.getNickname())
-                .role(user.getRole())
-                .avatar(user.getAvatar())
-                .build();
-
-        log.info("管理员登录成功，用户ID: {}, 角色: {}", user.getId(), user.getRole());
-        return Result.success(loginVO);
     }
 
     /**

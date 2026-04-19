@@ -16,7 +16,7 @@
           <!-- 字体大小调整 -->
           <el-dropdown @command="handleFontSizeCommand">
             <el-button type="text">
-              <el-icon><FontSize /></el-icon> 字体: {{ fontSize }}px
+              <el-icon><Operation /></el-icon> 字体: {{ fontSize }}px
             </el-button>
             <template #dropdown>
               <el-dropdown-menu>
@@ -63,8 +63,25 @@
         <!-- 章节内容 -->
         <div class="chapter-content" :style="{ fontSize: fontSize + 'px' }">
           <div v-if="loading" class="loading">
-            <el-icon class="loading-icon"><Loading /></el-icon>
-            <p>加载中...</p>
+            <el-skeleton :rows="10" animated style="width: 100%;">
+              <template #template>
+                <el-skeleton-item variant="h1" style="width: 50%; height: 40px; margin-bottom: 30px;" />
+                <el-skeleton-item variant="text" style="width: 100%; margin-bottom: 20px;" />
+                <el-skeleton-item variant="text" style="width: 100%; margin-bottom: 20px;" />
+                <el-skeleton-item variant="text" style="width: 100%; margin-bottom: 20px;" />
+                <el-skeleton-item variant="text" style="width: 90%; margin-bottom: 20px;" />
+                <el-skeleton-item variant="text" style="width: 95%; margin-bottom: 20px;" />
+                <el-skeleton-item variant="text" style="width: 100%; margin-bottom: 20px;" />
+                <el-skeleton-item variant="text" style="width: 80%; margin-bottom: 20px;" />
+                <el-skeleton-item variant="text" style="width: 100%; margin-bottom: 20px;" />
+                <el-skeleton-item variant="text" style="width: 60%; margin-bottom: 40px;" />
+                <div style="display: flex; justify-content: space-between; margin-top: 40px; padding-top: 20px; border-top: 1px solid #e4e7ed;">
+                  <el-skeleton-item variant="button" style="width: 100px; height: 40px;" />
+                  <el-skeleton-item variant="button" style="width: 100px; height: 40px;" />
+                  <el-skeleton-item variant="button" style="width: 100px; height: 40px;" />
+                </div>
+              </template>
+            </el-skeleton>
           </div>
           <div v-else-if="error" class="error">
             <el-icon><Warning /></el-icon>
@@ -128,14 +145,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted, onUnmounted, computed, watch } from 'vue'
+import { ref, onMounted, onUnmounted, computed, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { getChapterDetail } from '@/api/chapter'
-import { saveReadingHistory, getReadingHistoryByNovel } from '@/api/readingHistory'
-import type { ChapterDetailVO, ReadingHistoryVO } from '@/types'
+import { saveReadingHistory } from '@/api/readingHistory'
+import type { ChapterDetailVO } from '@/types'
 import {
-  ArrowLeft, ArrowRight, FontSize, Moon, Sunny,
-  Menu, Loading, Warning, Document, View
+  ArrowLeft, ArrowRight, Operation, Moon, Sunny,
+  Menu, Warning, Document
 } from '@element-plus/icons-vue'
 
 const route = useRoute()

@@ -43,47 +43,52 @@ request.interceptors.response.use(
     if (data.code === 200) {
       return data.data
     } else {
-      ElMessage.error(data.message || '请求失败')
-      return Promise.reject(new Error(data.message || '请求失败'))
+      // 业务错误：code !== 200
+      const errorMessage = data.message || '请求失败'
+      ElMessage.error(errorMessage)
+      return Promise.reject(new Error(errorMessage))
     }
   },
   (error) => {
-    let message = '请求错误'
+    // 网络错误 vs HTTP 错误
     if (error.response) {
-      switch (error.response.status) {
+      // HTTP 错误（状态码非 2xx）
+      const { status, data } = error.response
+      switch (status) {
         case 400:
-          message = '请求参数错误'
+          ElMessage.error(data?.message || '请求参数错误')
           break
         case 401:
-          message = '未授权，请登录'
-          // 如果是管理员接口，跳转到后台登录页
+          // token 过期或未授权
           if (error.config.url?.startsWith('/admin')) {
             localStorage.removeItem('admin_token')
             localStorage.removeItem('admin_user')
-            // 使用setTimeout避免在当前请求上下文中直接跳转
+            // 跳转到后台登录页
             setTimeout(() => {
               window.location.href = '/admin/login'
             }, 0)
           }
+          ElMessage.error('登录已过期，请重新登录')
           break
         case 403:
-          message = '拒绝访问'
+          ElMessage.error('权限不足，拒绝访问')
           break
         case 404:
-          message = '请求资源不存在'
+          ElMessage.error('请求的资源不存在')
           break
         case 500:
-          message = '服务器内部错误'
+          ElMessage.error('服务器内部错误，请稍后再试')
           break
         default:
-          message = `请求错误 ${error.response.status}`
+          ElMessage.error(`请求错误 ${status}`)
       }
     } else if (error.request) {
-      message = '网络连接错误，请检查网络'
+      // 网络错误（无响应）
+      ElMessage.error('网络连接异常，请检查网络设置')
     } else {
-      message = error.message
+      // 请求配置错误等其他错误
+      ElMessage.error(error.message || '请求发送失败')
     }
-    ElMessage.error(message)
     return Promise.reject(error)
   }
 )

@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { isAdminLoggedIn } from '@/api/admin'
+import NProgress from 'nprogress'
+import 'nprogress/nprogress.css'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -49,30 +51,36 @@ const router = createRouter({
         {
           path: 'novels',
           name: 'admin-novels',
-          component: () => import('@/views/admin/placeholder/AdminNovels.vue')
+          component: () => import('@/views/admin/NovelManage.vue')
         },
         {
           path: 'chapters',
           name: 'admin-chapters',
-          component: () => import('@/views/admin/placeholder/AdminChapters.vue')
+          component: () => import('@/views/admin/ChapterManage.vue')
         },
         {
           path: 'users',
           name: 'admin-users',
-          component: () => import('@/views/admin/placeholder/AdminUsers.vue')
+          component: () => import('@/views/admin/UserManage.vue')
         },
         {
           path: 'categories',
           name: 'admin-categories',
-          component: () => import('@/views/admin/placeholder/AdminCategories.vue')
+          component: () => import('@/views/admin/CategoryManage.vue')
         }
       ]
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      name: 'not-found',
+      component: () => import('@/views/NotFound.vue')
     }
   ]
 })
 
 // 路由守卫：检查管理员登录状态
 router.beforeEach((to, from, next) => {
+  NProgress.start()
   // 检查是否访问后台路由
   const isAdminRoute = to.path.startsWith('/admin') && to.path !== '/admin/login'
 
@@ -86,6 +94,14 @@ router.beforeEach((to, from, next) => {
     // 正常放行
     next()
   }
+})
+
+router.afterEach(() => {
+  NProgress.done()
+})
+
+router.onError(() => {
+  NProgress.done()
 })
 
 export default router

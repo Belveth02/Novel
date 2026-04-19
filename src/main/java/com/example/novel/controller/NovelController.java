@@ -28,12 +28,17 @@ public class NovelController {
      */
     @GetMapping
     public Result<Page<NovelVO>> listByPage(@Valid NovelQueryDTO queryDTO) {
+        long startTime = System.currentTimeMillis();
         log.info("分页查询小说列表请求, 参数: {}", queryDTO);
 
-        Page<NovelVO> page = novelService.listByPage(queryDTO);
-        log.info("返回 {} 条记录，共 {} 页", page.getTotal(), page.getPages());
-
-        return Result.success(page);
+        try {
+            Page<NovelVO> page = novelService.listByPage(queryDTO);
+            log.info("返回 {} 条记录，共 {} 页", page.getTotal(), page.getPages());
+            return Result.success(page);
+        } finally {
+            long cost = System.currentTimeMillis() - startTime;
+            log.info("分页查询小说列表请求耗时 {}ms", cost);
+        }
     }
 
     /**

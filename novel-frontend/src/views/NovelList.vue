@@ -83,34 +83,60 @@
       </div>
 
       <!-- 小说列表 -->
-      <div v-loading="loading" class="novel-list">
-        <div v-if="novels.length === 0" class="empty">
-          <el-empty description="暂无小说数据" />
+      <div class="novel-list">
+        <!-- 加载骨架屏 -->
+        <div v-if="loading" class="skeleton-grid">
+          <div v-for="i in 12" :key="i" class="skeleton-card">
+            <el-skeleton :rows="0" animated>
+              <template #template>
+                <el-skeleton-item variant="image" style="width: 100%; height: 240px; border-radius: 8px 8px 0 0;" />
+                <div style="padding: 15px;">
+                  <el-skeleton-item variant="h3" style="width: 80%; margin-bottom: 8px;" />
+                  <el-skeleton-item variant="text" style="width: 60%; margin-bottom: 10px;" />
+                  <el-skeleton-item variant="text" style="width: 90%; margin-bottom: 10px;" />
+                  <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                    <el-skeleton-item variant="text" style="width: 30%;" />
+                    <el-skeleton-item variant="text" style="width: 30%;" />
+                    <el-skeleton-item variant="text" style="width: 30%;" />
+                  </div>
+                  <div style="display: flex; justify-content: flex-end;">
+                    <el-skeleton-item variant="text" style="width: 20%;" />
+                  </div>
+                </div>
+              </template>
+            </el-skeleton>
+          </div>
         </div>
-        <div v-else class="novel-grid">
-          <div
-            v-for="novel in novels"
-            :key="novel.id"
-            class="novel-card"
-            @click="goToNovelDetail(novel.id)"
-          >
-            <el-image
-              :src="novel.coverImage || 'https://via.placeholder.com/160x240?text=封面'"
-              fit="cover"
-              class="novel-cover"
-            />
-            <div class="novel-info">
-              <h4 class="novel-title">{{ novel.title }}</h4>
-              <p class="novel-author">{{ novel.author }}</p>
-              <p class="novel-description">{{ novel.description?.slice(0, 60) }}...</p>
-              <div class="novel-stats">
-                <span><el-icon><View /></el-icon> {{ novel.viewCount }}</span>
-                <span><el-icon><Document /></el-icon> {{ novel.chapterCount }}章</span>
-                <span><el-icon><EditPen /></el-icon> {{ novel.wordCount }}字</span>
-              </div>
-              <div class="novel-status">
-                <el-tag v-if="novel.status === 1" type="success" size="small">上架</el-tag>
-                <el-tag v-else type="info" size="small">下架</el-tag>
+        <!-- 实际内容 -->
+        <div v-else>
+          <div v-if="novels.length === 0" class="empty">
+            <el-empty description="暂无小说数据" />
+          </div>
+          <div v-else class="novel-grid">
+            <div
+              v-for="novel in novels"
+              :key="novel.id"
+              class="novel-card"
+              @click="goToNovelDetail(novel.id)"
+            >
+              <el-image
+                :src="novel.coverImage || 'https://via.placeholder.com/160x240?text=封面'"
+                fit="cover"
+                class="novel-cover"
+              />
+              <div class="novel-info">
+                <h4 class="novel-title">{{ novel.title }}</h4>
+                <p class="novel-author">{{ novel.author }}</p>
+                <p class="novel-description">{{ novel.description?.slice(0, 60) }}...</p>
+                <div class="novel-stats">
+                  <span><el-icon><View /></el-icon> {{ novel.viewCount }}</span>
+                  <span><el-icon><Document /></el-icon> {{ novel.chapterCount }}章</span>
+                  <span><el-icon><EditPen /></el-icon> {{ novel.wordCount }}字</span>
+                </div>
+                <div class="novel-status">
+                  <el-tag v-if="novel.status === 1" type="success" size="small">上架</el-tag>
+                  <el-tag v-else type="info" size="small">下架</el-tag>
+                </div>
               </div>
             </div>
           </div>
@@ -403,6 +429,19 @@ onMounted(() => {
   font-size: 14px;
 }
 
+.skeleton-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+.skeleton-card {
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
 /* 响应式设计 */
 @media (max-width: 768px) {
   .header-content {
@@ -423,6 +462,11 @@ onMounted(() => {
     gap: 15px;
   }
 
+  .skeleton-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+  }
+
   .novel-cover {
     height: 200px;
   }
@@ -430,6 +474,10 @@ onMounted(() => {
 
 @media (max-width: 480px) {
   .novel-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .skeleton-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 

@@ -14,6 +14,7 @@ CREATE TABLE `user` (
     `username` VARCHAR(50) NOT NULL COMMENT '用户名',
     `nickname` VARCHAR(50) NOT NULL COMMENT '昵称',
     `password` VARCHAR(100) NOT NULL COMMENT '密码（BCrypt加密）',
+    `role` ENUM('ADMIN','USER') NOT NULL DEFAULT 'USER' COMMENT '角色：ADMIN-管理员，USER-普通用户',
     `email` VARCHAR(100) DEFAULT NULL COMMENT '邮箱',
     `phone` VARCHAR(20) DEFAULT NULL COMMENT '手机号',
     `avatar` VARCHAR(255) DEFAULT NULL COMMENT '头像URL',
@@ -149,9 +150,9 @@ INSERT INTO `category` (`name`, `description`, `sort_order`) VALUES
 ('悬疑', '侦探推理、灵异惊悚等', 8);
 
 -- 插入测试用户（密码均为123456的BCrypt加密值）
-INSERT INTO `user` (`username`, `nickname`, `password`, `email`, `status`) VALUES
-('admin', '管理员', '$2a$10$N.zmdr9k7uOCQb376NoUnuTJ8iAt6Z5EHsM8lE9lBOsl7iKTVjVsq', 'admin@novel.com', 1),
-('testuser', '测试用户', '$2a$10$N.zmdr9k7uOCQb376NoUnuTJ8iAt6Z5EHsM8lE9lBOsl7iKTVjVsq', 'user@novel.com', 1);
+INSERT INTO `user` (`username`, `nickname`, `password`, `role`, `email`, `status`) VALUES
+('admin', '管理员', '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'ADMIN', 'admin@novel.com', 1),
+('testuser', '测试用户', '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'USER', 'user@novel.com', 1);
 
 -- 插入测试小说
 INSERT INTO `novel` (`title`, `author`, `description`, `category_id`, `word_count`, `chapter_count`) VALUES

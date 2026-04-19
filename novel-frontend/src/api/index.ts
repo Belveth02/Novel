@@ -20,11 +20,14 @@ request.interceptors.request.use(
       config.headers['X-User-ID'] = tempUserId
     }
 
-    // 可在此处添加 token 等认证信息
-    // const token = localStorage.getItem('token')
-    // if (token) {
-    //   config.headers.Authorization = `Bearer ${token}`
-    // }
+    // 为管理员接口添加Authorization头
+    if (config.url?.startsWith('/admin')) {
+      const adminToken = localStorage.getItem('admin_token')
+      if (adminToken) {
+        config.headers.Authorization = `Bearer ${adminToken}`
+      }
+    }
+
     return config
   },
   (error) => {
@@ -53,7 +56,15 @@ request.interceptors.response.use(
           break
         case 401:
           message = '未授权，请登录'
-          // 可跳转到登录页
+          // 如果是管理员接口，跳转到后台登录页
+          if (error.config.url?.startsWith('/admin')) {
+            localStorage.removeItem('admin_token')
+            localStorage.removeItem('admin_user')
+            // 使用setTimeout避免在当前请求上下文中直接跳转
+            setTimeout(() => {
+              window.location.href = '/admin/login'
+            }, 0)
+          }
           break
         case 403:
           message = '拒绝访问'

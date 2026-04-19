@@ -39,6 +39,12 @@ mybatis-plus:
   mapper-locations: classpath*:/mapper/**/*.xml
   type-aliases-package: com.example.novel.entity
 
+# JWT配置
+jwt:
+  secret: novel-admin-jwt-secret-key-2026-04-20 # 密钥，生产环境需使用更安全的密钥
+  expiration: 86400000 # token过期时间（毫秒），24小时
+  header: Authorization # 请求头名称
+
 logging:
   level:
     com.example.novel: debug

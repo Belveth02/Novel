@@ -19,7 +19,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         // 注册JWT拦截器，拦截所有/admin/**路径，排除登录接口
         registry.addInterceptor(jwtInterceptor)
-                .addPathPatterns("/api/admin/**")
-                .excludePathPatterns("/api/admin/auth/login");
+                .addPathPatterns("/admin/**", "/api/admin/**")
+                .excludePathPatterns("/admin/auth/login", "/api/admin/auth/login");
     }
 }

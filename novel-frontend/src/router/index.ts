@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { isAdminLoggedIn } from '@/api/admin'
+import UserManage from '@/views/admin/UserManage.vue'
+import CategoryManage from '@/views/admin/CategoryManage.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -49,22 +51,22 @@ const router = createRouter({
         {
           path: 'novels',
           name: 'admin-novels',
-          component: () => import('@/views/admin/placeholder/AdminNovels.vue')
+          component: () => import('@/views/admin/NovelManage.vue')
         },
         {
           path: 'chapters',
           name: 'admin-chapters',
-          component: () => import('@/views/admin/placeholder/AdminChapters.vue')
+          component: () => import('@/views/admin/ChapterManage.vue')
         },
         {
           path: 'users',
           name: 'admin-users',
-          component: () => import('@/views/admin/placeholder/AdminUsers.vue')
+          component: UserManage
         },
         {
           path: 'categories',
           name: 'admin-categories',
-          component: () => import('@/views/admin/placeholder/AdminCategories.vue')
+          component: CategoryManage
         }
       ]
     }

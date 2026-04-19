@@ -126,3 +126,98 @@ export interface ChapterQueryParams {
   page?: number
   size?: number
 }
+
+// 管理员小说查询参数
+export interface AdminNovelQueryParams {
+  keyword?: string
+  page?: number
+  size?: number
+  categoryId?: number
+  status?: number
+}
+
+// 管理员小说创建参数
+export interface AdminNovelCreateParams {
+  title: string
+  author: string
+  coverImage?: string
+  description?: string
+  categoryId: number
+  status: number
+}
+
+// 管理员小说更新参数
+export interface AdminNovelUpdateParams {
+  title?: string
+  author?: string
+  coverImage?: string
+  description?: string
+  categoryId?: number
+  status?: number
+}
+
+// 管理员章节查询参数
+export interface AdminChapterQueryParams {
+  novelId: number
+  page?: number
+  size?: number
+}
+
+// 管理员章节创建参数
+export interface AdminChapterCreateParams {
+  novelId: number
+  title: string
+  content: string
+}
+
+// 管理员章节更新参数
+export interface AdminChapterUpdateParams {
+  title?: string
+  content?: string
+}
+
+// 用户视图对象
+export interface UserVO {
+  id: number
+  username: string
+  nickname: string
+  role: 'ADMIN' | 'USER'
+  email: string
+  phone: string
+  avatar: string
+  status: number
+  createTime: string
+  updateTime: string
+}
+
+// 管理员用户查询参数
+export interface AdminUserQueryParams {
+  keyword?: string
+  page?: number
+  size?: number
+}
+
+// 管理员分类视图对象（包含小说数量）
+export interface AdminCategoryVO {
+  id: number
+  name: string
+  description: string
+  sortOrder: number
+  novelCount: number
+  createTime: string
+  updateTime: string
+}
+
+// 管理员分类创建参数
+export interface AdminCategoryCreateParams {
+  name: string
+  description?: string
+  sortOrder?: number
+}
+
+// 管理员分类更新参数
+export interface AdminCategoryUpdateParams {
+  name?: string
+  description?: string
+  sortOrder?: number
+}

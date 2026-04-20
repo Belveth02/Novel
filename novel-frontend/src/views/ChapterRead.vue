@@ -235,8 +235,9 @@ const saveReadingRecord = async () => {
     // 这里假设总章节数未知，暂时使用100%表示已阅读
     const progress = 100
 
+    // 使用默认测试用户ID 2（对应数据库中的测试用户）
     await saveReadingHistory({
-      userId: parseInt(tempUserId.value.replace('temp_', '')), // 临时处理，实际应该使用后端生成的用户ID
+      userId: 2, // 默认测试用户ID
       novelId: novelId.value,
       chapterId: chapterId.value,
       progress

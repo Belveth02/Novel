@@ -15,10 +15,8 @@ const request: AxiosInstance = axios.create({
 request.interceptors.request.use(
   (config) => {
     // 添加临时用户ID请求头
-    const tempUserId = localStorage.getItem('tempUserId')
-    if (tempUserId) {
-      config.headers['X-User-ID'] = tempUserId
-    }
+    // 使用默认测试用户ID 2（对应数据库中的测试用户）
+    config.headers['X-User-ID'] = '2'
 
     // 为管理员接口添加Authorization头
     if (config.url?.startsWith('/admin')) {

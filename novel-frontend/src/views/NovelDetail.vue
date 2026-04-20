@@ -349,8 +349,7 @@ const handleChapterPageChange = (page: number) => {
 
 // 阅读章节
 const readChapter = (_chapter: ChapterVO) => {
-  // 这里可以跳转到阅读页面
-  ElMessage.info('阅读功能开发中...')
+  router.push(`/chapters/${_chapter.id}`)
 }
 
 // 监听路由参数变化

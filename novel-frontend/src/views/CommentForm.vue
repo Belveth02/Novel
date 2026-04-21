@@ -90,7 +90,7 @@ const handleSubmit = async () => {
 
   submitting.value = true
   try {
-    const commentId = await addComment(props.novelId, form.content)
+    await addComment(props.novelId, form.content)
     ElMessage.success('评论发布成功')
 
     // 清空表单

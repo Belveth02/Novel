@@ -65,7 +65,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted, watch, computed } from 'vue'
+import { ref, reactive, onMounted, watch } from 'vue'
 import { getComments, deleteComment, getCommentCount } from '@/api/comment'
 import type { CommentVO, PageResult } from '@/types'
 import { ElMessage, ElMessageBox } from 'element-plus'
@@ -110,7 +110,7 @@ const initCurrentUserId = () => {
 }
 
 // 判断是否可以删除评论
-const canDelete = (commentUserId: number): boolean => {
+const canDelete = (_commentUserId: number): boolean => {
   // 由于当前是临时用户系统，无法准确判断
   // 这里显示删除按钮，由后端验证权限
   return true

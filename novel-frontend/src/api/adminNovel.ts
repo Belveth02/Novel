@@ -1,5 +1,5 @@
 import { get, post, put, del } from '.'
-import type { Result, NovelVO, PageResult, AdminNovelQueryParams, AdminNovelCreateParams, AdminNovelUpdateParams } from '@/types'
+import type { NovelVO, PageResult, AdminNovelQueryParams, AdminNovelCreateParams, AdminNovelUpdateParams } from '@/types'
 
 /**
  * 管理员获取小说分页列表

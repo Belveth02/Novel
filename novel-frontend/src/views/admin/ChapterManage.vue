@@ -90,7 +90,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted, computed } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
 import { ElMessage, ElMessageBox, type FormInstance, type FormRules } from 'element-plus'
 import { getAdminChapters, getAdminChapterById, createAdminChapter, updateAdminChapter, deleteAdminChapter } from '@/api/adminChapter'
 import { getAdminNovels } from '@/api/adminNovel'
@@ -148,7 +148,12 @@ const loadChapters = async () => {
   loading.value = true
   try {
     const res = await getAdminChapters(queryParams)
-    chapterList.value = res.records
+    // 数据转换：确保所有字段都有值
+    chapterList.value = res.records.map(item => ({
+      ...item,
+      wordCount: item.wordCount ?? 0,
+      createTime: item.createTime ?? ''
+    }))
     total.value = res.total
   } catch (error) {
     console.error('加载章节列表失败:', error)

@@ -5220,3 +5220,607 @@ java.lang.IllegalArgumentException: Invalid return type for async method (only F
 2026-04-20 22:29:51 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
 2026-04-20 22:29:51 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
 2026-04-20 22:29:51 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2026-04-20 23:08:39 [restartedMain] INFO  com.example.novel.NovelApplication - Starting NovelApplication using Java 17.0.10 with PID 32004 (D:\IntelliJ IDEA 2023.2.3\Novel\target\classes started by Strelitzia in D:\IntelliJ IDEA 2023.2.3\Novel)
+2026-04-20 23:08:39 [restartedMain] DEBUG com.example.novel.NovelApplication - Running with Spring Boot v3.5.13, Spring v6.2.17
+2026-04-20 23:08:39 [restartedMain] INFO  com.example.novel.NovelApplication - No active profile set, falling back to 1 default profile: "default"
+2026-04-20 23:08:39 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-04-20 23:08:39 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-04-20 23:08:40 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-04-20 23:08:40 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-04-20 23:08:40 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.53]
+2026-04-20 23:08:40 [restartedMain] INFO  o.a.c.c.C.[.[localhost].[/api] - Initializing Spring embedded WebApplicationContext
+2026-04-20 23:08:40 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 970 ms
+2026-04-20 23:08:41 [restartedMain] INFO  c.b.m.e.s.MybatisPlusApplicationContextAware - Register ApplicationContext instances org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@78cf35cc
+2026-04-20 23:08:41 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2026-04-20 23:08:41 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/api'
+2026-04-20 23:08:41 [restartedMain] INFO  com.example.novel.NovelApplication - Started NovelApplication in 2.334 seconds (process running for 2.978)
+2026-04-20 23:08:57 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[.[localhost].[/api] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-04-20 23:08:57 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-04-20 23:08:57 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2026-04-20 23:08:57 [http-nio-8080-exec-1] INFO  c.e.n.controller.CategoryController - 获取分类列表请求
+2026-04-20 23:08:57 [http-nio-8080-exec-1] INFO  c.e.n.s.impl.CategoryServiceImpl - 查询所有分类列表
+2026-04-20 23:08:57 [http-nio-8080-exec-2] INFO  c.e.novel.controller.NovelController - 获取热门小说推荐请求, limit: 10
+2026-04-20 23:08:57 [http-nio-8080-exec-3] INFO  c.e.novel.controller.NovelController - 分页查询小说列表请求, 参数: NovelQueryDTO(categoryId=null, pageNum=1, pageSize=10, sortField=view_count, sortOrder=desc)
+2026-04-20 23:08:57 [http-nio-8080-exec-3] INFO  c.e.n.service.impl.NovelServiceImpl - 分页查询小说列表, 参数: NovelQueryDTO(categoryId=null, pageNum=1, pageSize=10, sortField=view_count, sortOrder=desc)
+2026-04-20 23:08:57 [http-nio-8080-exec-2] INFO  c.e.n.service.impl.NovelServiceImpl - 获取热门小说推荐, 数量: 10
+2026-04-20 23:08:57 [http-nio-8080-exec-1] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-04-20 23:08:57 [http-nio-8080-exec-1] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@2663bbef
+2026-04-20 23:08:57 [http-nio-8080-exec-1] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-04-20 23:08:57 [http-nio-8080-exec-1] INFO  c.e.n.s.impl.CategoryServiceImpl - 查询到 8 个分类
+2026-04-20 23:08:57 [http-nio-8080-exec-3] INFO  c.e.n.service.impl.NovelServiceImpl - 查询到 0 条记录，共 0 页
+2026-04-20 23:08:57 [http-nio-8080-exec-2] INFO  c.e.n.service.impl.NovelServiceImpl - 推荐 2 本热门小说
+2026-04-20 23:08:57 [http-nio-8080-exec-1] INFO  c.e.n.controller.CategoryController - 返回 8 个分类
+2026-04-20 23:08:57 [http-nio-8080-exec-3] INFO  c.e.novel.controller.NovelController - 返回 0 条记录，共 0 页
+2026-04-20 23:08:57 [http-nio-8080-exec-3] INFO  c.e.novel.controller.NovelController - 分页查询小说列表请求耗时 269ms
+2026-04-20 23:08:57 [http-nio-8080-exec-2] INFO  c.e.novel.controller.NovelController - 返回 2 本热门小说
+2026-04-20 23:08:59 [http-nio-8080-exec-4] INFO  c.e.novel.controller.NovelController - 获取小说详情请求, ID: 1
+2026-04-20 23:08:59 [http-nio-8080-exec-4] INFO  c.e.n.service.impl.NovelServiceImpl - 获取小说详情, ID: 1
+2026-04-20 23:08:59 [http-nio-8080-exec-4] DEBUG c.e.n.service.impl.NovelServiceImpl - 找到小说: 剑来
+2026-04-20 23:08:59 [http-nio-8080-exec-7] INFO  c.e.n.controller.ChapterController - 分页查询章节列表请求, novelId: 1, pageNum: 1, pageSize: 20
+2026-04-20 23:08:59 [http-nio-8080-exec-4] INFO  c.e.novel.controller.NovelController - 返回小说详情: 剑来
+2026-04-20 23:08:59 [http-nio-8080-exec-7] INFO  c.e.n.s.impl.ChapterServiceImpl - 分页查询章节列表, novelId: 1, pageNum: 1, pageSize: 20
+2026-04-20 23:08:59 [http-nio-8080-exec-6] INFO  c.e.novel.controller.NovelController - 获取小说详情请求, ID: 1
+2026-04-20 23:08:59 [http-nio-8080-exec-6] INFO  c.e.n.service.impl.NovelServiceImpl - 获取小说详情, ID: 1
+2026-04-20 23:08:59 [http-nio-8080-exec-7] INFO  c.e.n.s.impl.ChapterServiceImpl - 查询到 0 个章节，共 0 页
+2026-04-20 23:08:59 [http-nio-8080-exec-7] INFO  c.e.n.controller.ChapterController - 返回 0 个章节，共 0 页
+2026-04-20 23:08:59 [http-nio-8080-exec-6] DEBUG c.e.n.service.impl.NovelServiceImpl - 找到小说: 剑来
+2026-04-20 23:08:59 [http-nio-8080-exec-6] INFO  c.e.novel.controller.NovelController - 返回小说详情: 剑来
+2026-04-20 23:08:59 [http-nio-8080-exec-5] INFO  c.e.n.controller.ChapterController - 分页查询章节列表请求, novelId: 1, pageNum: 1, pageSize: 20
+2026-04-20 23:08:59 [http-nio-8080-exec-5] INFO  c.e.n.s.impl.ChapterServiceImpl - 分页查询章节列表, novelId: 1, pageNum: 1, pageSize: 20
+2026-04-20 23:08:59 [http-nio-8080-exec-5] INFO  c.e.n.s.impl.ChapterServiceImpl - 查询到 0 个章节，共 0 页
+2026-04-20 23:08:59 [http-nio-8080-exec-5] INFO  c.e.n.controller.ChapterController - 返回 0 个章节，共 0 页
+2026-04-20 23:08:59 [http-nio-8080-exec-10] INFO  c.e.n.controller.CommentController - 统计小说评论数量请求, novelId: 1
+2026-04-20 23:08:59 [http-nio-8080-exec-8] INFO  c.e.n.controller.FavoriteController - 检查收藏状态请求, userId: 2, novelId: 1
+2026-04-20 23:08:59 [http-nio-8080-exec-9] INFO  c.e.n.controller.CommentController - 查询小说评论列表请求, novelId: 1, pageNum: 1, pageSize: 20
+2026-04-20 23:08:59 [http-nio-8080-exec-8] INFO  c.e.n.s.impl.FavoriteServiceImpl - 检查收藏状态, userId: 2, novelId: 1
+2026-04-20 23:08:59 [http-nio-8080-exec-9] INFO  c.e.n.s.impl.CommentServiceImpl - 分页查询小说评论列表, novelId: 1, pageNum: 1, pageSize: 20
+2026-04-20 23:08:59 [http-nio-8080-exec-10] INFO  c.e.n.s.impl.CommentServiceImpl - 统计小说评论数量, novelId: 1
+2026-04-20 23:08:59 [http-nio-8080-exec-10] INFO  c.e.n.s.impl.CommentServiceImpl - 小说评论数量: 1, novelId: 1
+2026-04-20 23:08:59 [http-nio-8080-exec-9] INFO  c.e.n.s.impl.CommentServiceImpl - 查询到 0 条评论，共 0 页
+2026-04-20 23:08:59 [http-nio-8080-exec-8] INFO  c.e.n.s.impl.FavoriteServiceImpl - 收藏状态: 未收藏
+2026-04-20 23:08:59 [http-nio-8080-exec-9] INFO  c.e.n.controller.CommentController - 返回 0 条评论，共 0 页
+2026-04-20 23:08:59 [http-nio-8080-exec-10] INFO  c.e.n.controller.CommentController - 小说评论数量: 1, novelId: 1
+2026-04-20 23:08:59 [http-nio-8080-exec-8] INFO  c.e.n.controller.FavoriteController - 收藏状态: 未收藏, userId: 2, novelId: 1
+2026-04-20 23:08:59 [http-nio-8080-exec-1] INFO  c.e.n.controller.FavoriteController - 检查收藏状态请求, userId: 2, novelId: 1
+2026-04-20 23:08:59 [http-nio-8080-exec-2] INFO  c.e.n.controller.CommentController - 统计小说评论数量请求, novelId: 1
+2026-04-20 23:08:59 [http-nio-8080-exec-3] INFO  c.e.n.controller.CommentController - 查询小说评论列表请求, novelId: 1, pageNum: 1, pageSize: 20
+2026-04-20 23:08:59 [http-nio-8080-exec-1] INFO  c.e.n.s.impl.FavoriteServiceImpl - 检查收藏状态, userId: 2, novelId: 1
+2026-04-20 23:08:59 [http-nio-8080-exec-2] INFO  c.e.n.s.impl.CommentServiceImpl - 统计小说评论数量, novelId: 1
+2026-04-20 23:08:59 [http-nio-8080-exec-3] INFO  c.e.n.s.impl.CommentServiceImpl - 分页查询小说评论列表, novelId: 1, pageNum: 1, pageSize: 20
+2026-04-20 23:08:59 [http-nio-8080-exec-1] INFO  c.e.n.s.impl.FavoriteServiceImpl - 收藏状态: 未收藏
+2026-04-20 23:08:59 [http-nio-8080-exec-2] INFO  c.e.n.s.impl.CommentServiceImpl - 小说评论数量: 1, novelId: 1
+2026-04-20 23:08:59 [http-nio-8080-exec-3] INFO  c.e.n.s.impl.CommentServiceImpl - 查询到 0 条评论，共 0 页
+2026-04-20 23:08:59 [http-nio-8080-exec-2] INFO  c.e.n.controller.CommentController - 小说评论数量: 1, novelId: 1
+2026-04-20 23:08:59 [http-nio-8080-exec-1] INFO  c.e.n.controller.FavoriteController - 收藏状态: 未收藏, userId: 2, novelId: 1
+2026-04-20 23:08:59 [http-nio-8080-exec-3] INFO  c.e.n.controller.CommentController - 返回 0 条评论，共 0 页
+2026-04-20 23:09:00 [http-nio-8080-exec-4] INFO  c.e.n.controller.ChapterController - 查询章节详情请求, chapterId: 1
+2026-04-20 23:09:00 [http-nio-8080-exec-4] INFO  c.e.n.s.impl.ChapterServiceImpl - 查询章节详情, chapterId: 1
+2026-04-20 23:09:00 [http-nio-8080-exec-7] INFO  c.e.n.c.ReadingHistoryController - 保存阅读记录请求, userId: 2, novelId: 1, chapterId: 1
+2026-04-20 23:09:00 [http-nio-8080-exec-7] ERROR c.e.n.c.h.GlobalExceptionHandler - 系统异常: 
+java.lang.IllegalArgumentException: Invalid return type for async method (only Future and void supported): class java.lang.Long
+	at org.springframework.aop.interceptor.AsyncExecutionAspectSupport.doSubmit(AsyncExecutionAspectSupport.java:301)
+	at org.springframework.aop.interceptor.AsyncExecutionInterceptor.invoke(AsyncExecutionInterceptor.java:128)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:728)
+	at com.example.novel.service.impl.ReadingHistoryServiceImpl$$SpringCGLIB$$0.saveOrUpdate(<generated>)
+	at com.example.novel.controller.ReadingHistoryController.saveOrUpdate(ReadingHistoryController.java:43)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:360)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.springframework.validation.beanvalidation.MethodValidationInterceptor.invoke(MethodValidationInterceptor.java:172)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:728)
+	at com.example.novel.controller.ReadingHistoryController$$SpringCGLIB$$0.saveOrUpdate(<generated>)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:258)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:191)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:991)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:896)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:590)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:88)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:492)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:113)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:83)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:72)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1775)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:973)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:491)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+2026-04-20 23:09:00 [http-nio-8080-exec-7] WARN  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [java.lang.IllegalArgumentException: Invalid return type for async method (only Future and void supported): class java.lang.Long]
+2026-04-20 23:09:13 [http-nio-8080-exec-6] INFO  c.e.novel.controller.NovelController - 获取小说详情请求, ID: 1
+2026-04-20 23:09:13 [http-nio-8080-exec-6] INFO  c.e.n.service.impl.NovelServiceImpl - 获取小说详情, ID: 1
+2026-04-20 23:09:13 [http-nio-8080-exec-5] INFO  c.e.n.controller.ChapterController - 分页查询章节列表请求, novelId: 1, pageNum: 1, pageSize: 20
+2026-04-20 23:09:13 [http-nio-8080-exec-5] INFO  c.e.n.s.impl.ChapterServiceImpl - 分页查询章节列表, novelId: 1, pageNum: 1, pageSize: 20
+2026-04-20 23:09:13 [http-nio-8080-exec-5] INFO  c.e.n.s.impl.ChapterServiceImpl - 查询到 0 个章节，共 0 页
+2026-04-20 23:09:13 [http-nio-8080-exec-6] DEBUG c.e.n.service.impl.NovelServiceImpl - 找到小说: 剑来
+2026-04-20 23:09:13 [http-nio-8080-exec-5] INFO  c.e.n.controller.ChapterController - 返回 0 个章节，共 0 页
+2026-04-20 23:09:13 [http-nio-8080-exec-6] INFO  c.e.novel.controller.NovelController - 返回小说详情: 剑来
+2026-04-20 23:09:13 [http-nio-8080-exec-10] INFO  c.e.novel.controller.NovelController - 获取小说详情请求, ID: 1
+2026-04-20 23:09:13 [http-nio-8080-exec-8] INFO  c.e.n.controller.ChapterController - 分页查询章节列表请求, novelId: 1, pageNum: 1, pageSize: 20
+2026-04-20 23:09:13 [http-nio-8080-exec-10] INFO  c.e.n.service.impl.NovelServiceImpl - 获取小说详情, ID: 1
+2026-04-20 23:09:13 [http-nio-8080-exec-8] INFO  c.e.n.s.impl.ChapterServiceImpl - 分页查询章节列表, novelId: 1, pageNum: 1, pageSize: 20
+2026-04-20 23:09:13 [http-nio-8080-exec-10] DEBUG c.e.n.service.impl.NovelServiceImpl - 找到小说: 剑来
+2026-04-20 23:09:13 [http-nio-8080-exec-10] INFO  c.e.novel.controller.NovelController - 返回小说详情: 剑来
+2026-04-20 23:09:13 [http-nio-8080-exec-8] INFO  c.e.n.s.impl.ChapterServiceImpl - 查询到 0 个章节，共 0 页
+2026-04-20 23:09:13 [http-nio-8080-exec-8] INFO  c.e.n.controller.ChapterController - 返回 0 个章节，共 0 页
+2026-04-20 23:09:13 [http-nio-8080-exec-9] INFO  c.e.n.controller.FavoriteController - 检查收藏状态请求, userId: 2, novelId: 1
+2026-04-20 23:09:13 [http-nio-8080-exec-2] INFO  c.e.n.controller.CommentController - 查询小说评论列表请求, novelId: 1, pageNum: 1, pageSize: 20
+2026-04-20 23:09:13 [http-nio-8080-exec-3] INFO  c.e.n.controller.CommentController - 统计小说评论数量请求, novelId: 1
+2026-04-20 23:09:13 [http-nio-8080-exec-9] INFO  c.e.n.s.impl.FavoriteServiceImpl - 检查收藏状态, userId: 2, novelId: 1
+2026-04-20 23:09:13 [http-nio-8080-exec-3] INFO  c.e.n.s.impl.CommentServiceImpl - 统计小说评论数量, novelId: 1
+2026-04-20 23:09:13 [http-nio-8080-exec-2] INFO  c.e.n.s.impl.CommentServiceImpl - 分页查询小说评论列表, novelId: 1, pageNum: 1, pageSize: 20
+2026-04-20 23:09:13 [http-nio-8080-exec-3] INFO  c.e.n.s.impl.CommentServiceImpl - 小说评论数量: 1, novelId: 1
+2026-04-20 23:09:13 [http-nio-8080-exec-9] INFO  c.e.n.s.impl.FavoriteServiceImpl - 收藏状态: 未收藏
+2026-04-20 23:09:13 [http-nio-8080-exec-2] INFO  c.e.n.s.impl.CommentServiceImpl - 查询到 0 条评论，共 0 页
+2026-04-20 23:09:13 [http-nio-8080-exec-3] INFO  c.e.n.controller.CommentController - 小说评论数量: 1, novelId: 1
+2026-04-20 23:09:13 [http-nio-8080-exec-2] INFO  c.e.n.controller.CommentController - 返回 0 条评论，共 0 页
+2026-04-20 23:09:13 [http-nio-8080-exec-9] INFO  c.e.n.controller.FavoriteController - 收藏状态: 未收藏, userId: 2, novelId: 1
+2026-04-20 23:09:13 [http-nio-8080-exec-7] INFO  c.e.n.controller.CommentController - 统计小说评论数量请求, novelId: 1
+2026-04-20 23:09:13 [http-nio-8080-exec-4] INFO  c.e.n.controller.FavoriteController - 检查收藏状态请求, userId: 2, novelId: 1
+2026-04-20 23:09:13 [http-nio-8080-exec-1] INFO  c.e.n.controller.CommentController - 查询小说评论列表请求, novelId: 1, pageNum: 1, pageSize: 20
+2026-04-20 23:09:13 [http-nio-8080-exec-7] INFO  c.e.n.s.impl.CommentServiceImpl - 统计小说评论数量, novelId: 1
+2026-04-20 23:09:13 [http-nio-8080-exec-4] INFO  c.e.n.s.impl.FavoriteServiceImpl - 检查收藏状态, userId: 2, novelId: 1
+2026-04-20 23:09:13 [http-nio-8080-exec-1] INFO  c.e.n.s.impl.CommentServiceImpl - 分页查询小说评论列表, novelId: 1, pageNum: 1, pageSize: 20
+2026-04-20 23:09:13 [http-nio-8080-exec-4] INFO  c.e.n.s.impl.FavoriteServiceImpl - 收藏状态: 未收藏
+2026-04-20 23:09:13 [http-nio-8080-exec-7] INFO  c.e.n.s.impl.CommentServiceImpl - 小说评论数量: 1, novelId: 1
+2026-04-20 23:09:13 [http-nio-8080-exec-1] INFO  c.e.n.s.impl.CommentServiceImpl - 查询到 0 条评论，共 0 页
+2026-04-20 23:09:13 [http-nio-8080-exec-7] INFO  c.e.n.controller.CommentController - 小说评论数量: 1, novelId: 1
+2026-04-20 23:09:13 [http-nio-8080-exec-4] INFO  c.e.n.controller.FavoriteController - 收藏状态: 未收藏, userId: 2, novelId: 1
+2026-04-20 23:09:13 [http-nio-8080-exec-1] INFO  c.e.n.controller.CommentController - 返回 0 条评论，共 0 页
+2026-04-20 23:09:18 [http-nio-8080-exec-5] INFO  c.e.n.controller.CategoryController - 获取分类列表请求
+2026-04-20 23:09:18 [http-nio-8080-exec-5] INFO  c.e.n.s.impl.CategoryServiceImpl - 查询所有分类列表
+2026-04-20 23:09:18 [http-nio-8080-exec-6] INFO  c.e.novel.controller.NovelController - 获取热门小说推荐请求, limit: 10
+2026-04-20 23:09:18 [http-nio-8080-exec-10] INFO  c.e.novel.controller.NovelController - 分页查询小说列表请求, 参数: NovelQueryDTO(categoryId=null, pageNum=1, pageSize=10, sortField=view_count, sortOrder=desc)
+2026-04-20 23:09:18 [http-nio-8080-exec-10] INFO  c.e.n.service.impl.NovelServiceImpl - 分页查询小说列表, 参数: NovelQueryDTO(categoryId=null, pageNum=1, pageSize=10, sortField=view_count, sortOrder=desc)
+2026-04-20 23:09:18 [http-nio-8080-exec-6] INFO  c.e.novel.controller.NovelController - 返回 2 本热门小说
+2026-04-20 23:09:18 [http-nio-8080-exec-5] INFO  c.e.n.s.impl.CategoryServiceImpl - 查询到 8 个分类
+2026-04-20 23:09:18 [http-nio-8080-exec-5] INFO  c.e.n.controller.CategoryController - 返回 8 个分类
+2026-04-20 23:09:18 [http-nio-8080-exec-10] INFO  c.e.n.service.impl.NovelServiceImpl - 查询到 0 条记录，共 0 页
+2026-04-20 23:09:18 [http-nio-8080-exec-10] INFO  c.e.novel.controller.NovelController - 返回 0 条记录，共 0 页
+2026-04-20 23:09:18 [http-nio-8080-exec-10] INFO  c.e.novel.controller.NovelController - 分页查询小说列表请求耗时 5ms
+2026-04-20 23:09:26 [http-nio-8080-exec-8] INFO  c.e.n.controller.CategoryController - 获取分类列表请求
+2026-04-20 23:09:26 [http-nio-8080-exec-9] DEBUG c.e.n.common.handler.JwtInterceptor - JWT拦截器处理请求: /api/admin/novels
+2026-04-20 23:09:26 [http-nio-8080-exec-8] INFO  c.e.n.s.impl.CategoryServiceImpl - 查询所有分类列表
+2026-04-20 23:09:26 [http-nio-8080-exec-8] INFO  c.e.n.s.impl.CategoryServiceImpl - 查询到 8 个分类
+2026-04-20 23:09:26 [http-nio-8080-exec-8] INFO  c.e.n.controller.CategoryController - 返回 8 个分类
+2026-04-20 23:09:26 [http-nio-8080-exec-9] DEBUG c.e.n.common.handler.JwtInterceptor - JWT验证通过，用户ID: 1, 角色: ADMIN, 请求: /api/admin/novels
+2026-04-20 23:09:26 [http-nio-8080-exec-9] INFO  c.e.n.c.admin.AdminNovelController - 查询小说列表，参数: AdminNovelQueryDTO(keyword=, page=1, size=10, categoryId=null, status=null)
+2026-04-20 23:09:26 [http-nio-8080-exec-9] INFO  c.e.n.service.impl.NovelServiceImpl - 管理员分页查询小说列表, 参数: AdminNovelQueryDTO(keyword=, page=1, size=10, categoryId=null, status=null)
+2026-04-20 23:09:26 [http-nio-8080-exec-9] INFO  c.e.n.service.impl.NovelServiceImpl - 查询到 0 条记录，共 0 页
+2026-04-20 23:09:31 [http-nio-8080-exec-2] DEBUG c.e.n.common.handler.JwtInterceptor - JWT拦截器处理请求: /api/admin/novels
+2026-04-20 23:09:31 [http-nio-8080-exec-2] DEBUG c.e.n.common.handler.JwtInterceptor - JWT验证通过，用户ID: 1, 角色: ADMIN, 请求: /api/admin/novels
+2026-04-20 23:09:31 [http-nio-8080-exec-2] INFO  c.e.n.c.admin.AdminNovelController - 查询小说列表，参数: AdminNovelQueryDTO(keyword=null, page=1, size=1000, categoryId=null, status=null)
+2026-04-20 23:09:31 [http-nio-8080-exec-2] INFO  c.e.n.service.impl.NovelServiceImpl - 管理员分页查询小说列表, 参数: AdminNovelQueryDTO(keyword=null, page=1, size=1000, categoryId=null, status=null)
+2026-04-20 23:09:31 [http-nio-8080-exec-2] INFO  c.e.n.service.impl.NovelServiceImpl - 查询到 0 条记录，共 0 页
+2026-04-20 23:09:31 [http-nio-8080-exec-4] DEBUG c.e.n.common.handler.JwtInterceptor - JWT拦截器处理请求: /api/admin/users
+2026-04-20 23:09:31 [http-nio-8080-exec-4] DEBUG c.e.n.common.handler.JwtInterceptor - JWT验证通过，用户ID: 1, 角色: ADMIN, 请求: /api/admin/users
+2026-04-20 23:09:31 [http-nio-8080-exec-4] INFO  c.e.n.c.admin.AdminUserController - 查询用户列表，参数: AdminUserQueryDTO(keyword=, page=1, size=10)
+2026-04-20 23:09:31 [http-nio-8080-exec-4] INFO  c.e.n.service.impl.UserServiceImpl - 管理员分页查询用户列表, 参数: AdminUserQueryDTO(keyword=, page=1, size=10)
+2026-04-20 23:09:31 [http-nio-8080-exec-4] INFO  c.e.n.service.impl.UserServiceImpl - 查询到 2 条用户记录，共 0 条
+2026-04-20 23:09:33 [http-nio-8080-exec-6] DEBUG c.e.n.common.handler.JwtInterceptor - JWT拦截器处理请求: /api/admin/categories
+2026-04-20 23:09:33 [http-nio-8080-exec-6] DEBUG c.e.n.common.handler.JwtInterceptor - JWT验证通过，用户ID: 1, 角色: ADMIN, 请求: /api/admin/categories
+2026-04-20 23:09:33 [http-nio-8080-exec-6] INFO  c.e.n.c.a.AdminCategoryController - 获取分类列表
+2026-04-20 23:09:33 [http-nio-8080-exec-6] INFO  c.e.n.s.impl.CategoryServiceImpl - 管理员查询所有分类列表（包含小说数量）
+2026-04-20 23:09:33 [http-nio-8080-exec-6] INFO  c.e.n.s.impl.CategoryServiceImpl - 查询到 8 个分类
+2026-04-20 23:09:34 [http-nio-8080-exec-5] DEBUG c.e.n.common.handler.JwtInterceptor - JWT拦截器处理请求: /api/admin/users
+2026-04-20 23:09:34 [http-nio-8080-exec-5] DEBUG c.e.n.common.handler.JwtInterceptor - JWT验证通过，用户ID: 1, 角色: ADMIN, 请求: /api/admin/users
+2026-04-20 23:09:34 [http-nio-8080-exec-5] INFO  c.e.n.c.admin.AdminUserController - 查询用户列表，参数: AdminUserQueryDTO(keyword=, page=1, size=10)
+2026-04-20 23:09:34 [http-nio-8080-exec-5] INFO  c.e.n.service.impl.UserServiceImpl - 管理员分页查询用户列表, 参数: AdminUserQueryDTO(keyword=, page=1, size=10)
+2026-04-20 23:09:34 [http-nio-8080-exec-5] INFO  c.e.n.service.impl.UserServiceImpl - 查询到 2 条用户记录，共 0 条
+2026-04-20 23:09:35 [http-nio-8080-exec-10] DEBUG c.e.n.common.handler.JwtInterceptor - JWT拦截器处理请求: /api/admin/users
+2026-04-20 23:09:35 [http-nio-8080-exec-10] DEBUG c.e.n.common.handler.JwtInterceptor - JWT验证通过，用户ID: 1, 角色: ADMIN, 请求: /api/admin/users
+2026-04-20 23:09:35 [http-nio-8080-exec-10] INFO  c.e.n.c.admin.AdminUserController - 查询用户列表，参数: AdminUserQueryDTO(keyword=, page=1, size=10)
+2026-04-20 23:09:35 [http-nio-8080-exec-10] INFO  c.e.n.service.impl.UserServiceImpl - 管理员分页查询用户列表, 参数: AdminUserQueryDTO(keyword=, page=1, size=10)
+2026-04-20 23:09:35 [http-nio-8080-exec-10] INFO  c.e.n.service.impl.UserServiceImpl - 查询到 2 条用户记录，共 0 条
+2026-04-20 23:09:35 [http-nio-8080-exec-8] DEBUG c.e.n.common.handler.JwtInterceptor - JWT拦截器处理请求: /api/admin/novels
+2026-04-20 23:09:35 [http-nio-8080-exec-8] DEBUG c.e.n.common.handler.JwtInterceptor - JWT验证通过，用户ID: 1, 角色: ADMIN, 请求: /api/admin/novels
+2026-04-20 23:09:35 [http-nio-8080-exec-8] INFO  c.e.n.c.admin.AdminNovelController - 查询小说列表，参数: AdminNovelQueryDTO(keyword=null, page=1, size=1000, categoryId=null, status=null)
+2026-04-20 23:09:35 [http-nio-8080-exec-8] INFO  c.e.n.service.impl.NovelServiceImpl - 管理员分页查询小说列表, 参数: AdminNovelQueryDTO(keyword=null, page=1, size=1000, categoryId=null, status=null)
+2026-04-20 23:09:35 [http-nio-8080-exec-8] INFO  c.e.n.service.impl.NovelServiceImpl - 查询到 0 条记录，共 0 页
+2026-04-20 23:09:38 [http-nio-8080-exec-3] DEBUG c.e.n.common.handler.JwtInterceptor - JWT拦截器处理请求: /api/admin/chapters
+2026-04-20 23:09:38 [http-nio-8080-exec-3] DEBUG c.e.n.common.handler.JwtInterceptor - JWT验证通过，用户ID: 1, 角色: ADMIN, 请求: /api/admin/chapters
+2026-04-20 23:09:38 [http-nio-8080-exec-3] INFO  c.e.n.c.admin.AdminChapterController - 查询章节列表，参数: AdminChapterQueryDTO(novelId=1, page=1, size=10)
+2026-04-20 23:09:38 [http-nio-8080-exec-3] INFO  c.e.n.s.impl.ChapterServiceImpl - 管理员分页查询章节列表, 参数: AdminChapterQueryDTO(novelId=1, page=1, size=10)
+2026-04-20 23:09:38 [http-nio-8080-exec-3] INFO  c.e.n.s.impl.ChapterServiceImpl - 查询到 0 个章节，共 0 页
+2026-04-20 23:09:40 [http-nio-8080-exec-1] DEBUG c.e.n.common.handler.JwtInterceptor - JWT拦截器处理请求: /api/admin/chapters
+2026-04-20 23:09:40 [http-nio-8080-exec-1] DEBUG c.e.n.common.handler.JwtInterceptor - JWT验证通过，用户ID: 1, 角色: ADMIN, 请求: /api/admin/chapters
+2026-04-20 23:09:40 [http-nio-8080-exec-1] INFO  c.e.n.c.admin.AdminChapterController - 查询章节列表，参数: AdminChapterQueryDTO(novelId=2, page=1, size=10)
+2026-04-20 23:09:40 [http-nio-8080-exec-1] INFO  c.e.n.s.impl.ChapterServiceImpl - 管理员分页查询章节列表, 参数: AdminChapterQueryDTO(novelId=2, page=1, size=10)
+2026-04-20 23:09:40 [http-nio-8080-exec-1] INFO  c.e.n.s.impl.ChapterServiceImpl - 查询到 0 个章节，共 0 页
+2026-04-20 23:09:58 [http-nio-8080-exec-7] DEBUG c.e.n.common.handler.JwtInterceptor - JWT拦截器处理请求: /api/admin/chapters
+2026-04-20 23:09:58 [http-nio-8080-exec-7] DEBUG c.e.n.common.handler.JwtInterceptor - JWT验证通过，用户ID: 1, 角色: ADMIN, 请求: /api/admin/chapters
+2026-04-20 23:09:58 [http-nio-8080-exec-7] INFO  c.e.n.c.admin.AdminChapterController - 新增章节，标题: 第二章 诡秘
+2026-04-20 23:09:58 [http-nio-8080-exec-7] INFO  c.e.n.s.impl.ChapterServiceImpl - 创建章节, 标题: 第二章 诡秘
+2026-04-20 23:09:58 [http-nio-8080-exec-7] DEBUG c.e.n.s.impl.ChapterServiceImpl - 更新小说统计信息, novelId: 2
+2026-04-20 23:09:58 [http-nio-8080-exec-7] DEBUG c.e.n.s.impl.ChapterServiceImpl - 小说统计信息更新完成, 章节数: 2, 总字数: 2804
+2026-04-20 23:09:58 [http-nio-8080-exec-7] INFO  c.e.n.s.impl.ChapterServiceImpl - 创建章节成功, ID: 4
+2026-04-20 23:09:58 [http-nio-8080-exec-7] INFO  c.e.n.c.admin.AdminChapterController - 新增章节请求耗时 25ms
+2026-04-20 23:09:58 [http-nio-8080-exec-6] DEBUG c.e.n.common.handler.JwtInterceptor - JWT拦截器处理请求: /api/admin/chapters
+2026-04-20 23:09:58 [http-nio-8080-exec-6] DEBUG c.e.n.common.handler.JwtInterceptor - JWT验证通过，用户ID: 1, 角色: ADMIN, 请求: /api/admin/chapters
+2026-04-20 23:09:58 [http-nio-8080-exec-6] INFO  c.e.n.c.admin.AdminChapterController - 查询章节列表，参数: AdminChapterQueryDTO(novelId=2, page=1, size=10)
+2026-04-20 23:09:58 [http-nio-8080-exec-6] INFO  c.e.n.s.impl.ChapterServiceImpl - 管理员分页查询章节列表, 参数: AdminChapterQueryDTO(novelId=2, page=1, size=10)
+2026-04-20 23:09:58 [http-nio-8080-exec-6] INFO  c.e.n.s.impl.ChapterServiceImpl - 查询到 0 个章节，共 0 页
+2026-04-20 23:10:00 [http-nio-8080-exec-10] DEBUG c.e.n.common.handler.JwtInterceptor - JWT拦截器处理请求: /api/admin/chapters/3
+2026-04-20 23:10:00 [http-nio-8080-exec-10] DEBUG c.e.n.common.handler.JwtInterceptor - JWT验证通过，用户ID: 1, 角色: ADMIN, 请求: /api/admin/chapters/3
+2026-04-20 23:10:00 [http-nio-8080-exec-10] INFO  c.e.n.c.admin.AdminChapterController - 获取章节详情，ID: 3
+2026-04-20 23:10:00 [http-nio-8080-exec-10] INFO  c.e.n.s.impl.ChapterServiceImpl - 管理员获取章节详情, ID: 3
+2026-04-20 23:10:23 [http-nio-8080-exec-6] INFO  c.e.n.controller.CategoryController - 获取分类列表请求
+2026-04-20 23:10:23 [http-nio-8080-exec-6] INFO  c.e.n.s.impl.CategoryServiceImpl - 查询所有分类列表
+2026-04-20 23:10:23 [http-nio-8080-exec-10] INFO  c.e.novel.controller.NovelController - 获取热门小说推荐请求, limit: 10
+2026-04-20 23:10:23 [http-nio-8080-exec-5] INFO  c.e.novel.controller.NovelController - 分页查询小说列表请求, 参数: NovelQueryDTO(categoryId=null, pageNum=1, pageSize=10, sortField=view_count, sortOrder=desc)
+2026-04-20 23:10:23 [http-nio-8080-exec-5] INFO  c.e.n.service.impl.NovelServiceImpl - 分页查询小说列表, 参数: NovelQueryDTO(categoryId=null, pageNum=1, pageSize=10, sortField=view_count, sortOrder=desc)
+2026-04-20 23:10:23 [http-nio-8080-exec-10] INFO  c.e.novel.controller.NovelController - 返回 2 本热门小说
+2026-04-20 23:10:23 [http-nio-8080-exec-6] INFO  c.e.n.s.impl.CategoryServiceImpl - 查询到 8 个分类
+2026-04-20 23:10:23 [http-nio-8080-exec-6] INFO  c.e.n.controller.CategoryController - 返回 8 个分类
+2026-04-20 23:10:23 [http-nio-8080-exec-5] INFO  c.e.n.service.impl.NovelServiceImpl - 查询到 0 条记录，共 0 页
+2026-04-20 23:10:23 [http-nio-8080-exec-5] INFO  c.e.novel.controller.NovelController - 返回 0 条记录，共 0 页
+2026-04-20 23:10:23 [http-nio-8080-exec-5] INFO  c.e.novel.controller.NovelController - 分页查询小说列表请求耗时 6ms
+2026-04-20 23:10:26 [http-nio-8080-exec-7] INFO  c.e.n.controller.ChapterController - 分页查询章节列表请求, novelId: 2, pageNum: 1, pageSize: 20
+2026-04-20 23:10:26 [http-nio-8080-exec-4] INFO  c.e.novel.controller.NovelController - 获取小说详情请求, ID: 2
+2026-04-20 23:10:26 [http-nio-8080-exec-7] INFO  c.e.n.s.impl.ChapterServiceImpl - 分页查询章节列表, novelId: 2, pageNum: 1, pageSize: 20
+2026-04-20 23:10:26 [http-nio-8080-exec-4] INFO  c.e.n.service.impl.NovelServiceImpl - 获取小说详情, ID: 2
+2026-04-20 23:10:26 [http-nio-8080-exec-4] DEBUG c.e.n.service.impl.NovelServiceImpl - 找到小说: 诡秘之主
+2026-04-20 23:10:26 [http-nio-8080-exec-7] INFO  c.e.n.s.impl.ChapterServiceImpl - 查询到 0 个章节，共 0 页
+2026-04-20 23:10:26 [http-nio-8080-exec-4] INFO  c.e.novel.controller.NovelController - 返回小说详情: 诡秘之主
+2026-04-20 23:10:26 [http-nio-8080-exec-7] INFO  c.e.n.controller.ChapterController - 返回 0 个章节，共 0 页
+2026-04-20 23:10:26 [http-nio-8080-exec-10] INFO  c.e.novel.controller.NovelController - 获取小说详情请求, ID: 2
+2026-04-20 23:10:26 [http-nio-8080-exec-1] INFO  c.e.n.controller.ChapterController - 分页查询章节列表请求, novelId: 2, pageNum: 1, pageSize: 20
+2026-04-20 23:10:26 [http-nio-8080-exec-10] INFO  c.e.n.service.impl.NovelServiceImpl - 获取小说详情, ID: 2
+2026-04-20 23:10:26 [http-nio-8080-exec-1] INFO  c.e.n.s.impl.ChapterServiceImpl - 分页查询章节列表, novelId: 2, pageNum: 1, pageSize: 20
+2026-04-20 23:10:26 [http-nio-8080-exec-10] DEBUG c.e.n.service.impl.NovelServiceImpl - 找到小说: 诡秘之主
+2026-04-20 23:10:26 [http-nio-8080-exec-1] INFO  c.e.n.s.impl.ChapterServiceImpl - 查询到 0 个章节，共 0 页
+2026-04-20 23:10:26 [http-nio-8080-exec-10] INFO  c.e.novel.controller.NovelController - 返回小说详情: 诡秘之主
+2026-04-20 23:10:26 [http-nio-8080-exec-1] INFO  c.e.n.controller.ChapterController - 返回 0 个章节，共 0 页
+2026-04-20 23:10:26 [http-nio-8080-exec-2] INFO  c.e.n.controller.FavoriteController - 检查收藏状态请求, userId: 2, novelId: 2
+2026-04-20 23:10:26 [http-nio-8080-exec-7] INFO  c.e.n.controller.CommentController - 统计小说评论数量请求, novelId: 2
+2026-04-20 23:10:26 [http-nio-8080-exec-4] INFO  c.e.n.controller.CommentController - 查询小说评论列表请求, novelId: 2, pageNum: 1, pageSize: 20
+2026-04-20 23:10:26 [http-nio-8080-exec-2] INFO  c.e.n.s.impl.FavoriteServiceImpl - 检查收藏状态, userId: 2, novelId: 2
+2026-04-20 23:10:26 [http-nio-8080-exec-7] INFO  c.e.n.s.impl.CommentServiceImpl - 统计小说评论数量, novelId: 2
+2026-04-20 23:10:26 [http-nio-8080-exec-4] INFO  c.e.n.s.impl.CommentServiceImpl - 分页查询小说评论列表, novelId: 2, pageNum: 1, pageSize: 20
+2026-04-20 23:10:26 [http-nio-8080-exec-2] INFO  c.e.n.s.impl.FavoriteServiceImpl - 收藏状态: 已收藏
+2026-04-20 23:10:26 [http-nio-8080-exec-4] INFO  c.e.n.s.impl.CommentServiceImpl - 查询到 0 条评论，共 0 页
+2026-04-20 23:10:26 [http-nio-8080-exec-7] INFO  c.e.n.s.impl.CommentServiceImpl - 小说评论数量: 1, novelId: 2
+2026-04-20 23:10:26 [http-nio-8080-exec-4] INFO  c.e.n.controller.CommentController - 返回 0 条评论，共 0 页
+2026-04-20 23:10:26 [http-nio-8080-exec-2] INFO  c.e.n.controller.FavoriteController - 收藏状态: 已收藏, userId: 2, novelId: 2
+2026-04-20 23:10:26 [http-nio-8080-exec-7] INFO  c.e.n.controller.CommentController - 小说评论数量: 1, novelId: 2
+2026-04-20 23:10:26 [http-nio-8080-exec-10] INFO  c.e.n.controller.CommentController - 统计小说评论数量请求, novelId: 2
+2026-04-20 23:10:26 [http-nio-8080-exec-6] INFO  c.e.n.controller.FavoriteController - 检查收藏状态请求, userId: 2, novelId: 2
+2026-04-20 23:10:26 [http-nio-8080-exec-1] INFO  c.e.n.controller.CommentController - 查询小说评论列表请求, novelId: 2, pageNum: 1, pageSize: 20
+2026-04-20 23:10:26 [http-nio-8080-exec-10] INFO  c.e.n.s.impl.CommentServiceImpl - 统计小说评论数量, novelId: 2
+2026-04-20 23:10:26 [http-nio-8080-exec-6] INFO  c.e.n.s.impl.FavoriteServiceImpl - 检查收藏状态, userId: 2, novelId: 2
+2026-04-20 23:10:26 [http-nio-8080-exec-1] INFO  c.e.n.s.impl.CommentServiceImpl - 分页查询小说评论列表, novelId: 2, pageNum: 1, pageSize: 20
+2026-04-20 23:10:26 [http-nio-8080-exec-10] INFO  c.e.n.s.impl.CommentServiceImpl - 小说评论数量: 1, novelId: 2
+2026-04-20 23:10:26 [http-nio-8080-exec-6] INFO  c.e.n.s.impl.FavoriteServiceImpl - 收藏状态: 已收藏
+2026-04-20 23:10:26 [http-nio-8080-exec-1] INFO  c.e.n.s.impl.CommentServiceImpl - 查询到 0 条评论，共 0 页
+2026-04-20 23:10:26 [http-nio-8080-exec-10] INFO  c.e.n.controller.CommentController - 小说评论数量: 1, novelId: 2
+2026-04-20 23:10:26 [http-nio-8080-exec-6] INFO  c.e.n.controller.FavoriteController - 收藏状态: 已收藏, userId: 2, novelId: 2
+2026-04-20 23:10:26 [http-nio-8080-exec-1] INFO  c.e.n.controller.CommentController - 返回 0 条评论，共 0 页
+2026-04-20 23:10:27 [http-nio-8080-exec-9] INFO  c.e.n.controller.ChapterController - 查询章节详情请求, chapterId: 4
+2026-04-20 23:10:27 [http-nio-8080-exec-9] INFO  c.e.n.s.impl.ChapterServiceImpl - 查询章节详情, chapterId: 4
+2026-04-20 23:10:27 [http-nio-8080-exec-4] INFO  c.e.n.c.ReadingHistoryController - 保存阅读记录请求, userId: 2, novelId: 2, chapterId: 4
+2026-04-20 23:10:27 [http-nio-8080-exec-4] ERROR c.e.n.c.h.GlobalExceptionHandler - 系统异常: 
+java.lang.IllegalArgumentException: Invalid return type for async method (only Future and void supported): class java.lang.Long
+	at org.springframework.aop.interceptor.AsyncExecutionAspectSupport.doSubmit(AsyncExecutionAspectSupport.java:301)
+	at org.springframework.aop.interceptor.AsyncExecutionInterceptor.invoke(AsyncExecutionInterceptor.java:128)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:728)
+	at com.example.novel.service.impl.ReadingHistoryServiceImpl$$SpringCGLIB$$0.saveOrUpdate(<generated>)
+	at com.example.novel.controller.ReadingHistoryController.saveOrUpdate(ReadingHistoryController.java:43)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:360)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.springframework.validation.beanvalidation.MethodValidationInterceptor.invoke(MethodValidationInterceptor.java:172)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:728)
+	at com.example.novel.controller.ReadingHistoryController$$SpringCGLIB$$0.saveOrUpdate(<generated>)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:258)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:191)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:991)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:896)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:590)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:88)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:492)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:113)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:83)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:72)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1775)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:973)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:491)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+2026-04-20 23:10:27 [http-nio-8080-exec-4] WARN  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [java.lang.IllegalArgumentException: Invalid return type for async method (only Future and void supported): class java.lang.Long]
+2026-04-20 23:10:28 [http-nio-8080-exec-6] INFO  c.e.n.controller.ChapterController - 查询章节详情请求, chapterId: 3
+2026-04-20 23:10:28 [http-nio-8080-exec-6] INFO  c.e.n.s.impl.ChapterServiceImpl - 查询章节详情, chapterId: 3
+2026-04-20 23:10:28 [http-nio-8080-exec-1] INFO  c.e.n.controller.ChapterController - 查询章节详情请求, chapterId: 3
+2026-04-20 23:10:28 [http-nio-8080-exec-1] INFO  c.e.n.s.impl.ChapterServiceImpl - 查询章节详情, chapterId: 3
+2026-04-20 23:10:28 [http-nio-8080-exec-10] INFO  c.e.n.c.ReadingHistoryController - 保存阅读记录请求, userId: 2, novelId: 2, chapterId: 3
+2026-04-20 23:10:28 [http-nio-8080-exec-10] ERROR c.e.n.c.h.GlobalExceptionHandler - 系统异常: 
+java.lang.IllegalArgumentException: Invalid return type for async method (only Future and void supported): class java.lang.Long
+	at org.springframework.aop.interceptor.AsyncExecutionAspectSupport.doSubmit(AsyncExecutionAspectSupport.java:301)
+	at org.springframework.aop.interceptor.AsyncExecutionInterceptor.invoke(AsyncExecutionInterceptor.java:128)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:728)
+	at com.example.novel.service.impl.ReadingHistoryServiceImpl$$SpringCGLIB$$0.saveOrUpdate(<generated>)
+	at com.example.novel.controller.ReadingHistoryController.saveOrUpdate(ReadingHistoryController.java:43)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:360)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.springframework.validation.beanvalidation.MethodValidationInterceptor.invoke(MethodValidationInterceptor.java:172)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:728)
+	at com.example.novel.controller.ReadingHistoryController$$SpringCGLIB$$0.saveOrUpdate(<generated>)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:258)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:191)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:991)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:896)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:590)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:88)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:492)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:113)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:83)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:72)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1775)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:973)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:491)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+2026-04-20 23:10:28 [http-nio-8080-exec-10] WARN  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [java.lang.IllegalArgumentException: Invalid return type for async method (only Future and void supported): class java.lang.Long]
+2026-04-20 23:10:28 [http-nio-8080-exec-5] INFO  c.e.n.c.ReadingHistoryController - 保存阅读记录请求, userId: 2, novelId: 2, chapterId: 3
+2026-04-20 23:10:28 [http-nio-8080-exec-5] ERROR c.e.n.c.h.GlobalExceptionHandler - 系统异常: 
+java.lang.IllegalArgumentException: Invalid return type for async method (only Future and void supported): class java.lang.Long
+	at org.springframework.aop.interceptor.AsyncExecutionAspectSupport.doSubmit(AsyncExecutionAspectSupport.java:301)
+	at org.springframework.aop.interceptor.AsyncExecutionInterceptor.invoke(AsyncExecutionInterceptor.java:128)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:728)
+	at com.example.novel.service.impl.ReadingHistoryServiceImpl$$SpringCGLIB$$0.saveOrUpdate(<generated>)
+	at com.example.novel.controller.ReadingHistoryController.saveOrUpdate(ReadingHistoryController.java:43)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:360)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.springframework.validation.beanvalidation.MethodValidationInterceptor.invoke(MethodValidationInterceptor.java:172)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:728)
+	at com.example.novel.controller.ReadingHistoryController$$SpringCGLIB$$0.saveOrUpdate(<generated>)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:258)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:191)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:991)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:896)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:590)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:162)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:138)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:88)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:492)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:113)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:83)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:72)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1775)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:973)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:491)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+2026-04-20 23:10:28 [http-nio-8080-exec-5] WARN  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [java.lang.IllegalArgumentException: Invalid return type for async method (only Future and void supported): class java.lang.Long]
+2026-04-20 23:10:30 [http-nio-8080-exec-6] INFO  c.e.n.controller.ChapterController - 分页查询章节列表请求, novelId: 2, pageNum: 1, pageSize: 20
+2026-04-20 23:10:30 [http-nio-8080-exec-6] INFO  c.e.n.s.impl.ChapterServiceImpl - 分页查询章节列表, novelId: 2, pageNum: 1, pageSize: 20
+2026-04-20 23:10:30 [http-nio-8080-exec-7] INFO  c.e.novel.controller.NovelController - 获取小说详情请求, ID: 2
+2026-04-20 23:10:30 [http-nio-8080-exec-7] INFO  c.e.n.service.impl.NovelServiceImpl - 获取小说详情, ID: 2
+2026-04-20 23:10:30 [http-nio-8080-exec-7] DEBUG c.e.n.service.impl.NovelServiceImpl - 找到小说: 诡秘之主
+2026-04-20 23:10:30 [http-nio-8080-exec-6] INFO  c.e.n.s.impl.ChapterServiceImpl - 查询到 0 个章节，共 0 页
+2026-04-20 23:10:30 [http-nio-8080-exec-7] INFO  c.e.novel.controller.NovelController - 返回小说详情: 诡秘之主
+2026-04-20 23:10:30 [http-nio-8080-exec-6] INFO  c.e.n.controller.ChapterController - 返回 0 个章节，共 0 页
+2026-04-20 23:10:30 [http-nio-8080-exec-1] INFO  c.e.novel.controller.NovelController - 获取小说详情请求, ID: 2
+2026-04-20 23:10:30 [http-nio-8080-exec-10] INFO  c.e.n.controller.ChapterController - 分页查询章节列表请求, novelId: 2, pageNum: 1, pageSize: 20
+2026-04-20 23:10:30 [http-nio-8080-exec-1] INFO  c.e.n.service.impl.NovelServiceImpl - 获取小说详情, ID: 2
+2026-04-20 23:10:30 [http-nio-8080-exec-10] INFO  c.e.n.s.impl.ChapterServiceImpl - 分页查询章节列表, novelId: 2, pageNum: 1, pageSize: 20
+2026-04-20 23:10:30 [http-nio-8080-exec-1] DEBUG c.e.n.service.impl.NovelServiceImpl - 找到小说: 诡秘之主
+2026-04-20 23:10:30 [http-nio-8080-exec-1] INFO  c.e.novel.controller.NovelController - 返回小说详情: 诡秘之主
+2026-04-20 23:10:30 [http-nio-8080-exec-10] INFO  c.e.n.s.impl.ChapterServiceImpl - 查询到 0 个章节，共 0 页
+2026-04-20 23:10:30 [http-nio-8080-exec-10] INFO  c.e.n.controller.ChapterController - 返回 0 个章节，共 0 页
+2026-04-20 23:10:30 [http-nio-8080-exec-9] INFO  c.e.n.controller.CommentController - 统计小说评论数量请求, novelId: 2
+2026-04-20 23:10:30 [http-nio-8080-exec-5] INFO  c.e.n.controller.FavoriteController - 检查收藏状态请求, userId: 2, novelId: 2
+2026-04-20 23:10:30 [http-nio-8080-exec-3] INFO  c.e.n.controller.CommentController - 查询小说评论列表请求, novelId: 2, pageNum: 1, pageSize: 20
+2026-04-20 23:10:30 [http-nio-8080-exec-5] INFO  c.e.n.s.impl.FavoriteServiceImpl - 检查收藏状态, userId: 2, novelId: 2
+2026-04-20 23:10:30 [http-nio-8080-exec-9] INFO  c.e.n.s.impl.CommentServiceImpl - 统计小说评论数量, novelId: 2
+2026-04-20 23:10:30 [http-nio-8080-exec-3] INFO  c.e.n.s.impl.CommentServiceImpl - 分页查询小说评论列表, novelId: 2, pageNum: 1, pageSize: 20
+2026-04-20 23:10:30 [http-nio-8080-exec-9] INFO  c.e.n.s.impl.CommentServiceImpl - 小说评论数量: 1, novelId: 2
+2026-04-20 23:10:30 [http-nio-8080-exec-5] INFO  c.e.n.s.impl.FavoriteServiceImpl - 收藏状态: 已收藏
+2026-04-20 23:10:30 [http-nio-8080-exec-3] INFO  c.e.n.s.impl.CommentServiceImpl - 查询到 0 条评论，共 0 页
+2026-04-20 23:10:30 [http-nio-8080-exec-5] INFO  c.e.n.controller.FavoriteController - 收藏状态: 已收藏, userId: 2, novelId: 2
+2026-04-20 23:10:30 [http-nio-8080-exec-9] INFO  c.e.n.controller.CommentController - 小说评论数量: 1, novelId: 2
+2026-04-20 23:10:30 [http-nio-8080-exec-3] INFO  c.e.n.controller.CommentController - 返回 0 条评论，共 0 页
+2026-04-20 23:10:30 [http-nio-8080-exec-2] INFO  c.e.n.controller.CommentController - 查询小说评论列表请求, novelId: 2, pageNum: 1, pageSize: 20
+2026-04-20 23:10:30 [http-nio-8080-exec-8] INFO  c.e.n.controller.CommentController - 统计小说评论数量请求, novelId: 2
+2026-04-20 23:10:30 [http-nio-8080-exec-4] INFO  c.e.n.controller.FavoriteController - 检查收藏状态请求, userId: 2, novelId: 2
+2026-04-20 23:10:30 [http-nio-8080-exec-8] INFO  c.e.n.s.impl.CommentServiceImpl - 统计小说评论数量, novelId: 2
+2026-04-20 23:10:30 [http-nio-8080-exec-4] INFO  c.e.n.s.impl.FavoriteServiceImpl - 检查收藏状态, userId: 2, novelId: 2
+2026-04-20 23:10:30 [http-nio-8080-exec-2] INFO  c.e.n.s.impl.CommentServiceImpl - 分页查询小说评论列表, novelId: 2, pageNum: 1, pageSize: 20
+2026-04-20 23:10:30 [http-nio-8080-exec-8] INFO  c.e.n.s.impl.CommentServiceImpl - 小说评论数量: 1, novelId: 2
+2026-04-20 23:10:30 [http-nio-8080-exec-2] INFO  c.e.n.s.impl.CommentServiceImpl - 查询到 0 条评论，共 0 页
+2026-04-20 23:10:30 [http-nio-8080-exec-4] INFO  c.e.n.s.impl.FavoriteServiceImpl - 收藏状态: 已收藏
+2026-04-20 23:10:30 [http-nio-8080-exec-8] INFO  c.e.n.controller.CommentController - 小说评论数量: 1, novelId: 2
+2026-04-20 23:10:30 [http-nio-8080-exec-2] INFO  c.e.n.controller.CommentController - 返回 0 条评论，共 0 页
+2026-04-20 23:10:30 [http-nio-8080-exec-4] INFO  c.e.n.controller.FavoriteController - 收藏状态: 已收藏, userId: 2, novelId: 2
+2026-04-20 23:10:31 [http-nio-8080-exec-7] INFO  c.e.n.controller.CategoryController - 获取分类列表请求
+2026-04-20 23:10:31 [http-nio-8080-exec-7] INFO  c.e.n.s.impl.CategoryServiceImpl - 查询所有分类列表
+2026-04-20 23:10:31 [http-nio-8080-exec-6] INFO  c.e.novel.controller.NovelController - 获取热门小说推荐请求, limit: 10
+2026-04-20 23:10:31 [http-nio-8080-exec-6] INFO  c.e.novel.controller.NovelController - 返回 2 本热门小说
+2026-04-20 23:10:31 [http-nio-8080-exec-1] INFO  c.e.novel.controller.NovelController - 分页查询小说列表请求, 参数: NovelQueryDTO(categoryId=null, pageNum=1, pageSize=10, sortField=view_count, sortOrder=desc)
+2026-04-20 23:10:31 [http-nio-8080-exec-1] INFO  c.e.n.service.impl.NovelServiceImpl - 分页查询小说列表, 参数: NovelQueryDTO(categoryId=null, pageNum=1, pageSize=10, sortField=view_count, sortOrder=desc)
+2026-04-20 23:10:31 [http-nio-8080-exec-7] INFO  c.e.n.s.impl.CategoryServiceImpl - 查询到 8 个分类
+2026-04-20 23:10:31 [http-nio-8080-exec-1] INFO  c.e.n.service.impl.NovelServiceImpl - 查询到 0 条记录，共 0 页
+2026-04-20 23:10:31 [http-nio-8080-exec-7] INFO  c.e.n.controller.CategoryController - 返回 8 个分类
+2026-04-20 23:10:31 [http-nio-8080-exec-1] INFO  c.e.novel.controller.NovelController - 返回 0 条记录，共 0 页
+2026-04-20 23:10:31 [http-nio-8080-exec-1] INFO  c.e.novel.controller.NovelController - 分页查询小说列表请求耗时 4ms
+2026-04-20 23:32:19 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2026-04-20 23:32:19 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2026-04-20 23:32:19 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2026-04-20 23:32:19 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.

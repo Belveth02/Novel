@@ -1,5 +1,4 @@
 import { post, get } from '.'
-import type { Result } from '@/types'
 
 // 管理员登录响应类型
 export interface AdminLoginResponse {

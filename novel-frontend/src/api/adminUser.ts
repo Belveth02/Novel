@@ -1,5 +1,5 @@
 import { get, put } from '.'
-import type { Result, UserVO, PageResult, AdminUserQueryParams } from '@/types'
+import type { UserVO, PageResult, AdminUserQueryParams } from '@/types'
 
 /**
  * 管理员获取用户分页列表

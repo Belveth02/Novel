@@ -1,5 +1,5 @@
 import { get, post, put, del } from '.'
-import type { Result, ChapterVO, ChapterDetailVO, PageResult, AdminChapterQueryParams, AdminChapterCreateParams, AdminChapterUpdateParams } from '@/types'
+import type { ChapterVO, ChapterDetailVO, PageResult, AdminChapterQueryParams, AdminChapterCreateParams, AdminChapterUpdateParams } from '@/types'
 
 /**
  * 管理员获取章节分页列表

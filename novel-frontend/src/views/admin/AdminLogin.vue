@@ -48,7 +48,7 @@
       </el-form>
 
       <div class="login-footer">
-        <p>默认账号：admin / password</p>
+        <p>默认账号：admin / 123456</p>
       </div>
     </div>
   </div>

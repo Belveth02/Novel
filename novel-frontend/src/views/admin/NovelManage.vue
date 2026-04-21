@@ -153,7 +153,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted, computed } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
 import { ElMessage, ElMessageBox, type FormInstance, type FormRules } from 'element-plus'
 import { getAdminNovels, createAdminNovel, updateAdminNovel, deleteAdminNovel } from '@/api/adminNovel'
 import { getCategories } from '@/api/category'
@@ -213,7 +213,18 @@ const loadNovels = async () => {
   loading.value = true
   try {
     const res = await getAdminNovels(queryParams)
-    novelList.value = res.records
+    // 数据转换：确保所有字段都有值
+    novelList.value = res.records.map(item => ({
+      ...item,
+      categoryId: item.categoryId ?? 0,
+      status: item.status ?? 0,
+      wordCount: item.wordCount ?? 0,
+      createTime: item.createTime ?? '',
+      coverImage: item.coverImage ?? '',
+      description: item.description ?? '',
+      chapterCount: item.chapterCount ?? 0,
+      viewCount: item.viewCount ?? 0
+    }))
     total.value = res.total
   } catch (error) {
     console.error('加载小说列表失败:', error)

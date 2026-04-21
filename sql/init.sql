@@ -6,6 +6,7 @@
 -- 如果数据库不存在则创建
 CREATE DATABASE IF NOT EXISTS `novel_db` CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 USE `novel_db`;
+SET NAMES utf8mb4;
 
 -- 用户表
 DROP TABLE IF EXISTS `user`;

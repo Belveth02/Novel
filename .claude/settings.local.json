@@ -44,7 +44,16 @@
       "Bash(./mvnw.cmd --version)",
       "Bash(./mvnw.cmd compile *)",
       "WebSearch",
-      "Bash(npx vue-tsc *)"
+      "Bash(npx vue-tsc *)",
+      "Bash(docker-compose config *)",
+      "Bash(docker.exe exec *)",
+      "Bash(docker-compose.exe restart *)",
+      "Bash(curl.exe -v \"http://localhost:8080/api/novels?page=1&size=10\")",
+      "Bash(docker-compose.exe up *)",
+      "Bash(docker.exe ps *)",
+      "Bash(curl.exe -v \"http://localhost/api/novels?page=1&size=10\")",
+      "Bash(curl.exe -s \"http://localhost:8080/api/categories\")",
+      "Bash(curl.exe -s \"http://localhost:8080/api/chapters/1\")"
     ]
   }
 }

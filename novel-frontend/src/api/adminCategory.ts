@@ -1,5 +1,5 @@
 import { get, post, put, del } from '.'
-import type { Result, AdminCategoryVO, AdminCategoryCreateParams, AdminCategoryUpdateParams } from '@/types'
+import type { AdminCategoryVO, AdminCategoryCreateParams, AdminCategoryUpdateParams } from '@/types'
 
 /**
  * 管理员获取分类列表（不分页）

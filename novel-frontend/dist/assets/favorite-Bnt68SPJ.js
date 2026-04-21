@@ -1,0 +1,1 @@
+import{g as r,p as e}from"./index-CvvflJv1.js";const a=t=>e("/favorites/toggle",null,{params:{novelId:t}}),s=t=>r("/favorites/check",{params:{novelId:t}}),n=t=>r("/favorites",{params:t}),c=()=>r("/favorites/count");export{n as a,s as c,c as g,a as t};

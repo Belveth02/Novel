@@ -1,3 +1,4 @@
+# 生产环境配置
 server:
   port: 8080
   servlet:
@@ -17,8 +18,8 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://${DB_HOST:localhost}:3306/novel_db?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&connectionCollation=utf8mb4_unicode_ci&sessionVariables=character_set_client=utf8mb4,character_set_connection=utf8mb4,character_set_results=utf8mb4
-    username: root
-    password: 123456
+    username: ${DB_USER:root}
+    password: ${DB_PASSWORD:123456}
     hikari:
       connection-timeout: 30000
       minimum-idle: 5
@@ -31,10 +32,17 @@ spring:
     time-zone: GMT+8
     default-property-inclusion: non_null
 
+  # 缓存配置（使用 Caffeine）
+  cache:
+    type: caffeine
+    caffeine:
+      spec: maximumSize=500, expireAfterWrite=10m
+
 mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    # 生产环境关闭 SQL 日志
+    # log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   global-config:
     db-config:
       id-type: auto
@@ -45,14 +53,15 @@ mybatis-plus:
 
 # JWT配置
 jwt:
-  secret: novel-admin-jwt-secret-key-2026-04-20 # 密钥，生产环境需使用更安全的密钥
+  secret: ${JWT_SECRET:novel-admin-jwt-secret-key-2026-04-20} # 生产环境建议使用环境变量设置强密钥
   expiration: 86400000 # token过期时间（毫秒），24小时
   header: Authorization # 请求头名称
 
 logging:
   level:
-    com.example.novel: debug
-    org.springframework.web: info
+    com.example.novel: info
+    org.springframework.web: warn
+    com.baomidou.mybatisplus: warn
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
     file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"

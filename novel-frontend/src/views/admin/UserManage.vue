@@ -85,7 +85,18 @@ const loadUsers = async () => {
   loading.value = true
   try {
     const res = await getAdminUsers(queryParams)
-    userList.value = res.records
+    // 数据转换：确保所有字段都有值
+    userList.value = res.records.map(item => ({
+      ...item,
+      role: item.role ?? 'USER',
+      status: item.status ?? 0,
+      createTime: item.createTime ?? '',
+      nickname: item.nickname ?? '',
+      email: item.email ?? '',
+      phone: item.phone ?? '',
+      avatar: item.avatar ?? '',
+      updateTime: item.updateTime ?? ''
+    }))
     total.value = res.total
   } catch (error) {
     console.error('加载用户列表失败:', error)

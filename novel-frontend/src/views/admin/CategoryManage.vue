@@ -111,7 +111,15 @@ const loadCategories = async () => {
   loading.value = true
   try {
     const res = await getAdminCategories()
-    categoryList.value = res
+    // 数据转换：确保所有字段都有值
+    categoryList.value = res.map(item => ({
+      ...item,
+      novelCount: item.novelCount ?? 0,
+      createTime: item.createTime ?? '',
+      updateTime: item.updateTime ?? '',
+      description: item.description ?? '',
+      sortOrder: item.sortOrder ?? 0
+    }))
   } catch (error) {
     console.error('加载分类列表失败:', error)
     ElMessage.error('加载分类列表失败')

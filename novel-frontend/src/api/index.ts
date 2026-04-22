@@ -14,16 +14,12 @@ const request: AxiosInstance = axios.create({
 // 请求拦截器
 request.interceptors.request.use(
   (config) => {
-    // 添加临时用户ID请求头
-    // 使用默认测试用户ID 2（对应数据库中的测试用户）
-    config.headers['X-User-ID'] = '2'
+    // 从localStorage获取token
+    const token = localStorage.getItem('user_token')
 
-    // 为管理员接口添加Authorization头
-    if (config.url?.startsWith('/admin')) {
-      const adminToken = localStorage.getItem('admin_token')
-      if (adminToken) {
-        config.headers.Authorization = `Bearer ${adminToken}`
-      }
+    // 如果存在token，添加到Authorization header
+    if (token) {
+      config.headers['Authorization'] = `Bearer ${token}`
     }
 
     return config
@@ -57,16 +53,15 @@ request.interceptors.response.use(
           ElMessage.error(data?.message || '请求参数错误')
           break
         case 401:
-          // token 过期或未授权
-          if (error.config.url?.startsWith('/admin')) {
-            localStorage.removeItem('admin_token')
-            localStorage.removeItem('admin_user')
-            // 跳转到后台登录页
-            setTimeout(() => {
-              window.location.href = '/admin/login'
-            }, 0)
-          }
+          // token 过期或未授权，清除本地存储并跳转登录页
+          localStorage.removeItem('user_token')
+          localStorage.removeItem('user_info')
           ElMessage.error('登录已过期，请重新登录')
+          // 只有非登录页面才跳转
+          if (!window.location.pathname.includes('/login') &&
+              !window.location.pathname.includes('/register')) {
+            window.location.href = '/login'
+          }
           break
         case 403:
           ElMessage.error('权限不足，拒绝访问')

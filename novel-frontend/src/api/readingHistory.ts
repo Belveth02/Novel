@@ -4,8 +4,8 @@ import type { ReadingHistoryVO, PageResult, ReadingHistoryDTO } from '@/types'
 /**
  * 保存阅读记录
  */
-export const saveReadingHistory = (data: ReadingHistoryDTO): Promise<number> => {
-  return post<number>('/reading-history', data)
+export const saveReadingHistory = (data: ReadingHistoryDTO): Promise<void> => {
+  return post<void>('/reading-history', data)
 }
 
 /**

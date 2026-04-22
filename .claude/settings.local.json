@@ -53,7 +53,12 @@
       "Bash(docker.exe ps *)",
       "Bash(curl.exe -v \"http://localhost/api/novels?page=1&size=10\")",
       "Bash(curl.exe -s \"http://localhost:8080/api/categories\")",
-      "Bash(curl.exe -s \"http://localhost:8080/api/chapters/1\")"
+      "Bash(curl.exe -s \"http://localhost:8080/api/chapters/1\")",
+      "Bash(./mvnw.cmd clean *)",
+      "Bash(netstat -ano)",
+      "Bash(findstr :8080)",
+      "Bash(taskkill /F /PID 21608)",
+      "Bash(jps -l)"
     ]
   }
 }

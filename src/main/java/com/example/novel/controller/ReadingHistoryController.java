@@ -27,7 +27,7 @@ public class ReadingHistoryController {
      * 保存或更新阅读记录
      */
     @PostMapping
-    public Result<Long> saveOrUpdate(
+    public Result<Void> saveOrUpdate(
             @RequestHeader(value = "X-User-ID", required = false) Long userId,
             @RequestBody ReadingHistory readingHistory) {
         log.info("保存阅读记录请求, userId: {}, novelId: {}, chapterId: {}",
@@ -40,9 +40,8 @@ public class ReadingHistoryController {
         }
 
         readingHistory.setUserId(userId);
-        Long recordId = readingHistoryService.saveOrUpdate(readingHistory);
-
-        return Result.success(recordId);
+        readingHistoryService.saveOrUpdate(readingHistory);
+        return Result.success();
     }
 
     /**

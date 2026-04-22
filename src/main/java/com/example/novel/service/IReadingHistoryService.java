@@ -13,9 +13,8 @@ public interface IReadingHistoryService {
      * 保存或更新阅读记录
      *
      * @param readingHistory 阅读记录实体
-     * @return 保存后的记录ID
      */
-    Long saveOrUpdate(ReadingHistory readingHistory);
+    void saveOrUpdate(ReadingHistory readingHistory);
 
     /**
      * 分页查询用户的阅读记录

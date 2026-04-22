@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { isAdminLoggedIn } from '@/api/admin'
+import { isLoggedIn } from '@/store/user'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 
@@ -10,6 +10,18 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: () => import('@/views/HomePage.vue')
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: () => import('@/views/Login.vue'),
+      meta: { requiresGuest: true }
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: () => import('@/views/Register.vue'),
+      meta: { requiresGuest: true }
     },
     {
       path: '/novels',
@@ -24,12 +36,14 @@ const router = createRouter({
     {
       path: '/chapters/:id',
       name: 'chapter-read',
-      component: () => import('@/views/ChapterRead.vue')
+      component: () => import('@/views/ChapterRead.vue'),
+      meta: { requiresAuth: true }
     },
     {
       path: '/user/favorites',
       name: 'user-favorites',
-      component: () => import('@/views/UserFavorites.vue')
+      component: () => import('@/views/UserFavorites.vue'),
+      meta: { requiresAuth: true }
     },
     // 后台路由
     {
@@ -42,6 +56,7 @@ const router = createRouter({
       name: 'admin-layout',
       component: () => import('@/views/admin/AdminLayout.vue'),
       redirect: '/admin/dashboard',
+      meta: { requiresAdmin: true },
       children: [
         {
           path: 'dashboard',
@@ -78,22 +93,53 @@ const router = createRouter({
   ]
 })
 
-// 路由守卫：检查管理员登录状态
+// 路由守卫
 router.beforeEach((to, _from, next) => {
   NProgress.start()
-  // 检查是否访问后台路由
+
+  const loggedIn = isLoggedIn()
+  const adminToken = localStorage.getItem('admin_token')
+
+  // 检查路由元信息
+  const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
+  const requiresGuest = to.matched.some(record => record.meta.requiresGuest)
+  const requiresAdmin = to.matched.some(record => record.meta.requiresAdmin)
+
+  // 检查是否访问管理员路由
   const isAdminRoute = to.path.startsWith('/admin') && to.path !== '/admin/login'
 
-  if (isAdminRoute && !isAdminLoggedIn()) {
-    // 未登录，重定向到登录页
+  // 管理员路由守卫：需要管理员权限
+  if (isAdminRoute && !adminToken) {
     next('/admin/login')
-  } else if (to.path === '/admin/login' && isAdminLoggedIn()) {
-    // 已登录但访问登录页，重定向到仪表盘
-    next('/admin/dashboard')
-  } else {
-    // 正常放行
-    next()
+    return
   }
+
+  // 已登录管理员访问登录页，重定向到仪表盘
+  if (to.path === '/admin/login' && adminToken) {
+    next('/admin/dashboard')
+    return
+  }
+
+  // 需要管理员权限但不是管理员
+  if (requiresAdmin && !adminToken) {
+    next('/admin/login')
+    return
+  }
+
+  // 需要登录的页面
+  if (requiresAuth && !loggedIn) {
+    next('/login')
+    return
+  }
+
+  // 已登录用户访问登录/注册页，重定向到首页
+  if (requiresGuest && loggedIn) {
+    next('/')
+    return
+  }
+
+  // 正常放行
+  next()
 })
 
 router.afterEach(() => {

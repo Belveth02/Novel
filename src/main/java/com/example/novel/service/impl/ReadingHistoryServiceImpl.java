@@ -1,7 +1,9 @@
 package com.example.novel.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.novel.entity.Novel;
 import com.example.novel.entity.ReadingHistory;
 import com.example.novel.mapper.ChapterMapper;
 import com.example.novel.mapper.NovelMapper;
@@ -33,7 +35,7 @@ public class ReadingHistoryServiceImpl implements IReadingHistoryService {
     @Override
     @Async
     @Transactional(rollbackFor = Exception.class)
-    public Long saveOrUpdate(ReadingHistory readingHistory) {
+    public void saveOrUpdate(ReadingHistory readingHistory) {
         log.info("保存或更新阅读记录, userId: {}, novelId: {}, chapterId: {}",
                 readingHistory.getUserId(), readingHistory.getNovelId(), readingHistory.getChapterId());
 
@@ -51,14 +53,24 @@ public class ReadingHistoryServiceImpl implements IReadingHistoryService {
             existing.setLastReadTime(LocalDateTime.now());
             readingHistoryMapper.updateById(existing);
             log.info("更新阅读记录, id: {}", existing.getId());
-            return existing.getId();
         } else {
             // 插入新记录
             readingHistory.setLastReadTime(LocalDateTime.now());
             readingHistory.setCreateTime(LocalDateTime.now());
             readingHistoryMapper.insert(readingHistory);
             log.info("新增阅读记录, id: {}", readingHistory.getId());
-            return readingHistory.getId();
+        }
+
+        // 更新小说的阅读次数（原子增加）
+        try {
+            UpdateWrapper<Novel> updateWrapper = new UpdateWrapper<>();
+            updateWrapper.eq("id", readingHistory.getNovelId())
+                        .setSql("view_count = view_count + 1");
+            novelMapper.update(null, updateWrapper);
+            log.info("小说阅读次数已增加, novelId: {}", readingHistory.getNovelId());
+        } catch (Exception e) {
+            log.error("更新小说阅读次数失败, novelId: {}", readingHistory.getNovelId(), e);
+            // 不抛出异常，避免影响阅读记录保存
         }
     }
 

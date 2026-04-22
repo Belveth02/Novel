@@ -35,3 +35,16 @@ export const updateAdminNovel = (id: number, params: AdminNovelUpdateParams): Pr
 export const deleteAdminNovel = (id: number): Promise<void> => {
   return del<void>(`/admin/novels/${id}`)
 }
+
+/**
+ * 上传小说封面
+ */
+export const uploadNovelCover = (file: File): Promise<string> => {
+  const formData = new FormData()
+  formData.append('file', file)
+  return post<string>('/admin/novels/cover', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  })
+}

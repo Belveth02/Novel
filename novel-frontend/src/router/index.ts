@@ -45,6 +45,12 @@ const router = createRouter({
       component: () => import('@/views/UserFavorites.vue'),
       meta: { requiresAuth: true }
     },
+    {
+      path: '/user/profile',
+      name: 'user-profile',
+      component: () => import('@/views/UserProfile.vue'),
+      meta: { requiresAuth: true }
+    },
     // 后台路由
     {
       path: '/admin/login',

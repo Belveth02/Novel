@@ -74,6 +74,18 @@ public class Novel {
     private Integer viewCount;
 
     /**
+     * 是否热门推荐：0-否，1-是
+     */
+    @TableField("is_hot")
+    private Integer isHot;
+
+    /**
+     * 热门排序（数值越大越靠前）
+     */
+    @TableField("hot_sort")
+    private Integer hotSort;
+
+    /**
      * 创建时间
      */
     private LocalDateTime createTime;

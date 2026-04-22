@@ -31,6 +31,12 @@ spring:
     time-zone: GMT+8
     default-property-inclusion: non_null
 
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 2MB
+      max-request-size: 2MB
+
 mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true
@@ -48,6 +54,14 @@ jwt:
   secret: novel-admin-jwt-secret-key-2026-04-20 # 密钥，生产环境需使用更安全的密钥
   expiration: 86400000 # token过期时间（毫秒），24小时
   header: Authorization # 请求头名称
+
+# 文件上传配置
+app:
+  upload:
+    avatar-path: uploads/avatars/      # 头像上传路径
+    avatar-url: /uploads/avatars/      # 头像访问URL前缀
+    cover-path: uploads/covers/        # 封面上传路径
+    cover-url: /uploads/covers/        # 封面访问URL前缀
 
 logging:
   level:

@@ -2,8 +2,10 @@ package com.example.novel.config;
 
 import com.example.novel.common.handler.JwtInterceptor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
@@ -15,11 +17,34 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     private final JwtInterceptor jwtInterceptor;
 
+    @Value("${app.upload.avatar-path:uploads/avatars/}")
+    private String avatarUploadPath;
+
+    @Value("${app.upload.avatar-url:/uploads/avatars/}")
+    private String avatarUrlPrefix;
+
+    @Value("${app.upload.cover-path:uploads/covers/}")
+    private String coverUploadPath;
+
+    @Value("${app.upload.cover-url:/uploads/covers/}")
+    private String coverUrlPrefix;
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         // 注册JWT拦截器，拦截所有/admin/**路径，排除登录接口
         registry.addInterceptor(jwtInterceptor)
                 .addPathPatterns("/admin/**", "/api/admin/**")
                 .excludePathPatterns("/admin/auth/login", "/api/admin/auth/login");
+    }
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        // 配置头像访问路径映射
+        registry.addResourceHandler(avatarUrlPrefix + "**")
+                .addResourceLocations("file:" + avatarUploadPath);
+
+        // 配置封面访问路径映射
+        registry.addResourceHandler(coverUrlPrefix + "**")
+                .addResourceLocations("file:" + coverUploadPath);
     }
 }

@@ -58,7 +58,18 @@
       "Bash(netstat -ano)",
       "Bash(findstr :8080)",
       "Bash(taskkill /F /PID 21608)",
-      "Bash(jps -l)"
+      "Bash(jps -l)",
+      "Bash(java *)",
+      "Bash(python3 -c \"import bcrypt; print\\(bcrypt.hashpw\\(b'admin', bcrypt.gensalt\\(rounds=10\\)\\).decode\\(\\)\\)\")",
+      "Bash(python -c \"import bcrypt; print\\(bcrypt.hashpw\\(b'admin', bcrypt.gensalt\\(rounds=10\\)\\).decode\\(\\)\\)\")",
+      "Bash(bash ./mvnw test -Dtest=CommonComponentTest#generatePasswordHash)",
+      "Bash(javac -cp \"/c/Users/Strelitzia/.m2/repository/org/springframework/security/spring-security-crypto/6.4.4/spring-security-crypto-6.4.4.jar\" com/example/novel/common/util/PasswordGenerator.java)",
+      "Bash(pip install *)",
+      "Bash(python -c \"import bcrypt; h=bcrypt.hashpw\\(b'admin', bcrypt.gensalt\\(rounds=10\\)\\); print\\(h.decode\\(\\)\\)\")",
+      "Bash(python *)",
+      "Bash(cd /d/IntelliJ IDEA 2023.2.3/Novel)"
     ]
-  }
+  },
+  "language": "zh-CN",
+  "prefersReducedMotion": true
 }

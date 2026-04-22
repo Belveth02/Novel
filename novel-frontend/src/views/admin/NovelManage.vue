@@ -40,7 +40,7 @@
         <template #default="{ row }">
           <el-image
             v-if="row.coverImage"
-            :src="row.coverImage"
+            :src="getFullCoverUrl(row.coverImage)"
             fit="cover"
             style="width: 60px; height: 80px; border-radius: 4px"
           />
@@ -72,6 +72,16 @@
       <el-table-column prop="createTime" label="创建时间" width="160">
         <template #default="{ row }">
           {{ formatTime(row.createTime) }}
+        </template>
+      </el-table-column>
+      <el-table-column label="热门推荐" width="100" align="center">
+        <template #default="{ row }">
+          <el-switch
+            v-model="row.isHot"
+            :active-value="1"
+            :inactive-value="0"
+            @change="(val) => handleHotChange(row, val)"
+          />
         </template>
       </el-table-column>
       <el-table-column label="操作" width="180" fixed="right">
@@ -124,8 +134,31 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item label="封面URL">
-          <el-input v-model="formData.coverImage" placeholder="请输入封面图片URL" />
+        <el-form-item label="封面">
+          <div class="cover-upload">
+            <el-image
+              v-if="formData.coverImage"
+              :src="getFullCoverUrl(formData.coverImage)"
+              fit="cover"
+              style="width: 120px; height: 160px; border-radius: 4px; margin-right: 16px"
+            />
+            <div v-else style="width: 120px; height: 160px; background: #f5f5f5; border-radius: 4px; display: flex; align-items: center; justify-content: center; margin-right: 16px">
+              <span style="color: #999; font-size: 12px">暂无封面</span>
+            </div>
+            <el-upload
+              class="cover-uploader"
+              action="#"
+              :auto-upload="false"
+              :show-file-list="false"
+              :on-change="handleCoverChange"
+              accept="image/*"
+            >
+              <el-button type="primary">选择图片</el-button>
+              <template #tip>
+                <div class="el-upload__tip">支持 jpg/png 格式，大小不超过 2MB</div>
+              </template>
+            </el-upload>
+          </div>
         </el-form-item>
         <el-form-item label="状态" prop="status">
           <el-radio-group v-model="formData.status">
@@ -139,6 +172,14 @@
             type="textarea"
             :rows="4"
             placeholder="请输入小说简介"
+          />
+        </el-form-item>
+        <el-form-item label="热门排序" v-if="formData.isHot === 1">
+          <el-input-number
+            v-model="formData.hotSort"
+            :min="0"
+            :max="9999"
+            placeholder="数值越大排序越靠前"
           />
         </el-form-item>
       </el-form>
@@ -155,7 +196,7 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
 import { ElMessage, ElMessageBox, type FormInstance, type FormRules } from 'element-plus'
-import { getAdminNovels, createAdminNovel, updateAdminNovel, deleteAdminNovel } from '@/api/adminNovel'
+import { getAdminNovels, createAdminNovel, updateAdminNovel, deleteAdminNovel, uploadNovelCover } from '@/api/adminNovel'
 import { getCategories } from '@/api/category'
 import type { NovelVO, AdminNovelQueryParams, AdminNovelCreateParams, AdminNovelUpdateParams, CategoryVO } from '@/types'
 
@@ -186,7 +227,9 @@ const formData = reactive({
   coverImage: '',
   description: '',
   categoryId: undefined as number | undefined,
-  status: 1
+  status: 1,
+  isHot: 0,
+  hotSort: 0
 })
 
 // 表单验证规则
@@ -284,7 +327,9 @@ const handleCreate = () => {
     coverImage: '',
     description: '',
     categoryId: undefined,
-    status: 1
+    status: 1,
+    isHot: 0,
+    hotSort: 0
   })
   dialogVisible.value = true
 }
@@ -299,9 +344,27 @@ const handleEdit = (row: NovelVO) => {
     coverImage: row.coverImage || '',
     description: row.description || '',
     categoryId: row.categoryId,
-    status: row.status
+    status: row.status,
+    isHot: row.isHot ?? 0,
+    hotSort: row.hotSort ?? 0
   })
   dialogVisible.value = true
+}
+
+// 热门推荐开关变化
+const handleHotChange = async (row: NovelVO, val: number) => {
+  try {
+    await updateAdminNovel(row.id, {
+      isHot: val,
+      hotSort: val === 1 ? (row.hotSort || 0) : 0
+    })
+    ElMessage.success(val === 1 ? '已设为热门推荐' : '已取消热门推荐')
+  } catch (error) {
+    console.error('设置热门推荐失败:', error)
+    ElMessage.error('设置失败')
+    // 恢复原状
+    row.isHot = val === 1 ? 0 : 1
+  }
 }
 
 // 删除小说
@@ -333,6 +396,43 @@ const handleDialogClose = (done: () => void) => {
   }).catch(() => {})
 }
 
+// 处理封面变更
+const handleCoverChange = async (file: any) => {
+  if (!file.raw) return
+
+  // 验证文件类型
+  const isImage = file.raw.type.startsWith('image/')
+  if (!isImage) {
+    ElMessage.error('请上传图片文件')
+    return
+  }
+
+  // 验证文件大小（限制为2MB）
+  const isLt2M = file.raw.size / 1024 / 1024 < 2
+  if (!isLt2M) {
+    ElMessage.error('图片大小不能超过2MB')
+    return
+  }
+
+  try {
+    const coverUrl = await uploadNovelCover(file.raw)
+    formData.coverImage = coverUrl
+    ElMessage.success('封面上传成功')
+  } catch (error) {
+    console.error('封面上传失败:', error)
+    ElMessage.error('封面上传失败')
+  }
+}
+
+// 获取完整封面URL
+const getFullCoverUrl = (url: string) => {
+  if (!url) return ''
+  if (url.startsWith('http')) return url
+  // 拼接完整URL
+  const baseUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/api'
+  return `${baseUrl}${url}`
+}
+
 // 提交表单
 const handleSubmit = async () => {
   if (!formRef.value) return
@@ -349,7 +449,9 @@ const handleSubmit = async () => {
         coverImage: formData.coverImage || undefined,
         description: formData.description || undefined,
         categoryId: formData.categoryId,
-        status: formData.status
+        status: formData.status,
+        isHot: formData.isHot,
+        hotSort: formData.hotSort
       }
       await updateAdminNovel(formData.id, updateParams)
       ElMessage.success('更新成功')
@@ -398,5 +500,20 @@ onMounted(() => {
   display: flex;
   justify-content: center;
   margin-top: 20px;
+}
+
+.cover-upload {
+  display: flex;
+  align-items: flex-start;
+}
+
+.cover-uploader {
+  display: flex;
+  flex-direction: column;
+}
+
+.cover-uploader .el-upload__tip {
+  margin-top: 8px;
+  color: #909399;
 }
 </style>

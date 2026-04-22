@@ -2,10 +2,13 @@ package com.example.novel.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.novel.dto.AdminUserQueryDTO;
+import com.example.novel.dto.ChangePasswordDTO;
 import com.example.novel.dto.UserLoginDTO;
 import com.example.novel.dto.UserRegisterDTO;
+import com.example.novel.dto.UserUpdateDTO;
 import com.example.novel.vo.UserLoginVO;
 import com.example.novel.vo.UserVO;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 用户服务接口
@@ -51,4 +54,31 @@ public interface IUserService {
      * @param status 状态：0-禁用，1-正常
      */
     void updateUserStatus(Long id, Integer status);
+
+    /**
+     * 更新用户信息
+     *
+     * @param userId 用户ID
+     * @param updateDTO 更新参数
+     * @return 更新后的用户信息
+     */
+    UserVO updateUser(Long userId, UserUpdateDTO updateDTO);
+
+    /**
+     * 修改密码
+     *
+     * @param userId 用户ID
+     * @param passwordDTO 密码参数
+     * @return true-修改成功，false-修改失败
+     */
+    boolean changePassword(Long userId, ChangePasswordDTO passwordDTO);
+
+    /**
+     * 上传头像
+     *
+     * @param userId 用户ID
+     * @param file 头像文件
+     * @return 头像URL
+     */
+    String uploadAvatar(Long userId, MultipartFile file);
 }

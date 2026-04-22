@@ -27,7 +27,7 @@
           <el-col :xs="24" :sm="8" :md="6">
             <div class="cover-section">
               <el-image
-                :src="novelData.coverImage || 'https://via.placeholder.com/300x450?text=封面'"
+                :src="getFullCoverUrl(novelData.coverImage) || 'https://via.placeholder.com/300x450?text=封面'"
                 fit="cover"
                 class="cover-image"
               />
@@ -198,6 +198,15 @@ const loading = ref(false)
 
 // 非空小说数据（用于模板，避免类型检查错误）
 const novelData = computed(() => novel.value!)
+
+// 获取完整封面 URL
+const getFullCoverUrl = (url: string) => {
+  if (!url) return ''
+  if (url.startsWith('http')) return url
+  // 拼接完整 URL: http://localhost:8080/api + /uploads/covers/xxx.jpg
+  const baseUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/api'
+  return `${baseUrl}${url}`
+}
 
 // 收藏状态
 const isFavorited = ref(false)

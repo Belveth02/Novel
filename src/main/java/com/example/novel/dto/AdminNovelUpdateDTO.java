@@ -43,4 +43,14 @@ public class AdminNovelUpdateDTO {
      * 状态：0-下架，1-上架
      */
     private Integer status;
+
+    /**
+     * 是否热门推荐：0-否，1-是
+     */
+    private Integer isHot;
+
+    /**
+     * 热门排序（数值越大越靠前）
+     */
+    private Integer hotSort;
 }

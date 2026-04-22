@@ -70,6 +70,16 @@ public class NovelVO implements Serializable {
     private Integer viewCount;
 
     /**
+     * 是否热门推荐：0-否，1-是
+     */
+    private Integer isHot;
+
+    /**
+     * 热门排序（数值越大越靠前）
+     */
+    private Integer hotSort;
+
+    /**
      * 创建时间
      */
     private LocalDateTime createTime;

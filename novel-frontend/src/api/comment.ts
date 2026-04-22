@@ -34,3 +34,13 @@ export const deleteComment = (commentId: number): Promise<boolean> => {
 export const getCommentCount = (novelId: number): Promise<number> => {
   return get<number>('/comments/count', { params: { novelId } })
 }
+
+/**
+ * 获取当前用户的所有评论
+ */
+export const getMyComments = (params: {
+  page?: number
+  size?: number
+}): Promise<PageResult<CommentVO>> => {
+  return get<PageResult<CommentVO>>('/comments/my', { params })
+}

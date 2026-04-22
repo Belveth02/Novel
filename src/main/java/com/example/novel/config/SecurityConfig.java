@@ -46,8 +46,10 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 // 放行用户认证接口
                 .requestMatchers("/auth/**").permitAll()
-                // 放行管理员登录接口
-                .requestMatchers("/admin/auth/**").permitAll()
+                // 放行用户接口（由JWT处理认证）
+                .requestMatchers("/users/**").permitAll()
+                // 放行管理员接口（由JWT拦截器处理认证）
+                .requestMatchers("/admin/**").permitAll()
                 // 放行所有小说相关公开接口
                 .requestMatchers("/novels/**").permitAll()
                 .requestMatchers("/chapters/**").permitAll()
@@ -61,6 +63,12 @@ public class SecurityConfig {
                 .requestMatchers("/reading-history/**").permitAll()
                 // 放行静态资源和首页
                 .requestMatchers("/", "/favicon.ico", "/static/**").permitAll()
+                // 放行上传的文件访问
+                .requestMatchers("/uploads/**").permitAll()
+                // 放行头像访问
+                .requestMatchers("/uploads/avatars/**").permitAll()
+                // 放行封面访问
+                .requestMatchers("/uploads/covers/**").permitAll()
                 // 其他请求需要认证
                 .anyRequest().authenticated())
             // 禁用表单登录

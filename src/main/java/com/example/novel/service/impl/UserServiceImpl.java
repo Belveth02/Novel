@@ -5,8 +5,10 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.novel.common.exception.BusinessException;
 import com.example.novel.common.util.JwtUtil;
 import com.example.novel.dto.AdminUserQueryDTO;
+import com.example.novel.dto.ChangePasswordDTO;
 import com.example.novel.dto.UserLoginDTO;
 import com.example.novel.dto.UserRegisterDTO;
+import com.example.novel.dto.UserUpdateDTO;
 import com.example.novel.entity.User;
 import com.example.novel.mapper.UserMapper;
 import com.example.novel.service.IUserService;
@@ -14,9 +16,17 @@ import com.example.novel.vo.UserLoginVO;
 import com.example.novel.vo.UserVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.UUID;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -33,6 +43,12 @@ public class UserServiceImpl implements IUserService {
     private final UserMapper userMapper;
     private final JwtUtil jwtUtil;
     private final BCryptPasswordEncoder passwordEncoder;
+
+    @Value("${app.upload.avatar-path:uploads/avatars/}")
+    private String avatarUploadPath;
+
+    @Value("${app.upload.avatar-url:/uploads/avatars/}")
+    private String avatarUrlPrefix;
 
     /**
      * 用户注册
@@ -264,5 +280,140 @@ public class UserServiceImpl implements IUserService {
         voPage.setRecords(records);
 
         return voPage;
+    }
+
+    /**
+     * 更新用户信息
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public UserVO updateUser(Long userId, UserUpdateDTO updateDTO) {
+        log.info("更新用户信息，用户ID: {}", userId);
+
+        // 查询用户
+        User user = userMapper.selectById(userId);
+        if (user == null) {
+            log.warn("用户不存在，用户ID: {}", userId);
+            throw new BusinessException("用户不存在");
+        }
+
+        // 更新字段
+        if (updateDTO.getNickname() != null) {
+            user.setNickname(updateDTO.getNickname());
+        }
+        if (updateDTO.getEmail() != null) {
+            // 检查邮箱是否已被其他用户使用
+            if (!updateDTO.getEmail().equals(user.getEmail())) {
+                LambdaQueryWrapper<User> emailWrapper = new LambdaQueryWrapper<>();
+                emailWrapper.eq(User::getEmail, updateDTO.getEmail());
+                User existingEmail = userMapper.selectOne(emailWrapper);
+                if (existingEmail != null && !existingEmail.getId().equals(userId)) {
+                    throw new BusinessException("该邮箱已被其他用户使用");
+                }
+            }
+            user.setEmail(updateDTO.getEmail());
+        }
+        if (updateDTO.getPhone() != null) {
+            user.setPhone(updateDTO.getPhone());
+        }
+        if (updateDTO.getAvatar() != null) {
+            user.setAvatar(updateDTO.getAvatar());
+        }
+        user.setUpdateTime(LocalDateTime.now());
+
+        // 保存更新
+        int rows = userMapper.updateById(user);
+        if (rows != 1) {
+            log.error("更新用户信息失败，用户ID: {}", userId);
+            throw new BusinessException("更新用户信息失败");
+        }
+
+        log.info("用户信息更新成功，用户ID: {}", userId);
+        return convertToVO(user);
+    }
+
+    /**
+     * 修改密码
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public boolean changePassword(Long userId, ChangePasswordDTO passwordDTO) {
+        log.info("修改密码，用户ID: {}", userId);
+
+        // 查询用户
+        User user = userMapper.selectById(userId);
+        if (user == null) {
+            log.warn("用户不存在，用户ID: {}", userId);
+            throw new BusinessException("用户不存在");
+        }
+
+        // 验证原密码
+        if (!passwordEncoder.matches(passwordDTO.getOldPassword(), user.getPassword())) {
+            log.warn("原密码错误，用户ID: {}", userId);
+            throw new BusinessException("原密码错误");
+        }
+
+        // 更新密码
+        user.setPassword(passwordEncoder.encode(passwordDTO.getNewPassword()));
+        user.setUpdateTime(LocalDateTime.now());
+
+        int rows = userMapper.updateById(user);
+        if (rows != 1) {
+            log.error("修改密码失败，用户ID: {}", userId);
+            throw new BusinessException("修改密码失败");
+        }
+
+        log.info("密码修改成功，用户ID: {}", userId);
+        return true;
+    }
+
+    /**
+     * 上传头像
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public String uploadAvatar(Long userId, MultipartFile file) {
+        log.info("上传头像，用户ID: {}", userId);
+
+        // 查询用户
+        User user = userMapper.selectById(userId);
+        if (user == null) {
+            log.warn("用户不存在，用户ID: {}", userId);
+            throw new BusinessException("用户不存在");
+        }
+
+        try {
+            // 创建上传目录
+            Path uploadDir = Paths.get(avatarUploadPath);
+            if (!Files.exists(uploadDir)) {
+                Files.createDirectories(uploadDir);
+            }
+
+            // 生成文件名
+            String originalFilename = file.getOriginalFilename();
+            String extension = originalFilename != null && originalFilename.contains(".")
+                    ? originalFilename.substring(originalFilename.lastIndexOf("."))
+                    : ".jpg";
+            String filename = UUID.randomUUID() + extension;
+
+            // 保存文件
+            Path filePath = uploadDir.resolve(filename);
+            Files.copy(file.getInputStream(), filePath);
+
+            // 构建URL
+            String avatarUrl = avatarUrlPrefix + filename;
+
+            // 更新用户头像
+            user.setAvatar(avatarUrl);
+            user.setUpdateTime(LocalDateTime.now());
+            userMapper.updateById(user);
+
+            log.info("头像上传成功，用户ID: {}, URL: {}", userId, avatarUrl);
+            return avatarUrl;
+
+        } catch (IOException e) {
+            log.error("头像上传失败，用户ID: {}", userId, e);
+            throw new BusinessException("头像上传失败: " + e.getMessage());
+        }
     }
 }

@@ -25,7 +25,7 @@
             <div class="comment-header">
               <span class="user-info">
                 <el-icon><User /></el-icon>
-                用户 {{ comment.userId }}
+                {{ comment.nickname || `用户${comment.userId}` }}
               </span>
               <span class="comment-time">
                 <el-icon><Clock /></el-icon>
@@ -70,12 +70,16 @@ import { getComments, deleteComment, getCommentCount } from '@/api/comment'
 import type { CommentVO, PageResult } from '@/types'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { User, Clock } from '@element-plus/icons-vue'
+import { useUserStore } from '@/store/user'
 
 interface Props {
   novelId: number
 }
 
 const props = defineProps<Props>()
+
+// 用户 store
+const userStore = useUserStore()
 
 // 评论数据
 const comments = ref<CommentVO[]>([])
@@ -86,34 +90,16 @@ const loading = ref(false)
 // 删除加载状态
 const deleteLoading = ref<Record<number, boolean>>({})
 
-// 当前用户ID（临时）
-const currentUserId = ref<number | null>(null)
-
 // 查询参数
 const queryParams = reactive({
   pageNum: 1,
   pageSize: 20
 })
 
-// 初始化当前用户ID
-const initCurrentUserId = () => {
-  // 从 localStorage 获取临时用户ID
-  const tempUserId = localStorage.getItem('tempUserId')
-  if (tempUserId) {
-    // 临时用户ID是字符串，但后端需要数字，这里我们只用于前端判断
-    // 实际用户ID由后端通过 X-User-ID 请求头获取
-    // 这里我们无法获取实际用户ID，所以只能通过其他方式判断
-    // 暂时不实现用户判断，删除按钮对所有评论显示
-    // 后端会验证用户权限
-    currentUserId.value = null
-  }
-}
-
 // 判断是否可以删除评论
-const canDelete = (_commentUserId: number): boolean => {
-  // 由于当前是临时用户系统，无法准确判断
-  // 这里显示删除按钮，由后端验证权限
-  return true
+const canDelete = (commentUserId: number): boolean => {
+  // 只有评论作者可以删除评论
+  return userStore.isLoggedIn && userStore.userId === commentUserId
 }
 
 // 加载评论数量
@@ -214,7 +200,6 @@ watch(() => props.novelId, (newNovelId) => {
 
 // 初始化加载
 onMounted(() => {
-  initCurrentUserId()
   if (props.novelId) {
     loadComments()
     loadCommentCount()

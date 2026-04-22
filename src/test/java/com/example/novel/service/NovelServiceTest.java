@@ -25,9 +25,9 @@ class NovelServiceTest {
     void testListByPage() {
         // 构造查询参数
         NovelQueryDTO queryDTO = new NovelQueryDTO();
-        queryDTO.setPageNum(1);
-        queryDTO.setPageSize(10);
-        queryDTO.setSortField("view_count");
+        queryDTO.setPage(1);
+        queryDTO.setSize(10);
+        queryDTO.setSortBy("viewCount");
         queryDTO.setSortOrder("desc");
 
         // 调用服务
@@ -96,8 +96,8 @@ class NovelServiceTest {
     void testGetByIdExists() {
         // 先查询第一页，获取一个存在的ID
         NovelQueryDTO queryDTO = new NovelQueryDTO();
-        queryDTO.setPageNum(1);
-        queryDTO.setPageSize(1);
+        queryDTO.setPage(1);
+        queryDTO.setSize(1);
         Page<NovelVO> page = novelService.listByPage(queryDTO);
 
         if (!page.getRecords().isEmpty()) {

@@ -122,7 +122,11 @@ const handleLogin = async () => {
       userId: response.userId,
       username: response.username,
       nickname: response.nickname,
-      token: response.token
+      token: response.token,
+      role: response.role,
+      email: response.email,
+      phone: response.phone,
+      avatar: response.avatar
     })
 
     ElMessage.success('登录成功')

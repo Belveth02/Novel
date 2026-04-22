@@ -18,6 +18,8 @@ export interface NovelVO {
   wordCount: number
   chapterCount: number
   viewCount: number
+  isHot?: number
+  hotSort?: number
   createTime: string
 }
 
@@ -114,7 +116,9 @@ export interface FavoriteVO {
 export interface CommentVO {
   id: number
   userId: number
+  nickname?: string
   novelId: number
+  novelTitle?: string
   content: string
   createTime: string
   updateTime: string
@@ -154,6 +158,8 @@ export interface AdminNovelUpdateParams {
   description?: string
   categoryId?: number
   status?: number
+  isHot?: number
+  hotSort?: number
 }
 
 // 管理员章节查询参数
@@ -188,6 +194,20 @@ export interface UserVO {
   status: number
   createTime: string
   updateTime: string
+}
+
+// 用户更新参数
+export interface UserUpdateParams {
+  nickname?: string
+  email?: string
+  phone?: string
+  avatar?: string
+}
+
+// 修改密码参数
+export interface ChangePasswordParams {
+  oldPassword: string
+  newPassword: string
 }
 
 // 管理员用户查询参数

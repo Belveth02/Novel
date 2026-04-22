@@ -19,6 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.CacheEvict;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -51,6 +52,16 @@ public class NovelServiceImpl implements INovelService {
         // 构建查询条件
         LambdaQueryWrapper<Novel> queryWrapper = new LambdaQueryWrapper<>();
 
+        // 标题筛选
+        if (queryDTO.getTitle() != null && !queryDTO.getTitle().trim().isEmpty()) {
+            queryWrapper.like(Novel::getTitle, queryDTO.getTitle().trim());
+        }
+
+        // 作者筛选
+        if (queryDTO.getAuthor() != null && !queryDTO.getAuthor().trim().isEmpty()) {
+            queryWrapper.like(Novel::getAuthor, queryDTO.getAuthor().trim());
+        }
+
         // 分类筛选
         if (queryDTO.getCategoryId() != null) {
             queryWrapper.eq(Novel::getCategoryId, queryDTO.getCategoryId());
@@ -67,13 +78,15 @@ public class NovelServiceImpl implements INovelService {
             queryWrapper.orderBy(true, isAsc, Novel::getViewCount);
         } else if ("create_time".equals(sortField)) {
             queryWrapper.orderBy(true, isAsc, Novel::getCreateTime);
+        } else if ("word_count".equals(sortField)) {
+            queryWrapper.orderBy(true, isAsc, Novel::getWordCount);
         } else {
             // 默认按阅读量降序
             queryWrapper.orderByDesc(Novel::getViewCount);
         }
 
         // 执行分页查询
-        Page<Novel> page = new Page<>(queryDTO.getPageNum(), queryDTO.getPageSize());
+        Page<Novel> page = new Page<>(queryDTO.getPage(), queryDTO.getSize());
         Page<Novel> novelPage = novelMapper.selectPage(page, queryWrapper);
 
         log.info("查询到 {} 条记录，共 {} 页", novelPage.getTotal(), novelPage.getPages());
@@ -109,7 +122,9 @@ public class NovelServiceImpl implements INovelService {
 
         LambdaQueryWrapper<Novel> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(Novel::getStatus, 1)
-                   .orderByDesc(Novel::getViewCount);
+                   .eq(Novel::getIsHot, 1)  // 只查询热门推荐的小说
+                   .orderByDesc(Novel::getHotSort)  // 按热门排序降序
+                   .orderByDesc(Novel::getViewCount);  // 再按阅读量降序
 
         Page<Novel> page = new Page<>(1, limit);
         Page<Novel> novelPage = novelMapper.selectPage(page, queryWrapper);
@@ -133,6 +148,8 @@ public class NovelServiceImpl implements INovelService {
                 .wordCount(novel.getWordCount())
                 .chapterCount(novel.getChapterCount())
                 .viewCount(novel.getViewCount())
+                .isHot(novel.getIsHot())
+                .hotSort(novel.getHotSort())
                 .createTime(novel.getCreateTime())
                 .build();
     }
@@ -243,6 +260,7 @@ public class NovelServiceImpl implements INovelService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
+    @CacheEvict(value = "hotNovels", allEntries = true)
     public void updateNovel(Long id, AdminNovelUpdateDTO updateDTO) {
         log.info("更新小说, ID: {}", id);
 
@@ -279,6 +297,14 @@ public class NovelServiceImpl implements INovelService {
             novel.setStatus(updateDTO.getStatus());
             updated = true;
         }
+        if (updateDTO.getIsHot() != null) {
+            novel.setIsHot(updateDTO.getIsHot());
+            updated = true;
+        }
+        if (updateDTO.getHotSort() != null) {
+            novel.setHotSort(updateDTO.getHotSort());
+            updated = true;
+        }
 
         if (updated) {
             novel.setUpdateTime(LocalDateTime.now());
@@ -295,6 +321,7 @@ public class NovelServiceImpl implements INovelService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
+    @CacheEvict(value = "hotNovels", allEntries = true)
     public void deleteNovel(Long id) {
         log.info("删除小说, ID: {}", id);
 

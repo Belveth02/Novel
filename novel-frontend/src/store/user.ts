@@ -84,6 +84,22 @@ export const useUserStore = defineStore('user', () => {
     localStorage.removeItem('user_info')
   }
 
+  // 更新头像
+  function updateAvatar(newAvatar: string) {
+    avatar.value = newAvatar
+    // 同时更新 localStorage 中的用户信息
+    const storedUserInfo = localStorage.getItem('user_info')
+    if (storedUserInfo) {
+      try {
+        const userInfo = JSON.parse(storedUserInfo)
+        userInfo.avatar = newAvatar
+        localStorage.setItem('user_info', JSON.stringify(userInfo))
+      } catch (e) {
+        console.error('更新本地头像失败:', e)
+      }
+    }
+  }
+
   return {
     // 状态
     userId,
@@ -99,7 +115,8 @@ export const useUserStore = defineStore('user', () => {
     // 方法
     setUserInfo,
     restoreFromStorage,
-    logout
+    logout,
+    updateAvatar
   }
 })
 

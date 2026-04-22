@@ -30,9 +30,19 @@ public class CommentVO implements Serializable {
     private Long userId;
 
     /**
+     * 用户昵称
+     */
+    private String nickname;
+
+    /**
      * 小说ID
      */
     private Long novelId;
+
+    /**
+     * 小说标题
+     */
+    private String novelTitle;
 
     /**
      * 评论内容

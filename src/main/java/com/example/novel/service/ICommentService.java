@@ -44,4 +44,14 @@ public interface ICommentService {
      * @return 评论数量
      */
     Long countByNovelId(Long novelId);
+
+    /**
+     * 分页查询用户的评论列表
+     *
+     * @param userId 用户ID
+     * @param pageNum 页码
+     * @param pageSize 每页大小
+     * @return 分页结果
+     */
+    Page<CommentVO> listByUserId(Long userId, Integer pageNum, Integer pageSize);
 }

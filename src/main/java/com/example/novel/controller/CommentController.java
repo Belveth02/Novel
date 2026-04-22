@@ -117,4 +117,33 @@ public class CommentController {
 
         return Result.success(count);
     }
+
+    /**
+     * 获取当前用户的评论列表
+     */
+    @GetMapping("/my")
+    public Result<Page<CommentVO>> listMyComments(
+            @RequestHeader(value = "X-User-ID", required = false) String userIdStr,
+            @RequestParam(defaultValue = "1") @Min(value = 1, message = "页码不能小于1") Integer pageNum,
+            @RequestParam(defaultValue = "10") @Min(value = 1, message = "每页大小不能小于1") Integer pageSize) {
+        log.info("查询我的评论列表请求, userId: {}, pageNum: {}, pageSize: {}", userIdStr, pageNum, pageSize);
+
+        Long userId = 2L; // 默认测试用户ID
+
+        // 解析用户ID
+        if (userIdStr != null && !userIdStr.trim().isEmpty()) {
+            try {
+                userId = Long.parseLong(userIdStr.trim());
+            } catch (NumberFormatException e) {
+                log.warn("用户ID格式无效: {}, 使用默认用户ID: {}", userIdStr, userId);
+            }
+        } else {
+            log.info("未提供用户ID，使用默认用户ID: {}", userId);
+        }
+
+        Page<CommentVO> page = commentService.listByUserId(userId, pageNum, pageSize);
+        log.info("返回 {} 条评论，共 {} 页", page.getTotal(), page.getPages());
+
+        return Result.success(page);
+    }
 }

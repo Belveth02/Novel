@@ -30,7 +30,7 @@ class NovelControllerTest {
     void testListByPage() {
         // 发送GET请求
         ResponseEntity<Result<Page<NovelVO>>> response = restTemplate.exchange(
-                "/novels?pageNum=1&pageSize=10",
+                "/novels?page=1&size=10",
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<Result<Page<NovelVO>>>() {}
@@ -65,7 +65,7 @@ class NovelControllerTest {
     void testGetById() {
         // 先查询列表获取一个有效的小说ID
         ResponseEntity<Result<Page<NovelVO>>> listResponse = restTemplate.exchange(
-                "/novels?pageSize=1",
+                "/novels?size=1",
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<Result<Page<NovelVO>>>() {}

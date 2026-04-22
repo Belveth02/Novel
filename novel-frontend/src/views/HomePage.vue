@@ -1,20 +1,53 @@
 <template>
-  <div class="home-page">
-    <!-- 顶部导航 -->
-    <el-header class="header">
-      <div class="header-content">
-        <div class="logo">
-          <h1>小说网站</h1>
+  <div id="app">
+    <!-- 顶部导航栏 -->
+    <header class="app-header">
+      <div class="header-container">
+        <div class="header-left">
+          <router-link to="/" class="logo">小说阅读</router-link>
+          <nav class="nav-menu">
+            <router-link to="/" class="nav-item">首页</router-link>
+            <router-link to="/novels" class="nav-item">小说列表</router-link>
+          </nav>
         </div>
-        <div class="nav">
-          <el-button type="text" @click="$router.push('/')">首页</el-button>
-          <el-button type="text" @click="$router.push('/novels')">全部小说</el-button>
+        <div class="header-right">
+          <template v-if="userStore.isLoggedIn">
+            <el-dropdown @command="handleCommand">
+              <span class="user-dropdown">
+                <el-avatar :size="32" :src="getFullAvatarUrl(userStore.avatar) || undefined">
+                  {{ userStore.nickname?.charAt(0) || userStore.username?.charAt(0) || 'U' }}
+                </el-avatar>
+                <span class="username">{{ userStore.nickname || userStore.username }}</span>
+                <el-icon><arrow-down /></el-icon>
+              </span>
+              <template #dropdown>
+                <el-dropdown-menu>
+                  <el-dropdown-item command="favorites">
+                    <el-icon><star /></el-icon>
+                    我的收藏
+                  </el-dropdown-item>
+                  <el-dropdown-item command="profile">
+                    <el-icon><user /></el-icon>
+                    个人中心
+                  </el-dropdown-item>
+                  <el-dropdown-item command="logout" divided>
+                    <el-icon><switch-button /></el-icon>
+                    退出登录
+                  </el-dropdown-item>
+                </el-dropdown-menu>
+              </template>
+            </el-dropdown>
+          </template>
+          <template v-else>
+            <router-link to="/login" class="auth-link">登录</router-link>
+            <router-link to="/register" class="auth-link">注册</router-link>
+          </template>
         </div>
       </div>
-    </el-header>
+    </header>
 
     <!-- 主要内容 -->
-    <el-main class="main">
+    <main class="app-main">
       <!-- 分类导航 -->
       <section class="section category-section">
         <div class="section-header">
@@ -43,7 +76,7 @@
             <el-carousel-item v-for="novel in hotNovels" :key="novel.id">
               <div class="hot-item" @click="goToNovelDetail(novel.id)">
                 <el-image
-                  :src="novel.coverImage || 'https://via.placeholder.com/200x300?text=封面'"
+                  :src="getFullCoverUrl(novel.coverImage) || 'https://via.placeholder.com/200x300?text=封面'"
                   fit="cover"
                   class="hot-cover"
                 />
@@ -75,7 +108,7 @@
             @click="goToNovelDetail(novel.id)"
           >
             <el-image
-              :src="novel.coverImage || 'https://via.placeholder.com/160x240?text=封面'"
+              :src="getFullCoverUrl(novel.coverImage) || 'https://via.placeholder.com/160x240?text=封面'"
               fit="cover"
               class="novel-cover"
             />
@@ -102,24 +135,67 @@
           />
         </div>
       </section>
-    </el-main>
+    </main>
 
     <!-- 底部 -->
-    <el-footer class="footer">
-      <p>© 2026 小说网站 - 仅供学习使用</p>
-    </el-footer>
+    <footer class="app-footer">
+      <p>小说阅读网站 &copy; 2026</p>
+    </footer>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, reactive, onMounted, watch } from 'vue'
 import { useRouter } from 'vue-router'
+import { ElMessage } from 'element-plus'
+import { ArrowDown, Star, User, SwitchButton, View, Document } from '@element-plus/icons-vue'
+import { useUserStore } from '@/store/user'
 import { getCategories } from '@/api/category'
 import { getNovels, getHotNovels } from '@/api/novel'
 import type { CategoryVO, NovelVO, NovelQueryParams } from '@/types'
-import { View, Document } from '@element-plus/icons-vue'
 
 const router = useRouter()
+const userStore = useUserStore()
+
+// 获取完整头像 URL
+const getFullAvatarUrl = (url: string) => {
+  if (!url) return ''
+  if (url.startsWith('http')) return url
+  // 拼接完整 URL: http://localhost:8080/api + /uploads/avatars/xxx.jpg
+  const baseUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/api'
+  return `${baseUrl}${url}`
+}
+
+// 获取完整封面 URL
+const getFullCoverUrl = (url: string) => {
+  if (!url) return ''
+  if (url.startsWith('http')) return url
+  // 拼接完整 URL: http://localhost:8080/api + /uploads/covers/xxx.jpg
+  const baseUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/api'
+  return `${baseUrl}${url}`
+}
+
+// 页面加载时恢复用户状态
+onMounted(() => {
+  userStore.restoreFromStorage()
+})
+
+// 处理下拉菜单命令
+const handleCommand = (command: string) => {
+  switch (command) {
+    case 'favorites':
+      router.push('/user/favorites')
+      break
+    case 'profile':
+      router.push('/user/profile')
+      break
+    case 'logout':
+      userStore.logout()
+      ElMessage.success('已退出登录')
+      router.push('/')
+      break
+  }
+}
 
 // 分类数据
 const categories = ref<CategoryVO[]>([])
@@ -157,7 +233,13 @@ const loadCategories = async () => {
 const loadHotNovels = async () => {
   hotLoading.value = true
   try {
-    hotNovels.value = await getHotNovels()
+    const result: any = await getHotNovels()
+    // 后端返回分页对象 {records: [...], total: ...}
+    if (result && result.records) {
+      hotNovels.value = result.records
+    } else {
+      hotNovels.value = Array.isArray(result) ? result : []
+    }
   } catch (error) {
     console.error('加载热门推荐失败:', error)
   } finally {
@@ -224,44 +306,134 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.home-page {
+#app {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
-.header {
-  background: #fff;
-  border-bottom: 1px solid #e4e7ed;
-  padding: 0 20px;
+.app-header {
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
-.header-content {
+.header-container {
   max-width: 1200px;
   margin: 0 auto;
+  padding: 0 20px;
+  height: 60px;
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  height: 100%;
+  align-items: center;
 }
 
-.logo h1 {
-  margin: 0;
-  font-size: 24px;
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.logo {
+  font-size: 20px;
+  font-weight: bold;
+  color: #409eff;
+  text-decoration: none;
+}
+
+.nav-menu {
+  display: flex;
+  gap: 20px;
+}
+
+.nav-item {
+  color: #333;
+  text-decoration: none;
+  padding: 8px 0;
+  position: relative;
+}
+
+.nav-item:hover,
+.nav-item.router-link-active {
   color: #409eff;
 }
 
-.nav .el-button {
-  margin-left: 20px;
-  font-size: 16px;
+.nav-item.router-link-active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #409eff;
 }
 
-.main {
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.user-dropdown {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.user-dropdown:hover {
+  background-color: #f5f5f5;
+}
+
+.username {
+  color: #333;
+  font-size: 14px;
+}
+
+.auth-link {
+  color: #409eff;
+  text-decoration: none;
+  padding: 8px 16px;
+  border: 1px solid #409eff;
+  border-radius: 4px;
+  transition: all 0.3s;
+}
+
+.auth-link:hover {
+  background-color: #409eff;
+  color: white;
+}
+
+.app-main {
   flex: 1;
   max-width: 1200px;
+  width: 100%;
   margin: 0 auto;
   padding: 20px;
-  width: 100%;
+}
+
+.app-footer {
+  background: #333;
+  color: white;
+  text-align: center;
+  padding: 20px;
+  margin-top: auto;
+}
+
+.app-footer p {
+  margin: 0;
+  font-size: 14px;
+}
+
+:deep(.el-dropdown-menu__item) {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .section {
@@ -428,27 +600,34 @@ onMounted(() => {
   margin-top: 20px;
 }
 
-.footer {
-  background: #fff;
-  border-top: 1px solid #e4e7ed;
-  text-align: center;
-  padding: 20px;
-  color: #666;
-  font-size: 14px;
-}
-
 /* 响应式设计 */
 @media (max-width: 768px) {
-  .header-content {
-    flex-direction: column;
-    padding: 10px 0;
+  .header-container {
+    padding: 0 10px;
   }
 
-  .nav {
-    margin-top: 10px;
+  .header-left {
+    gap: 15px;
   }
 
-  .main {
+  .logo {
+    font-size: 16px;
+  }
+
+  .nav-menu {
+    gap: 10px;
+  }
+
+  .nav-item {
+    font-size: 14px;
+  }
+
+  .auth-link {
+    padding: 6px 12px;
+    font-size: 14px;
+  }
+
+  .app-main {
     padding: 10px;
   }
 

@@ -14,19 +14,19 @@
           sub-title="请使用左侧菜单开始管理操作"
         >
           <template #extra>
-            <div class="stats">
+            <div class="stats" v-loading="loading">
               <el-row :gutter="20">
                 <el-col :span="6">
-                  <el-statistic title="用户总数" :value="0" />
+                  <el-statistic title="用户总数" :value="stats.userCount" />
                 </el-col>
                 <el-col :span="6">
-                  <el-statistic title="小说总数" :value="0" />
+                  <el-statistic title="小说总数" :value="stats.novelCount" />
                 </el-col>
                 <el-col :span="6">
-                  <el-statistic title="章节总数" :value="0" />
+                  <el-statistic title="章节总数" :value="stats.chapterCount" />
                 </el-col>
                 <el-col :span="6">
-                  <el-statistic title="评论总数" :value="0" />
+                  <el-statistic title="评论总数" :value="stats.commentCount" />
                 </el-col>
               </el-row>
             </div>
@@ -48,9 +48,36 @@
 </template>
 
 <script setup lang="ts">
+import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { ElMessage } from 'element-plus'
+import { getAdminStats } from '@/api/adminDashboard'
+import type { AdminStats } from '@/api/adminDashboard'
 
 const router = useRouter()
+const loading = ref(false)
+
+// 统计数据
+const stats = ref<AdminStats>({
+  userCount: 0,
+  novelCount: 0,
+  chapterCount: 0,
+  commentCount: 0
+})
+
+// 加载统计数据
+const loadStats = async () => {
+  loading.value = true
+  try {
+    const data = await getAdminStats()
+    stats.value = data
+  } catch (error) {
+    console.error('加载统计数据失败:', error)
+    ElMessage.error('加载统计数据失败')
+  } finally {
+    loading.value = false
+  }
+}
 
 const goToNovels = () => {
   router.push('/admin/novels')
@@ -67,6 +94,11 @@ const goToUsers = () => {
 const goToCategories = () => {
   router.push('/admin/categories')
 }
+
+// 页面加载时获取数据
+onMounted(() => {
+  loadStats()
+})
 </script>
 
 <style scoped>

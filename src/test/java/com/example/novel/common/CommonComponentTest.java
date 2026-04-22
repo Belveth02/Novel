@@ -125,4 +125,18 @@ class CommonComponentTest {
         assertEquals(403, Result.FORBIDDEN);
         assertEquals(404, Result.NOT_FOUND);
     }
+
+    /**
+     * 生成BCrypt密码哈希（仅用于初始化）
+     */
+    @Test
+    void generatePasswordHash() {
+        org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder encoder =
+            new org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder();
+        String password = "admin";
+        String encoded = encoder.encode(password);
+        System.out.println("Password: " + password);
+        System.out.println("BCrypt Hash: " + encoded);
+        assertTrue(encoder.matches(password, encoded));
+    }
 }

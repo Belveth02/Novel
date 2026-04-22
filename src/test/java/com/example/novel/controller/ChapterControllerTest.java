@@ -30,7 +30,7 @@ class ChapterControllerTest {
     void testListByNovelId() {
         // 先获取一个有效的小说ID
         ResponseEntity<Result<Page<com.example.novel.vo.NovelVO>>> novelResponse = restTemplate.exchange(
-                "/novels?pageSize=1",
+                "/novels?size=1",
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<Result<Page<com.example.novel.vo.NovelVO>>>() {}

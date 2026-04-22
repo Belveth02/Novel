@@ -44,6 +44,7 @@ import { ref, reactive } from 'vue'
 import { addComment } from '@/api/comment'
 import type { FormInstance, FormRules } from 'element-plus'
 import { ElMessage } from 'element-plus'
+import { useUserStore } from '@/store/user'
 
 interface Props {
   novelId: number
@@ -55,6 +56,9 @@ interface Emits {
 
 const props = defineProps<Props>()
 const emit = defineEmits<Emits>()
+
+// 用户 store
+const userStore = useUserStore()
 
 // 表单引用
 const formRef = ref<FormInstance>()
@@ -78,6 +82,12 @@ const rules = reactive<FormRules>({
 // 处理提交
 const handleSubmit = async () => {
   if (!formRef.value) return
+
+  // 检查是否已登录
+  if (!userStore.isLoggedIn) {
+    ElMessage.warning('请先登录后再发表评论')
+    return
+  }
 
   // 验证表单
   try {

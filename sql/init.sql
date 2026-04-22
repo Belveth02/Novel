@@ -57,6 +57,8 @@ CREATE TABLE `novel` (
     `word_count` INT NOT NULL DEFAULT 0 COMMENT '总字数',
     `chapter_count` INT NOT NULL DEFAULT 0 COMMENT '章节数',
     `view_count` INT NOT NULL DEFAULT 0 COMMENT '阅读次数',
+    `is_hot` TINYINT NOT NULL DEFAULT 0 COMMENT '是否热门推荐：0-否，1-是',
+    `hot_sort` INT NOT NULL DEFAULT 0 COMMENT '热门排序（数值越大越靠前）',
     `create_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     `update_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
     PRIMARY KEY (`id`),
@@ -150,9 +152,9 @@ INSERT INTO `category` (`name`, `description`, `sort_order`) VALUES
 ('言情', '现代言情、古代言情等', 7),
 ('悬疑', '侦探推理、灵异惊悚等', 8);
 
--- 插入测试用户（密码均为123456的BCrypt加密值）
+-- 插入测试用户（admin密码为admin，testuser密码为123456的BCrypt加密值）
 INSERT INTO `user` (`username`, `nickname`, `password`, `role`, `email`, `status`) VALUES
-('admin', '管理员', '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'ADMIN', 'admin@novel.com', 1),
+('admin', '管理员', '$2a$10$EqKkjL1b.NT3Fe3I6yPpuuPhd4d0sL8HK5k5N5F6pQGpO3x.pGGJG', 'ADMIN', 'admin@novel.com', 1),
 ('testuser', '测试用户', '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'USER', 'user@novel.com', 1);
 
 -- 插入测试小说

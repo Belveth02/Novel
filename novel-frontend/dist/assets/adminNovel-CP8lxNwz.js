@@ -1,0 +1,1 @@
+import{g as o,a as t,d as s,p as a}from"./index-B6bjbjci.js";const d=e=>o("/admin/novels",{params:e}),l=e=>a("/admin/novels",e),m=(e,n)=>t(`/admin/novels/${e}`,n),i=e=>s(`/admin/novels/${e}`),v=e=>{const n=new FormData;return n.append("file",e),a("/admin/novels/cover",n,{headers:{"Content-Type":"multipart/form-data"}})};export{v as a,l as c,i as d,d as g,m as u};

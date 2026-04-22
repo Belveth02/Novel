@@ -41,7 +41,7 @@
             @click="goToNovelDetail(item.novelId)"
           >
             <el-image
-              :src="item.novelCoverImage || 'https://via.placeholder.com/160x240?text=封面'"
+              :src="getFullCoverUrl(item.novelCoverImage) || 'https://via.placeholder.com/160x240?text=封面'"
               fit="cover"
               class="novel-cover"
             />
@@ -110,6 +110,15 @@ import {
 import { ElMessage, ElMessageBox } from 'element-plus'
 
 const router = useRouter()
+
+// 获取完整封面 URL
+const getFullCoverUrl = (url: string) => {
+  if (!url) return ''
+  if (url.startsWith('http')) return url
+  // 拼接完整 URL: http://localhost:8080/api + /uploads/covers/xxx.jpg
+  const baseUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/api'
+  return `${baseUrl}${url}`
+}
 
 // 收藏数据
 const favorites = ref<FavoriteVO[]>([])

@@ -80,7 +80,7 @@
             v-model="row.isHot"
             :active-value="1"
             :inactive-value="0"
-            @change="(val) => handleHotChange(row, val)"
+            @change="(val: number) => handleHotChange(row, val)"
           />
         </template>
       </el-table-column>

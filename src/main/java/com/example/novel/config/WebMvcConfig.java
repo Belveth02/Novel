@@ -40,6 +40,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         // 配置头像访问路径映射
+        // 注意：context-path=/api 会被 Spring 自动处理，这里只需要配置去掉 /api 后的路径
         registry.addResourceHandler(avatarUrlPrefix + "**")
                 .addResourceLocations("file:" + avatarUploadPath);
 

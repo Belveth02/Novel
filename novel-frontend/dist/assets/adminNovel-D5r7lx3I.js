@@ -1,1 +1,0 @@
-import{g as s,d as t,c as o,p as a}from"./index-CvvflJv1.js";const r=e=>s("/admin/novels",{params:e}),l=e=>a("/admin/novels",e),m=(e,n)=>o(`/admin/novels/${e}`,n),i=e=>t(`/admin/novels/${e}`);export{l as c,i as d,r as g,m as u};

@@ -1,0 +1,1 @@
+import{p as n,g as e,d as s}from"./index-B6bjbjci.js";const a=(t,m)=>n("/comments",null,{params:{novelId:t,content:m}}),r=t=>e("/comments",{params:t}),c=t=>s(`/comments/${t}`),u=t=>e("/comments/count",{params:{novelId:t}});export{a,r as b,c as d,u as g};

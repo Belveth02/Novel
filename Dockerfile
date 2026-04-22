@@ -3,6 +3,20 @@ FROM maven:3.9-eclipse-temurin-17 AS builder
 
 WORKDIR /app
 
+# 配置阿里云 Maven 镜像
+RUN mkdir -p ~/.m2 && cat > ~/.m2/settings.xml << 'EOF'
+<settings>
+  <mirrors>
+    <mirror>
+      <id>aliyunmaven</id>
+      <name>阿里云公共仓库</name>
+      <url>https://maven.aliyun.com/repository/public</url>
+      <mirrorOf>central</mirrorOf>
+    </mirror>
+  </mirrors>
+</settings>
+EOF
+
 # 先复制 pom.xml（利用缓存）
 COPY pom.xml .
 

@@ -1,7 +1,6 @@
 import axios, { type AxiosInstance, type AxiosRequestConfig, type AxiosResponse } from 'axios'
 import type { Result } from '@/types'
 import { ElMessage } from 'element-plus'
-import { useUserStore } from '@/store/user'
 
 // 创建 axios 实例
 const request: AxiosInstance = axios.create({

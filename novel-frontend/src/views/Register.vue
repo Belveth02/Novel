@@ -159,7 +159,7 @@ const handleRegister = async () => {
       email: registerForm.email || undefined
     }
 
-    const response = await post<RegisterResponse>('/auth/register', registerData)
+    await post<RegisterResponse>('/auth/register', registerData)
 
     ElMessage.success('注册成功，请登录')
     // 注册成功后跳转到登录页面

@@ -67,7 +67,10 @@
       "Bash(pip install *)",
       "Bash(python -c \"import bcrypt; h=bcrypt.hashpw\\(b'admin', bcrypt.gensalt\\(rounds=10\\)\\); print\\(h.decode\\(\\)\\)\")",
       "Bash(python *)",
-      "Bash(cd /d/IntelliJ IDEA 2023.2.3/Novel)"
+      "Bash(cd /d/IntelliJ IDEA 2023.2.3/Novel)",
+      "Bash(dir novel-frontend/src/views/)",
+      "Bash(sed *)",
+      "Bash(node create_feasibility.js)"
     ]
   },
   "language": "zh-CN",

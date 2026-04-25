@@ -136,7 +136,9 @@ const queryParams = ref({
 const fetchNovels = async () => {
   loading.value = true
   try {
-    const result = await get('/author/novels', queryParams.value)
+    const result = await get('/author/novels', {
+      params: queryParams.value
+    })
     novelList.value = result.records || []
     total.value = result.total || 0
   } catch (error: any) {

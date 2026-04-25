@@ -171,8 +171,10 @@ const fetchNovels = async () => {
   loading.value = true
   try {
     const result = await get<{ records: Novel[]; total: number }>('/author/novels', {
-      page: 1,
-      size: 5
+      params: {
+        page: 1,
+        size: 5
+      }
     })
     novels.value = result.records || []
   } catch (error: any) {

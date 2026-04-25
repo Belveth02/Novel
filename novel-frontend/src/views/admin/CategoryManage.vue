@@ -156,7 +156,7 @@ const handleEdit = (row: AdminCategoryVO) => {
     id: row.id,
     name: row.name,
     description: row.description || '',
-    sortOrder: row.sortOrder || 0
+    sortOrder: row.sortOrder ?? 0
   })
   dialogVisible.value = true
   nextTick(() => {
@@ -216,7 +216,7 @@ const handleSubmit = async () => {
       const updateParams: AdminCategoryUpdateParams = {
         name: formData.name,
         description: formData.description || undefined,
-        sortOrder: formData.sortOrder || undefined
+        sortOrder: formData.sortOrder ?? undefined
       }
       await updateAdminCategory(formData.id, updateParams)
       ElMessage.success('更新成功')
@@ -225,7 +225,7 @@ const handleSubmit = async () => {
       const createParams: AdminCategoryCreateParams = {
         name: formData.name,
         description: formData.description || undefined,
-        sortOrder: formData.sortOrder || undefined
+        sortOrder: formData.sortOrder ?? undefined
       }
       await createAdminCategory(createParams)
       ElMessage.success('新增成功')

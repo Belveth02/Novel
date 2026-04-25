@@ -140,7 +140,7 @@ const total = ref(0)
 
 const queryParams = ref({
   page: 1,
-  size: 20
+  size: 100
 })
 
 const form = ref({
@@ -165,7 +165,9 @@ const rules: FormRules = {
 
 const fetchNovels = async () => {
   try {
-    const result = await get('/author/novels', { page: 1, size: 1000 })
+    const result = await get('/author/novels', {
+      params: { page: 1, size: 100 }
+    })
     novels.value = result.records || []
   } catch (error: any) {
     ElMessage.error(error.message || '获取小说列表失败')
@@ -178,8 +180,10 @@ const fetchChapters = async () => {
   loading.value = true
   try {
     const result = await get('/author/chapters', {
-      novelId: selectedNovelId.value,
-      ...queryParams.value
+      params: {
+        novelId: selectedNovelId.value,
+        ...queryParams.value
+      }
     })
     chapterList.value = result.records || []
     total.value = result.total || 0

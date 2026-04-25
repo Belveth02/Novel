@@ -59,7 +59,7 @@
         <div class="header-right">
           <el-dropdown @command="handleCommand">
             <span class="user-info">
-              <el-avatar :size="32" :src="userStore.userInfo?.avatar" />
+              <el-avatar :size="32" :src="getAvatarUrl(userStore.userInfo?.avatar) || undefined" />
               <span class="username">{{ userStore.userInfo?.nickname || userStore.userInfo?.username }}</span>
               <el-icon><ArrowDown /></el-icon>
             </span>
@@ -120,6 +120,22 @@ const pageTitle = computed(() => {
   }
   return titles[route.path] || '作者后台'
 })
+
+const getAvatarUrl = (avatar: string | null | undefined) => {
+  if (!avatar) return ''
+  if (avatar.startsWith('http://') || avatar.startsWith('https://')) {
+    return avatar
+  }
+
+  const baseUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/api'
+  if (avatar.startsWith('/api/')) {
+    return `${window.location.origin}${avatar}`
+  }
+  if (avatar.startsWith('/')) {
+    return `${baseUrl}${avatar}`
+  }
+  return `${baseUrl}/${avatar}`
+}
 
 const toggleSidebar = () => {
   isCollapsed.value = !isCollapsed.value

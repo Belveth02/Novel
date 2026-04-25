@@ -41,7 +41,7 @@
           <el-table-column label="评论用户" width="200">
             <template #default="{ row }">
               <div class="user-info">
-                <el-avatar :size="40" :src="row.avatar" />
+                <el-avatar :size="40" :src="getAvatarUrl(row.avatar) || undefined" />
                 <div class="user-detail">
                   <div class="nickname">{{ row.nickname || row.username }}</div>
                   <div class="username" v-if="row.nickname">@{{ row.username }}</div>
@@ -103,7 +103,9 @@ const queryParams = ref({
 
 const fetchNovels = async () => {
   try {
-    const result = await get('/author/novels', { page: 1, size: 1000 })
+    const result = await get('/author/novels', {
+      params: { page: 1, size: 100 }
+    })
     novels.value = result.records || []
   } catch (error: any) {
     ElMessage.error(error.message || '获取小说列表失败')
@@ -116,10 +118,11 @@ const fetchComments = async () => {
   loading.value = true
   try {
     const result = await get('/author/comments', {
-      novelId: selectedNovelId.value,
-      ...queryParams.value
+      params: {
+        novelId: selectedNovelId.value,
+        ...queryParams.value
+      }
     })
-    console.log('评论数据:', result)
     commentList.value = result.records || []
     total.value = result.total || 0
   } catch (error: any) {
@@ -143,6 +146,22 @@ const formatDate = (date: string) => {
     hour: '2-digit',
     minute: '2-digit'
   })
+}
+
+const getAvatarUrl = (avatar: string | null | undefined) => {
+  if (!avatar) return ''
+  if (avatar.startsWith('http://') || avatar.startsWith('https://')) {
+    return avatar
+  }
+
+  const baseUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/api'
+  if (avatar.startsWith('/api/')) {
+    return `${window.location.origin}${avatar}`
+  }
+  if (avatar.startsWith('/')) {
+    return `${baseUrl}${avatar}`
+  }
+  return `${baseUrl}/${avatar}`
 }
 
 const handleSizeChange = (size: number) => {

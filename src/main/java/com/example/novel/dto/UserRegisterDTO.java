@@ -47,4 +47,10 @@ public class UserRegisterDTO {
      */
     @Size(max = 20, message = "手机号长度不能超过20个字符")
     private String phone;
+
+    /**
+     * 角色：USER-普通用户，AUTHOR-作者
+     */
+    @Size(max = 10, message = "角色长度不能超过10个字符")
+    private String role;
 }

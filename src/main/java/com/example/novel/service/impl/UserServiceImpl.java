@@ -2,6 +2,7 @@ package com.example.novel.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.novel.common.constant.RoleConstant;
 import com.example.novel.common.exception.BusinessException;
 import com.example.novel.common.util.JwtUtil;
 import com.example.novel.dto.AdminUserQueryDTO;
@@ -78,12 +79,21 @@ public class UserServiceImpl implements IUserService {
             }
         }
 
+        // 确定用户角色（只允许USER或AUTHOR）
+        String role = registerDTO.getRole();
+        if (role == null || role.isEmpty()) {
+            role = RoleConstant.USER;
+        } else if (!RoleConstant.USER.equals(role) && !RoleConstant.AUTHOR.equals(role)) {
+            // 防止注册时指定ADMIN角色
+            role = RoleConstant.USER;
+        }
+
         // 构建用户实体
         User user = User.builder()
                 .username(registerDTO.getUsername())
                 .nickname(registerDTO.getNickname() != null ? registerDTO.getNickname() : registerDTO.getUsername())
                 .password(passwordEncoder.encode(registerDTO.getPassword()))
-                .role("USER")
+                .role(role)
                 .email(registerDTO.getEmail())
                 .phone(registerDTO.getPhone())
                 .status(1)

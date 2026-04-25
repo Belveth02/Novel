@@ -50,6 +50,8 @@ public class SecurityConfig {
                 .requestMatchers("/users/**").permitAll()
                 // 放行管理员接口（由JWT拦截器处理认证）
                 .requestMatchers("/admin/**").permitAll()
+                // 放行作者接口（由JWT拦截器处理认证）
+                .requestMatchers("/author/**").permitAll()
                 // 放行所有小说相关公开接口
                 .requestMatchers("/novels/**").permitAll()
                 .requestMatchers("/chapters/**").permitAll()

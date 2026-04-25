@@ -13,6 +13,13 @@
         class="register-form"
         @submit.prevent="handleRegister"
       >
+        <el-form-item>
+          <el-radio-group v-model="registerForm.role" size="large">
+            <el-radio-button label="USER">普通用户</el-radio-button>
+            <el-radio-button label="AUTHOR">作者</el-radio-button>
+          </el-radio-group>
+        </el-form-item>
+
         <el-form-item prop="username">
           <el-input
             v-model="registerForm.username"
@@ -48,7 +55,7 @@
         <el-form-item prop="nickname">
           <el-input
             v-model="registerForm.nickname"
-            placeholder="请输入昵称（选填）"
+            :placeholder="registerForm.role === 'AUTHOR' ? '请输入笔名' : '请输入昵称（选填）'"
             size="large"
             :prefix-icon="UserFilled"
           />
@@ -71,12 +78,17 @@
             @click="handleRegister"
             class="register-btn"
           >
-            注册
+            {{ registerForm.role === 'AUTHOR' ? '作者注册' : '注册' }}
           </el-button>
         </el-form-item>
       </el-form>
 
       <div class="register-footer">
+        <p v-if="registerForm.role === 'AUTHOR'">
+          作者注册后可进入
+          <router-link to="/author/login" class="login-link">作者后台</router-link>
+          管理您的小说
+        </p>
         <p>
           已有账号？
           <router-link to="/login" class="login-link">立即登录</router-link>
@@ -103,7 +115,8 @@ const registerForm = reactive({
   password: '',
   confirmPassword: '',
   nickname: '',
-  email: ''
+  email: '',
+  role: 'USER'
 })
 
 // 自定义校验：确认密码
@@ -156,14 +169,19 @@ const handleRegister = async () => {
       username: registerForm.username,
       password: registerForm.password,
       nickname: registerForm.nickname || undefined,
-      email: registerForm.email || undefined
+      email: registerForm.email || undefined,
+      role: registerForm.role
     }
 
     await post<RegisterResponse>('/auth/register', registerData)
 
-    ElMessage.success('注册成功，请登录')
-    // 注册成功后跳转到登录页面
-    router.push('/login')
+    if (registerForm.role === 'AUTHOR') {
+      ElMessage.success('作者注册成功，请登录作者后台')
+      router.push('/author/login')
+    } else {
+      ElMessage.success('注册成功，请登录')
+      router.push('/login')
+    }
   } catch (error: any) {
     console.error('注册失败:', error)
     ElMessage.error(error.message || '注册失败，请重试')
@@ -212,6 +230,19 @@ const handleRegister = async () => {
   margin-bottom: 20px;
 }
 
+:deep(.el-radio-group) {
+  width: 100%;
+  display: flex;
+}
+
+:deep(.el-radio-button) {
+  flex: 1;
+}
+
+:deep(.el-radio-button__inner) {
+  width: 100%;
+}
+
 .register-btn {
   width: 100%;
   margin-top: 10px;
@@ -224,7 +255,7 @@ const handleRegister = async () => {
 }
 
 .register-footer p {
-  margin: 0;
+  margin: 5px 0;
 }
 
 .login-link {

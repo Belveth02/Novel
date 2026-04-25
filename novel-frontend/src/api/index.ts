@@ -14,15 +14,20 @@ const request: AxiosInstance = axios.create({
 // 请求拦截器
 request.interceptors.request.use(
   (config) => {
-    // 判断是否是管理员接口（检查url是否包含/admin/路径）
+    // 判断接口类型
     const url = config.url || ''
     const isAdminApi = url.includes('/admin/')
+    const isAuthorApi = url.includes('/author/')
 
     // 根据接口类型获取对应的token
-    const token = isAdminApi
-      ? localStorage.getItem('admin_token')
-      : localStorage.getItem('user_token')
-
+    let token = null
+    if (isAdminApi) {
+      token = localStorage.getItem('admin_token')
+    } else if (isAuthorApi) {
+      token = localStorage.getItem('author_token')
+    } else {
+      token = localStorage.getItem('user_token')
+    }
 
     // 如果存在token，添加到Authorization header
     if (token) {
@@ -30,7 +35,7 @@ request.interceptors.request.use(
     }
 
     // 从localStorage获取用户信息并添加X-User-ID请求头（仅普通用户接口）
-    if (!isAdminApi) {
+    if (!isAdminApi && !isAuthorApi) {
       const userInfoStr = localStorage.getItem('user_info')
       if (userInfoStr) {
         try {
@@ -76,27 +81,34 @@ request.interceptors.response.use(
           break
         case 401:
           // token 过期或未授权，清除本地存储并跳转登录页
-          const isAdminPage = window.location.pathname.startsWith('/admin')
-          if (isAdminPage) {
+          const pathname = window.location.pathname
+          if (pathname.startsWith('/admin')) {
             localStorage.removeItem('admin_token')
             localStorage.removeItem('admin_user')
             ElMessage.error('管理员登录已过期，请重新登录')
-            if (!window.location.pathname.includes('/admin/login')) {
+            if (!pathname.includes('/admin/login')) {
               window.location.href = '/admin/login'
+            }
+          } else if (pathname.startsWith('/author')) {
+            localStorage.removeItem('author_token')
+            localStorage.removeItem('author_info')
+            ElMessage.error('登录已过期，请重新登录')
+            if (!pathname.includes('/author/login')) {
+              window.location.href = '/author/login'
             }
           } else {
             localStorage.removeItem('user_token')
             localStorage.removeItem('user_info')
             ElMessage.error('登录已过期，请重新登录')
             // 只有非登录页面才跳转
-            if (!window.location.pathname.includes('/login') &&
-                !window.location.pathname.includes('/register')) {
+            if (!pathname.includes('/login') &&
+                !pathname.includes('/register')) {
               window.location.href = '/login'
             }
           }
           break
         case 403:
-          ElMessage.error('权限不足，拒绝访问')
+          ElMessage.error(data?.message || '权限不足，拒绝访问')
           break
         case 404:
           ElMessage.error('请求的资源不存在')

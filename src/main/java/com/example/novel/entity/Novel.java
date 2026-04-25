@@ -30,9 +30,15 @@ public class Novel {
     private String title;
 
     /**
-     * 作者
+     * 作者（显示名称）
      */
     private String author;
+
+    /**
+     * 作者用户ID（关联user表）
+     */
+    @TableField("author_user_id")
+    private Long authorUserId;
 
     /**
      * 封面图片URL

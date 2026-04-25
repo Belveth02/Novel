@@ -116,12 +116,14 @@ export interface FavoriteVO {
 export interface CommentVO {
   id: number
   userId: number
+  username?: string
   nickname?: string
+  avatar?: string
   novelId: number
   novelTitle?: string
   content: string
   createTime: string
-  updateTime: string
+  updateTime?: string
 }
 
 // 章节查询参数

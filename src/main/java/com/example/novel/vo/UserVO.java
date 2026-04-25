@@ -68,4 +68,9 @@ public class UserVO implements Serializable {
      * 更新时间
      */
     private LocalDateTime updateTime;
+
+    /**
+     * JWT Token（登录时返回）
+     */
+    private String token;
 }

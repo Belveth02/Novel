@@ -25,25 +25,55 @@ export const useUserStore = defineStore('user', () => {
   // 计算属性：是否已登录
   const isLoggedIn = computed(() => !!token.value)
 
+  // 设置token
+  function setToken(newToken: string, tokenType: 'user' | 'author' | 'admin' = 'user') {
+    token.value = newToken
+    const storageKey = `${tokenType}_token`
+    localStorage.setItem(storageKey, newToken)
+  }
+
   // 设置用户信息
   function setUserInfo(info: {
-    userId: number
+    id?: number
+    userId?: number
     username: string
     nickname: string
-    token: string
     role?: string
     email?: string
     phone?: string
     avatar?: string
-  }) {
-    userId.value = info.userId
+  }, tokenType: 'user' | 'author' | 'admin' = 'user') {
+    userId.value = info.id || info.userId || null
     username.value = info.username
     nickname.value = info.nickname
     role.value = info.role || 'USER'
     email.value = info.email || ''
     phone.value = info.phone || ''
     avatar.value = info.avatar || ''
-    token.value = info.token
+
+    // 保存到localStorage
+    const userInfo: UserInfo = {
+      userId: info.id || info.userId || 0,
+      username: info.username,
+      nickname: info.nickname,
+      role: info.role || 'USER',
+      email: info.email,
+      phone: info.phone,
+      avatar: info.avatar
+    }
+    localStorage.setItem(`${tokenType}_info`, JSON.stringify(userInfo))
+  }
+
+  // 清除用户信息
+  function clearUserInfo() {
+    userId.value = null
+    username.value = ''
+    nickname.value = ''
+    role.value = ''
+    email.value = ''
+    phone.value = ''
+    avatar.value = ''
+    token.value = ''
   }
 
   // 从localStorage恢复用户信息
@@ -113,7 +143,9 @@ export const useUserStore = defineStore('user', () => {
     // 计算属性
     isLoggedIn,
     // 方法
+    setToken,
     setUserInfo,
+    clearUserInfo,
     restoreFromStorage,
     logout,
     updateAvatar

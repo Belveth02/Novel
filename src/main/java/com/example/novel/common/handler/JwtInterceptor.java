@@ -1,5 +1,6 @@
 package com.example.novel.common.handler;
 
+import com.example.novel.common.constant.RoleConstant;
 import com.example.novel.common.exception.BusinessException;
 import com.example.novel.common.util.JwtUtil;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,10 +23,12 @@ public class JwtInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String requestURI = request.getRequestURI();
-        log.debug("JWT拦截器处理请求: {}", requestURI);
+        String method = request.getMethod();
+        log.info("JWT拦截器处理请求: {} {}", method, requestURI);
 
         // 排除登录接口
-        if (requestURI.startsWith("/api/admin/auth/login")) {
+        if (requestURI.startsWith("/api/admin/auth/login") || requestURI.startsWith("/api/author/auth/login")) {
+            log.info("放行登录接口: {}", requestURI);
             return true;
         }
 
@@ -37,6 +40,12 @@ public class JwtInterceptor implements HandlerInterceptor {
         }
 
         String token = authHeader.substring(7);
+
+        // 作者后台接口单独处理
+        if (requestURI.startsWith("/api/author/")) {
+            return handleAuthorRequest(request, response, token);
+        }
+
         if (!jwtUtil.validateToken(token)) {
             log.warn("JWT token无效或已过期: {}", requestURI);
             throw new BusinessException("登录已过期，请重新登录");
@@ -44,7 +53,7 @@ public class JwtInterceptor implements HandlerInterceptor {
 
         // 验证用户角色（必须是管理员）
         String role = jwtUtil.getRoleFromToken(token);
-        if (!"ADMIN".equals(role)) {
+        if (!RoleConstant.ADMIN.equals(role)) {
             log.warn("用户角色不是管理员，禁止访问: {}", requestURI);
             throw new BusinessException("权限不足，仅限管理员访问");
         }
@@ -56,6 +65,34 @@ public class JwtInterceptor implements HandlerInterceptor {
         request.setAttribute("role", role);
 
         log.debug("JWT验证通过，用户ID: {}, 角色: {}, 请求: {}", userId, role, requestURI);
+        return true;
+    }
+
+    /**
+     * 处理作者后台接口请求
+     */
+    private boolean handleAuthorRequest(HttpServletRequest request, HttpServletResponse response, String token) throws Exception {
+        String requestURI = request.getRequestURI();
+
+        if (!jwtUtil.validateToken(token)) {
+            log.warn("JWT token无效或已过期: {}", requestURI);
+            throw new BusinessException("登录已过期，请重新登录");
+        }
+
+        // 验证用户角色（必须是作者或管理员）
+        String role = jwtUtil.getRoleFromToken(token);
+        if (!RoleConstant.AUTHOR.equals(role) && !RoleConstant.ADMIN.equals(role)) {
+            log.warn("用户角色不是作者，禁止访问作者后台: {}", requestURI);
+            throw new BusinessException("权限不足，仅限作者访问");
+        }
+
+        // 将用户ID存入请求属性，供后续使用
+        Long userId = jwtUtil.getUserIdFromToken(token);
+        request.setAttribute("userId", userId);
+        request.setAttribute("username", jwtUtil.getUsernameFromToken(token));
+        request.setAttribute("role", role);
+
+        log.debug("作者后台JWT验证通过，用户ID: {}, 角色: {}, 请求: {}", userId, role, requestURI);
         return true;
     }
 }

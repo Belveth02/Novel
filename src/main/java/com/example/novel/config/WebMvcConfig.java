@@ -35,6 +35,11 @@ public class WebMvcConfig implements WebMvcConfigurer {
         registry.addInterceptor(jwtInterceptor)
                 .addPathPatterns("/admin/**", "/api/admin/**")
                 .excludePathPatterns("/admin/auth/login", "/api/admin/auth/login");
+
+        // 注册JWT拦截器，拦截所有/author/**路径，排除登录接口
+        registry.addInterceptor(jwtInterceptor)
+                .addPathPatterns("/author/**", "/api/author/**")
+                .excludePathPatterns("/author/auth/login", "/api/author/auth/login");
     }
 
     @Override

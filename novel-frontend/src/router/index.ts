@@ -91,6 +91,51 @@ const router = createRouter({
         }
       ]
     },
+    // 作者后台路由
+    {
+      path: '/author/login',
+      name: 'author-login',
+      component: () => import('@/views/author/AuthorLogin.vue')
+    },
+    {
+      path: '/author',
+      name: 'author-layout',
+      component: () => import('@/views/author/AuthorLayout.vue'),
+      redirect: '/author/dashboard',
+      meta: { requiresAuthor: true },
+      children: [
+        {
+          path: 'dashboard',
+          name: 'author-dashboard',
+          component: () => import('@/views/author/AuthorDashboard.vue')
+        },
+        {
+          path: 'novels',
+          name: 'author-novels',
+          component: () => import('@/views/author/AuthorNovelList.vue')
+        },
+        {
+          path: 'novels/create',
+          name: 'author-novel-create',
+          component: () => import('@/views/author/AuthorNovelEdit.vue')
+        },
+        {
+          path: 'novels/edit/:id',
+          name: 'author-novel-edit',
+          component: () => import('@/views/author/AuthorNovelEdit.vue')
+        },
+        {
+          path: 'chapters',
+          name: 'author-chapters',
+          component: () => import('@/views/author/AuthorChapterList.vue')
+        },
+        {
+          path: 'comments',
+          name: 'author-comments',
+          component: () => import('@/views/author/AuthorCommentList.vue')
+        }
+      ]
+    },
     {
       path: '/:pathMatch(.*)*',
       name: 'not-found',
@@ -105,18 +150,29 @@ router.beforeEach((to, _from, next) => {
 
   const loggedIn = isLoggedIn()
   const adminToken = localStorage.getItem('admin_token')
+  const authorToken = localStorage.getItem('author_token')
 
   // 检查路由元信息
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
   const requiresGuest = to.matched.some(record => record.meta.requiresGuest)
   const requiresAdmin = to.matched.some(record => record.meta.requiresAdmin)
+  const requiresAuthor = to.matched.some(record => record.meta.requiresAuthor)
 
   // 检查是否访问管理员路由
   const isAdminRoute = to.path.startsWith('/admin') && to.path !== '/admin/login'
 
-  // 管理员路由守卫：需要管理员权限
+  // 检查是否访问作者路由
+  const isAuthorRoute = to.path.startsWith('/author') && to.path !== '/author/login'
+
+  // 管理员路由守卫
   if (isAdminRoute && !adminToken) {
     next('/admin/login')
+    return
+  }
+
+  // 作者路由守卫
+  if (isAuthorRoute && !authorToken) {
+    next('/author/login')
     return
   }
 
@@ -126,9 +182,21 @@ router.beforeEach((to, _from, next) => {
     return
   }
 
+  // 已登录作者访问登录页，重定向到仪表盘
+  if (to.path === '/author/login' && authorToken) {
+    next('/author/dashboard')
+    return
+  }
+
   // 需要管理员权限但不是管理员
   if (requiresAdmin && !adminToken) {
     next('/admin/login')
+    return
+  }
+
+  // 需要作者权限但不是作者
+  if (requiresAuthor && !authorToken) {
+    next('/author/login')
     return
   }
 

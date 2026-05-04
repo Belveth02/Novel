@@ -70,7 +70,12 @@
       "Bash(cd /d/IntelliJ IDEA 2023.2.3/Novel)",
       "Bash(dir novel-frontend/src/views/)",
       "Bash(sed *)",
-      "Bash(node create_feasibility.js)"
+      "Bash(node create_feasibility.js)",
+      "Bash(\"D:/maven/apache-maven-3.8.6/apache-maven-3.8.6/bin/mvn.cmd\" compile *)",
+      "Bash(jar xf *)",
+      "Bash(javap -c -p com/baomidou/mybatisplus/autoconfigure/MybatisPlusInnerInterceptorAutoConfiguration.class)",
+      "Bash(xargs -I{} basename {})",
+      "Bash(jar tf *)"
     ]
   },
   "language": "zh-CN",

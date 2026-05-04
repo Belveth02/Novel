@@ -47,6 +47,13 @@
             <version>3.5.15</version>
         </dependency>
 
+        <!-- MyBatis Plus 分页插件（3.5.15起分页拦截器移至此模块） -->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-jsqlparser-4.9</artifactId>
+            <version>3.5.15</version>
+        </dependency>
+
         <!-- Spring Security -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -114,7 +121,12 @@
             <groupId>com.github.ben-manes.caffeine</groupId>
             <artifactId>caffeine</artifactId>
         </dependency>
-            </dependencies>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-extension</artifactId>
+            <version>3.5.15</version>
+        </dependency>
+    </dependencies>
 
     <build>
         <plugins>

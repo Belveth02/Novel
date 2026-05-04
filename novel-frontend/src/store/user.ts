@@ -42,6 +42,7 @@ export const useUserStore = defineStore('user', () => {
     email?: string
     phone?: string
     avatar?: string
+    token?: string
   }, tokenType: 'user' | 'author' | 'admin' = 'user') {
     userId.value = info.id || info.userId || null
     username.value = info.username

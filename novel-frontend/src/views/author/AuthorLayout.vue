@@ -59,8 +59,8 @@
         <div class="header-right">
           <el-dropdown @command="handleCommand">
             <span class="user-info">
-              <el-avatar :size="32" :src="getAvatarUrl(userStore.userInfo?.avatar) || undefined" />
-              <span class="username">{{ userStore.userInfo?.nickname || userStore.userInfo?.username }}</span>
+              <el-avatar :size="32" :src="getAvatarUrl(userStore.avatar) || undefined" />
+              <span class="username">{{ userStore.nickname || userStore.username }}</span>
               <el-icon><ArrowDown /></el-icon>
             </span>
             <template #dropdown>

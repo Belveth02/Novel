@@ -122,9 +122,9 @@ import { get, del } from '@/api'
 
 const router = useRouter()
 const loading = ref(false)
-const novelList = ref([])
+const novelList = ref<Array<{ id: number; title: string; author: string; coverImage: string; status: number; chapterCount: number; wordCount: number; viewCount: number; createTime: string; categoryId: number; description: string }>>([])
 const total = ref(0)
-const categories = ref([])
+const categories = ref<Array<{ id: number; name: string }>>([])
 
 const queryParams = ref({
   page: 1,

@@ -98,7 +98,7 @@
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
-import { Reading, ChatDotRound, Document, View, Plus } from '@element-plus/icons-vue'
+import { Reading, ChatDotRound, Plus } from '@element-plus/icons-vue'
 import { get } from '@/api'
 
 const router = useRouter()

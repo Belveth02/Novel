@@ -67,10 +67,8 @@ import { ElMessage } from 'element-plus'
 import { User, Lock } from '@element-plus/icons-vue'
 import type { FormInstance, FormRules } from 'element-plus'
 import { post } from '@/api'
-import { useUserStore } from '@/store/user'
 
 const router = useRouter()
-const userStore = useUserStore()
 const loading = ref(false)
 const loginFormRef = ref<FormInstance>()
 

@@ -87,7 +87,7 @@ const route = useRoute()
 const router = useRouter()
 const formRef = ref<FormInstance>()
 const loading = ref(false)
-const categories = ref([])
+const categories = ref<Array<{ id: number; name: string }>>([])
 
 const isEdit = computed(() => !!route.params.id)
 const novelId = computed(() => route.params.id as string)

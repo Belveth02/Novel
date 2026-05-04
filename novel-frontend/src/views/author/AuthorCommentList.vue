@@ -91,7 +91,7 @@ import { ElMessage, ElMessageBox } from 'element-plus'
 import { get, del } from '@/api'
 
 const loading = ref(false)
-const novels = ref([])
+const novels = ref<Array<{ id: number; title: string }>>([])
 const selectedNovelId = ref<number | null>(null)
 const commentList = ref([])
 const total = ref(0)

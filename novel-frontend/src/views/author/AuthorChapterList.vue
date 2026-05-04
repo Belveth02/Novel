@@ -133,7 +133,7 @@ const dialogVisible = ref(false)
 const isEdit = ref(false)
 const formRef = ref<FormInstance>()
 
-const novels = ref([])
+const novels = ref<Array<{ id: number; title: string }>>([])
 const selectedNovelId = ref<number | null>(null)
 const chapterList = ref([])
 const total = ref(0)
